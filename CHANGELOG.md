@@ -43,3 +43,18 @@ All notable changes to this project will be documented in this file.
 - UI feedback through animation and button press interaction.
 
 ---
+
+## [2025-05-24] – [2025-05-25] – Initial Release
+
+### Loading Screen
+
+#### Added
+- Implemented a manual loading screen using `useEffect` in `App.tsx` with a 2-second delay before navigating to the `Home` screen.
+- Replaced native splash configuration with a custom splash view, rendering a background image and centered `🎼 ClassiQ` text.
+- Reorganized the `loadResources` function for clarity and consistency.
+- Reduced splash image size from 1.52 MB to 52 KB, optimizing performance in line with the Grab project (which uses a 32 KB image).
+
+#### Learned
+- When defining new screens, ensure they are added to `types.ts` under `RootStackParamList` to avoid navigation and typing errors.
+- Manual splash rendering using `<Image>` improves control but introduces a slight delay due to image load timing.
+- Native splash configuration in `app.json` is no longer needed when manually managing the splash screen in `App.tsx`.
