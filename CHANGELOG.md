@@ -54,7 +54,32 @@ All notable changes to this project will be documented in this file.
 - Reorganized the `loadResources` function for clarity and consistency.
 - Reduced splash image size from 1.52 MB to 52 KB, optimizing performance in line with the Grab project (which uses a 32 KB image).
 
+
 #### Learned
 - When defining new screens, ensure they are added to `types.ts` under `RootStackParamList` to avoid navigation and typing errors.
 - Manual splash rendering using `<Image>` improves control but introduces a slight delay due to image load timing.
 - Native splash configuration in `app.json` is no longer needed when manually managing the splash screen in `App.tsx`.
+
+
+## [2025-06-07] – [2025-06-08]
+
+### Playing Screen
+
+#### Added
+- Implemented a simplified splash screen using only the container (without a background image) to reduce loading delay.
+- Introduced a stable method for font importing.
+- Added a loading indicator that waits for both the background and record image to finish loading before rendering the screen.
+- Implemented conditional logic in `handlePlayNext` and `handlePlayPrevious` to maintain the current play state (playing/paused) across track changes.
+- Introduced dynamic blinking speed based on the formula `blinkDuration = 1000 - volume * 700`, adjusting animation speed based on the current volume level.
+
+#### Changed
+- Added `recordLoaded` state alongside `bgLoaded` and updated rendering conditions to wait for both assets.
+- Refactored the player box from `<View>` to `<Animated.View>` and applied `blinkAnim` opacity transitions when playing.
+- Adjusted blink animation speed to reflect changes in volume level.
+- Refined the `updateBlinkAnimation` method for dynamic responsiveness.
+
+#### Learned
+- How to reliably import and use custom fonts in React Native.
+- How `useState` can be used to manage multiple local UI states effectively.
+- That animation properties (like blinking) can be dynamically controlled using mathematical formulas tied to user input (e.g., volume level).
+

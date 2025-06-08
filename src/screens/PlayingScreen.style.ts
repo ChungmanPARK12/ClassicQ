@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     position: 'absolute',
-    top: '42%',
+    top: '42.5%',
     zIndex: 1,
     opacity: 0.8,
   },
 
   playerBox: {
   width: 350,
-  minHeight: 700,
+  minHeight: 650,
   paddingTop: 40,
   paddingBottom: 60,
   paddingHorizontal: 30,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
   borderColor: 'rgba(255,255,255,0.2)',
   alignItems: 'center',
   justifyContent: 'flex-start',
-  marginTop: -50,
+  marginTop: -60,
   gap: 30, // ✅ optional: clean spacing between child elements
 },
 
@@ -47,6 +47,7 @@ infoBox: {
   borderWidth: 1,
   borderColor: 'rgba(255,255,255,0.2)',
   marginBottom: 20, // ✅ slightly less to avoid pushing elements too far
+  marginTop: -20,
 },
 
   titleContainer: {
@@ -89,8 +90,8 @@ infoBox: {
     flexDirection: 'row',
     justifyContent: 'space-evenly', // ensures equal space
     alignItems: 'center',
-    width: '80%',
-    marginTop: -170,
+    width: '70%',
+    marginTop: -150,
   },
 
   controlButton: {
@@ -107,6 +108,15 @@ infoBox: {
   textShadowOffset: { width: 1, height: 1 },
   textShadowRadius: 2,
 },
+
+loader: {
+  ...StyleSheet.absoluteFillObject,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#7B4A2D',
+  zIndex: 999,
+},
+
 
 });
 

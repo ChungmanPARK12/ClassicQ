@@ -1,15 +1,22 @@
-
-import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  ImageBackground,
+  ActivityIndicator,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import styles from './HomeScreen.style';
-import { trackList } from '../data/tracks'; // ✅ Use shared track list
+import { trackList } from '../data/tracks';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
+  const [bgLoaded, setBgLoaded] = useState(false);
 
   const handlePlayRandom = () => {
     const randomIndex = Math.floor(Math.random() * trackList.length);
@@ -22,22 +29,33 @@ export default function HomeScreen() {
   };
 
   return (
-    <ImageBackground
-      source={require('../../assets/background.jpg')}
-      style={styles.backgroundImage}
-      resizeMode="cover"
+    <>
+      {!bgLoaded && (
+        <View style={styles.loader}>
+          <ActivityIndicator size="large" color="#ffffff" />
+        </View>
+      )}
+
+      <ImageBackground
+        source={require('../../assets/background.jpg')}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+        onLoadEnd={() => setBgLoaded(true)}
       >
-      <View style={styles.header}>
-        <Text style={styles.title}>🎼 ClassiQ</Text>
-      </View>
+        {bgLoaded && (
+          <>
+            <View style={styles.header}>
+              <Text style={styles.title}>🎼 ClassiQ</Text>
+            </View>
 
-      <View style={styles.body}>
-        <TouchableOpacity style={styles.button} onPress={handlePlayRandom}>
-          <Text style={styles.buttonText}> Play Random Music</Text>
-        </TouchableOpacity>
-      </View>
-    </ImageBackground>
+            <View style={styles.body}>
+              <TouchableOpacity style={styles.button} onPress={handlePlayRandom}>
+                <Text style={styles.buttonText}>Play Random Music</Text>
+              </TouchableOpacity>
+            </View>
+          </>
+        )}
+      </ImageBackground>
+    </>
   );
-
-
 }

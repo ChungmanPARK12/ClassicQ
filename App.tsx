@@ -1,28 +1,25 @@
 import React, { useEffect, useState } from 'react';
-import { View, Image, StatusBar, StyleSheet, Text } from 'react-native';
+import { View, Text, StyleSheet, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './src/navigation/AppNavigator';
+import { useFonts, Lora_700Bold } from '@expo-google-fonts/lora';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({ Lora_700Bold });
   const [isAppReady, setIsAppReady] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsAppReady(true), 5000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (fontsLoaded) {
+      const timer = setTimeout(() => setIsAppReady(true), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [fontsLoaded]);
 
-  if (!isAppReady) {
+  if (!fontsLoaded || !isAppReady) {
     return (
       <View style={styles.splashContainer}>
         <StatusBar hidden />
-        <Image
-          source={require('./assets/background2.jpg')}
-          style={styles.splashImage}
-          resizeMode="cover"
-        />
-        <View style={styles.overlay}>
-          <Text style={styles.title}>🎼 ClassiQ</Text>
-        </View>
+        <Text style={styles.title}>🎼 ClassiQ</Text>
       </View>
     );
   }
@@ -37,24 +34,15 @@ export default function App() {
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
-    backgroundColor: '#000000',
-  },
-  splashImage: {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-  },
-  overlay: {
-    flex: 1,
+    backgroundColor: '#A36C4D', //  #A36C4D, 	#BC8A6B
     justifyContent: 'center',
     alignItems: 'center',
   },
-  
   title: {
     fontFamily: 'Lora_700Bold',
     fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 40,
     color: '#1e1e1e',
+    marginBottom: 60,
   },
 });

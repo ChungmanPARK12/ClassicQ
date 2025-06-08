@@ -66,6 +66,15 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 1,
   },
+
+  loader: {
+  ...StyleSheet.absoluteFillObject,
+  backgroundColor: '#A36C4D',
+  justifyContent: 'center',
+  alignItems: 'center',
+  zIndex: 10,
+}
+
   
 });
 
