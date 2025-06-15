@@ -113,7 +113,7 @@ loader: {
   ...StyleSheet.absoluteFillObject,
   justifyContent: 'center',
   alignItems: 'center',
-  backgroundColor: '#7B4A2D',
+ // backgroundColor: '#7B4A2D',
   zIndex: 999,
 },
 

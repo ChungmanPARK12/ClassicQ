@@ -83,3 +83,26 @@ All notable changes to this project will be documented in this file.
 - How `useState` can be used to manage multiple local UI states effectively.
 - That animation properties (like blinking) can be dynamically controlled using mathematical formulas tied to user input (e.g., volume level).
 
+## [2025-06-14] – [2025-06-15]
+
+### Playing Screen
+
+#### Added
+- Implemented the Music List screen where users can tap a track to start playback.
+- Added a blinking animation to indicate the currently playing track.
+- Enabled automatic playback of the next track every 3 seconds (test logic).
+- Added container styling for the list and each item, including a frame-like design using CSS.
+- Enhanced `renderItem` logic to style even and odd items differently based on index.
+- Installed and integrated `expo-linear-gradient` with a 3-color dynamic background for modern styling.
+
+#### Changed
+- Fixed a bug where the blinking animation did not trigger or proceed to the next track when starting from the first item.
+- Improved blinking behavior and automatic transition between tracks.
+- Refactored list rendering logic using the formula `index % 2` to differentiate between even and odd items.
+- Replaced static background color with a modern gradient using `LinearGradient`.
+
+#### Learned
+- Gained hands-on experience with `Animated.loop`, `useRef`, and managing timed playback transitions using `setTimeout`.
+- Learned how to implement dynamic color styling and apply index-based conditional logic for alternating item designs.
+
+
