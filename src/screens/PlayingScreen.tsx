@@ -15,6 +15,8 @@ import { trackList } from '../data/tracks';
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 type PlayingScreenRouteProp = RouteProp<RootStackParamList, 'NowPlaying'>;
 
@@ -139,10 +141,14 @@ export default function PlayingScreen({ route }: Props) {
   return (
     <>
       {!(bgLoaded && recordLoaded) && (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
-      )}
+  <LinearGradient
+colors={['#2c1e1a', '#4b2e24', '#6f4e37']} // warm brown gradient
+
+    style={styles.loader}
+  >
+    <ActivityIndicator size="large" color="#ffffff" />
+  </LinearGradient>
+)}
 
       <ImageBackground
         source={require('../../assets/background2.jpg')}

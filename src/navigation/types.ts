@@ -6,6 +6,6 @@ export type RootStackParamList = {
       title: string;
       composer: string
     };
-    
+    List:undefined;
   };
   

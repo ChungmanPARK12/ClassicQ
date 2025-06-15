@@ -11,6 +11,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../navigation/types';
 import styles from './HomeScreen.style';
 import { trackList } from '../data/tracks';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
@@ -28,13 +30,22 @@ export default function HomeScreen() {
     });
   };
 
+  const handleOpenList = () => {
+  navigation.navigate('List');
+};
+
+
   return (
     <>
-      {!bgLoaded && (
-        <View style={styles.loader}>
-          <ActivityIndicator size="large" color="#ffffff" />
-        </View>
-      )}
+      {!(bgLoaded) && (
+  <LinearGradient
+    colors={['#5c3c2d', '#7e514f', '#a1887f']} // elegant brown gradient
+    style={styles.loader}
+  >
+    <ActivityIndicator size="large" color="#ffffff" />
+  </LinearGradient>
+)}
+
 
       <ImageBackground
         source={require('../../assets/background.jpg')}
@@ -51,6 +62,10 @@ export default function HomeScreen() {
             <View style={styles.body}>
               <TouchableOpacity style={styles.button} onPress={handlePlayRandom}>
                 <Text style={styles.buttonText}>Play Random Music</Text>
+              </TouchableOpacity>
+
+                <TouchableOpacity style={styles.button} onPress={handleOpenList}>
+                <Text style={styles.buttonText}>        Music List        </Text>
               </TouchableOpacity>
             </View>
           </>

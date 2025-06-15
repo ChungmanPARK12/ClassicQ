@@ -3,6 +3,7 @@ import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import HomeScreen from '../screens/HomeScreen';
 import PlayingScreen from '../screens/PlayingScreen';
+import ListScreen from '../screens/ListScreen';
 
 import { RootStackParamList } from './types'; // ✅ Import type
 
@@ -13,7 +14,7 @@ export default function AppNavigator() {
     <Stack.Navigator>
       <Stack.Screen name="Home" component={HomeScreen} />
       <Stack.Screen name="NowPlaying" component={PlayingScreen} />
-      
+      <Stack.Screen name="List" component={ListScreen} />
     </Stack.Navigator>
   );
 }

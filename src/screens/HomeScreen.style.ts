@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     
   },
-  
+
   favButton: {
     backgroundColor: 'rgba(228, 93, 127, 0.2)', // subtle pink shade
     borderColor: 'rgba(228, 93, 127, 0.4)',
@@ -65,11 +65,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     letterSpacing: 1,
+    width: '100%',
   },
 
   loader: {
   ...StyleSheet.absoluteFillObject,
-  backgroundColor: '#A36C4D',
+ 
   justifyContent: 'center',
   alignItems: 'center',
   zIndex: 10,
