@@ -105,4 +105,17 @@ All notable changes to this project will be documented in this file.
 - Gained hands-on experience with `Animated.loop`, `useRef`, and managing timed playback transitions using `setTimeout`.
 - Learned how to implement dynamic color styling and apply index-based conditional logic for alternating item designs.
 
+## [2025-06-21] – [2025-06-22]
+
+### List Screen
+
+#### Added
+- Added image support for each music item in the list.
+
+#### Changed
+- Applied `trackImage` style to images inside `renderItem`.
+- Set `flexDirection: 'row'` for item layout.
+- Adjusted image styling to properly fit within each row frame.
+
+
 
