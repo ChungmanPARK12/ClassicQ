@@ -6,6 +6,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Animated,
+  Image
 } from 'react-native';
 import { trackList } from '../data/tracks';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -82,24 +83,26 @@ export default function ListScreen() {
     };
   }, []);
 
-  const renderItem = ({ item, index }: any) => {
+const renderItem = ({ item, index }: any) => {
   const isPlaying = index === playingIndex;
   const TextComponent = isPlaying ? Animated.Text : Text;
-
-  // Alternate background style
   const backgroundStyle = index % 2 === 1 ? styles.itemDark : styles.itemLight;
 
   return (
     <TouchableOpacity onPress={() => handleTrackPress(index)} style={styles.itemWrapper}>
       <View style={[styles.item, backgroundStyle]}>
-        <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
-          {item.title}
-        </TextComponent>
-        <Text style={styles.trackComposer}>{item.composer}</Text>
+        <Image source={item.image} style={styles.trackImage} />
+        <View style={styles.textBox}>
+          <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
+            {item.title}
+          </TextComponent>
+          <Text style={styles.trackComposer}>{item.composer}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
 };
+
 
  return (
   <LinearGradient
@@ -121,24 +124,25 @@ export default function ListScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-   
     paddingTop: 0,
     paddingHorizontal: 0,
   },
+
   title: {
     fontSize: 26,
     fontWeight: 'bold',
     marginBottom: 0,
     textAlign: 'center',
   },
+
   itemWrapper: {
   marginBottom: -2,
-   // optional
 },
 
-    item: {
+  item: {
+    flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.15)', // translucent frame
-    paddingVertical: 16,
+    paddingVertical: 4,
     paddingHorizontal: 25,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.25)',
@@ -147,17 +151,18 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
   },
+  
   background: {
-  flex: 1,
+    flex: 1,
 },
 
   itemLight: {
   backgroundColor: 	'#3e2723',
 },
 
-itemDark: {
-  backgroundColor: 'rgba(0,0,0,0.35)', // darker for odd rows
-},
+  itemDark: {
+    backgroundColor: 'rgba(0,0,0,0.35)', // darker for odd rows
+  },
   trackTitle: {
     fontSize: 18,
     fontWeight: '600',
@@ -168,4 +173,19 @@ itemDark: {
     color: '#ddd',
     marginTop: 4,
   },
+
+  // Images
+  trackImage: {
+  width: 90,
+  height: 90,
+  borderRadius: 6,
+  marginRight: 15,
+  marginLeft: -20,
+},
+
+textBox: {
+  flex: 1,
+  justifyContent: 'center',
+},
+
 });
