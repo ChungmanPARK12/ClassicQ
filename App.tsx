@@ -1,8 +1,10 @@
+// App.tsx
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './src/navigation/AppNavigator';
 import { useFonts, Lora_700Bold } from '@expo-google-fonts/lora';
+import { FavouriteProvider } from './src/screens/context/FavouriteContext';
+import { NavigationContainer } from '@react-navigation/native'; // ✅ Add this back
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Lora_700Bold });
@@ -25,16 +27,18 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <AppNavigator />
-    </NavigationContainer>
+    <FavouriteProvider>
+      <NavigationContainer>
+        <AppNavigator />
+      </NavigationContainer>
+    </FavouriteProvider>
   );
 }
 
 const styles = StyleSheet.create({
   splashContainer: {
     flex: 1,
-    backgroundColor: '#A36C4D', //  #A36C4D, 	#BC8A6B
+    backgroundColor: '#A36C4D',
     justifyContent: 'center',
     alignItems: 'center',
   },

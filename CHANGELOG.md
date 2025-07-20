@@ -111,11 +111,31 @@ All notable changes to this project will be documented in this file.
 
 #### Added
 - Added image support for each music item in the list.
+- State, `LoadingMap, setloadMap`
+- Spinner, `renderItem, isLoading &&`
+- import `IonIcons`, expo vector-icons
+- Overlay play/pause icon, `isPlaying ? pause : play`
 
 #### Changed
 - Applied `trackImage` style to images inside `renderItem`.
 - Set `flexDirection: 'row'` for item layout.
 - Adjusted image styling to properly fit within each row frame.
+- Loading image for each images in the list
+- Play and puase icons on each imagesnp
+
+## [2025-07-19] – [2025-07-20]
+
+### Favourite Screen
+- Created `FavouriteScreen` to show user’s favorite music.
+- Added `FavouriteContext` to store and share favorite tracks.
+- Used `LinearGradient` background for visual consistency.
+- Matched layout with `ListScreen` (image, title, composer, no heart icon).
+
+### ListScreen
+- Added heart button to add/remove music from favorites.
+- Imported and used `toggleFavourite`, `addToFavourites`, and `removeFromFavourites` from context.
+- Synced favorite tracks with `FavouriteScreen`.
+
 
 
 
