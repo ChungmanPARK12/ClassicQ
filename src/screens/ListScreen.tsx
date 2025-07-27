@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
   trackImage: {
     width: 90,
     height: 90,
-    borderRadius: 6,
+    borderRadius: 0,
   },
   imageBox: {
     width: 90,

@@ -136,6 +136,15 @@ All notable changes to this project will be documented in this file.
 - Imported and used `toggleFavourite`, `addToFavourites`, and `removeFromFavourites` from context.
 - Synced favorite tracks with `FavouriteScreen`.
 
+## [2025-07-26] – [2025-07-27]
+
+### Favourite Screen
+- index % 2 === 0 ? styles.itemDark : styles.itemLight to Light and Dark to change the color pattern
+- Added all the blinking, animation and timeout function, play and pause music same structure with `ListScreen`.
+
+### Learned
+- Image size shoul be less than 10kb, to set balance image quality.
+
 
 
 
