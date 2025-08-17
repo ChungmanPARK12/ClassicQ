@@ -13,7 +13,6 @@ import styles from './HomeScreen.style';
 import { trackList } from '../data/tracks';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
@@ -31,21 +30,23 @@ export default function HomeScreen() {
   };
 
   const handleOpenList = () => {
-  navigation.navigate('List');
-};
+    navigation.navigate('List');
+  };
 
+  const handleOpenFavourite = () => {
+    navigation.navigate('Favourite');
+  };
 
   return (
     <>
-      {!(bgLoaded) && (
-  <LinearGradient
-    colors={['#5c3c2d', '#7e514f', '#a1887f']} // elegant brown gradient
-    style={styles.loader}
-  >
-    <ActivityIndicator size="large" color="#ffffff" />
-  </LinearGradient>
-)}
-
+      {!bgLoaded && (
+        <LinearGradient
+          colors={['#5c3c2d', '#7e514f', '#a1887f']}
+          style={styles.loader}
+        >
+          <ActivityIndicator size="large" color="#ffffff" />
+        </LinearGradient>
+      )}
 
       <ImageBackground
         source={require('../../assets/background.jpg')}
@@ -64,8 +65,12 @@ export default function HomeScreen() {
                 <Text style={styles.buttonText}>Play Random Music</Text>
               </TouchableOpacity>
 
-                <TouchableOpacity style={styles.button} onPress={handleOpenList}>
+              <TouchableOpacity style={styles.button} onPress={handleOpenList}>
                 <Text style={styles.buttonText}>        Music List        </Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity style={styles.button} onPress={handleOpenFavourite}>
+                <Text style={styles.buttonText}>         Favourite         </Text>
               </TouchableOpacity>
             </View>
           </>

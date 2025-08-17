@@ -111,11 +111,80 @@ All notable changes to this project will be documented in this file.
 
 #### Added
 - Added image support for each music item in the list.
+- State, `LoadingMap, setloadMap`
+- Spinner, `renderItem, isLoading &&`
+- import `IonIcons`, expo vector-icons
+- Overlay play/pause icon, `isPlaying ? pause : play`
 
 #### Changed
 - Applied `trackImage` style to images inside `renderItem`.
 - Set `flexDirection: 'row'` for item layout.
 - Adjusted image styling to properly fit within each row frame.
+- Loading image for each images in the list
+- Play and puase icons on each imagesnp
+
+## [2025-07-19] – [2025-07-20]
+
+### Favourite Screen
+- Created `FavouriteScreen` to show user’s favorite music.
+- Added `FavouriteContext` to store and share favorite tracks.
+- Used `LinearGradient` background for visual consistency.
+- Matched layout with `ListScreen` (image, title, composer, no heart icon).
+
+### ListScreen
+- Added heart button to add/remove music from favorites.
+- Imported and used `toggleFavourite`, `addToFavourites`, and `removeFromFavourites` from context.
+- Synced favorite tracks with `FavouriteScreen`.
+
+## [2025-07-26] – [2025-07-27]
+
+### Favourite Screen
+- index % 2 === 0 ? styles.itemDark : styles.itemLight to Light and Dark to change the color pattern
+- Added all the blinking, animation and timeout function, play and pause music same structure with `ListScreen`.
+
+### Learned
+- Image size shoul be less than 10kb, to set balance image quality.
+
+## [2025-08-04] – [2025-08-05]
+
+### Favoutire Screen
+
+### Problem
+- The issue for storing the favourite list, restart app, reset the favourite list
+
+### Changed
+- Added `AsyncStorage`, variety of user stroing the favourite list for each device.
+- `npm install @react-native-async-storage/async-storage`
+
+## [2025-08-09] – [2025-08-10]
+
+### Favourite Screen
+- Added drag-reorder feature using `react-native-draggable-flatlist`.
+
+### Favourite Context
+- `reorderFavourites` updates both state and storage the tracks.
+
+### ListScreen
+- Bug fix, error on track `toggleFavourie` that argument compser and title, missing image property.
+- Added in src/navigation.type.ts `Track` objects, title, composer and image
+- import `Track` in data/track.ts and ListScreen
+
+### Problem
+- Bug fix, item index handling `getIndex` to avoid undefined index error, functional provide drag that always returns the current index.
+- import `GestrueHandlerRootView`, `npm i gesture handler` to fix some error for opening and compatability the app
+
+## [2025-08-16] – [2025-08-17]
+
+### ListScreen
+- ALl the image reduced the size to under 10KB.
+
+### Favourite Screen
+- Removed the marginBottm: -2 to 0 in `itermWrapper` to get rid of the issue for the border line on the last item
+
+### Codereview(HomeScreen)
+- `handleopen` Navigation screen using `NavigationProps` to `NavigationParamList` in AppNavigator.
+- Loading Screen Implementation, `bgLoaded`, `LinearGradient` and `ActivityIndicator` with styling, color...
+
 
 
 

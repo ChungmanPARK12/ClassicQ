@@ -1,4 +1,6 @@
-export const trackList = [
+import { Track } from '../navigation/types';
+
+export const trackList: Track[] = [
   { title: 'Moonlight Sonata', composer: 'Beethoven', image: require('../../assets/tracks/moonlight.png') },
   { title: 'Clair de Lune', composer: 'Debussy', image: require('../../assets/tracks/clair.png') },
   { title: 'The Four Seasons', composer: 'Vivaldi', image: require('../../assets/tracks/thefour.png') },
@@ -9,15 +11,14 @@ export const trackList = [
   { title: 'Air on the G String', composer: 'Bach', image: require('../../assets/tracks/airon.png') },
   { title: 'Boléro', composer: 'Ravel', image: require('../../assets/tracks/bolero.png') },
   { title: 'Eine kleine Nachtmusik', composer: 'Mozart', image: require('../../assets/tracks/eine.png') },
-
-  //{ title: 'Gymnopédie No.1', composer: 'Satie', image: require('../../assets/tracks/gymopedie.jpg') },
-  //{ title: 'Peer Gynt: Morning Mood', composer: 'Grieg', image: require('../../assets/tracks/peer.png') },
-  //{ title: 'Pavane', composer: 'Fauré', image: require('../../assets/tracks/pavane.png') },
-  //{ title: 'Symphony No.5', composer: 'Beethoven', image: require('../../assets/tracks/symphony.jpg') },
-  //{ title: 'Adagio for Strings', composer: 'Barber', image: require('../../assets/tracks/adigio.png') },
-  //{ title: 'The Blue Danube', composer: 'Strauss II', image: require('../../assets/tracks/theblue.png') },
-  //{ title: 'Pictures at an Exhibition', composer: 'Mussorgsky', image: require('../../assets/tracks/pictures.png') },
-  //{ title: 'Prelude in E Minor', composer: 'Chopin', image: require('../../assets/tracks/prelude.png') },
-  //{ title: 'Ave Maria', composer: 'Schubert', image: require('../../assets/tracks/maria.png') },
-  //{ title: 'Carmen: Habanera', composer: 'Bizet', image: require('../../assets/tracks/carmen.png') },
+  { title: 'Gymnopédie No.1', composer: 'Satie', image: require('../../assets/tracks/gymopedie.jpg') },
+  { title: 'Peer Gynt: Morning Mood', composer: 'Grieg', image: require('../../assets/tracks/peer.png') },
+  { title: 'Pavane', composer: 'Fauré', image: require('../../assets/tracks/pavane.png') },
+  { title: 'Symphony No.5', composer: 'Beethoven', image: require('../../assets/tracks/symphony.jpg') },
+  { title: 'Adagio for Strings', composer: 'Barber', image: require('../../assets/tracks/adigo.png') },
+  { title: 'The Blue Danube', composer: 'Strauss II', image: require('../../assets/tracks/theblue.png') },
+  { title: 'Pictures at an Exhibition', composer: 'Mussorgsky', image: require('../../assets/tracks/pictures.png') },
+  // { title: 'Prelude in E Minor', composer: 'Chopin', image: require('../../assets/tracks/prelude.png') },
+  // { title: 'Ave Maria', composer: 'Schubert', image: require('../../assets/tracks/maria.png') },
+  // { title: 'Carmen: Habanera', composer: 'Bizet', image: require('../../assets/tracks/carmen.png') },
 ];
