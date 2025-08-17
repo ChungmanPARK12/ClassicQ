@@ -5,6 +5,8 @@ import AppNavigator from './src/navigation/AppNavigator';
 import { useFonts, Lora_700Bold } from '@expo-google-fonts/lora';
 import { FavouriteProvider } from './src/screens/context/FavouriteContext';
 import { NavigationContainer } from '@react-navigation/native'; // ✅ Add this back
+import 'react-native-gesture-handler';
+
 
 export default function App() {
   const [fontsLoaded] = useFonts({ Lora_700Bold });

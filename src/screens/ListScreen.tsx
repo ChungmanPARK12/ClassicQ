@@ -9,10 +9,12 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import { trackList } from '../data/tracks';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-import { useFavourite } from '../screens/context/FavouriteContext'; // ✅ Import context
+
+import { trackList } from '../data/tracks';
+import { useFavourite } from '../screens/context/FavouriteContext';
+import { Track } from '../navigation/types';
 
 export default function ListScreen() {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
@@ -20,29 +22,22 @@ export default function ListScreen() {
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [loadingMap, setLoadingMap] = useState<{ [index: number]: boolean }>({});
+  const [loadingMap, setLoadingMap] = useState<Record<number, boolean>>({});
 
-  const { favourites, addToFavourites, removeFromFavourites } = useFavourite(); // ✅ Destructure context methods
+  const { favourites, addToFavourites, removeFromFavourites } = useFavourite();
 
-  const toggleFavourite = (track: { title: string; composer: string }) => {
-    const isFav = favourites.some(t => t.title === track.title);
+  const toggleFavourite = (track: Track) => {
+    const isFav = favourites.some(t => t.title === track.title); // or compare by id if you add one
     isFav ? removeFromFavourites(track) : addToFavourites(track);
   };
 
+  // Blink animation control
   const startBlinking = () => {
     fadeAnim.setValue(1);
     animationRef.current = Animated.loop(
       Animated.sequence([
-        Animated.timing(fadeAnim, {
-          toValue: 0.3,
-          duration: 500,
-          useNativeDriver: true,
-        }),
-        Animated.timing(fadeAnim, {
-          toValue: 1,
-          duration: 500,
-          useNativeDriver: true,
-        }),
+        Animated.timing(fadeAnim, { toValue: 0.3, duration: 500, useNativeDriver: true }),
+        Animated.timing(fadeAnim, { toValue: 1, duration: 500, useNativeDriver: true }),
       ])
     );
     animationRef.current.start();
@@ -58,13 +53,13 @@ export default function ListScreen() {
       setIsPaused(prev => !prev);
       return;
     }
-
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     stopBlinking();
     setIsPaused(false);
     setPlayingIndex(index);
   };
 
+  // autoplay + blink controller
   useEffect(() => {
     if (playingIndex === null || isPaused) {
       stopBlinking();
@@ -88,6 +83,7 @@ export default function ListScreen() {
     };
   }, [playingIndex, isPaused]);
 
+  // cleanup
   useEffect(() => {
     return () => {
       stopBlinking();
@@ -95,16 +91,17 @@ export default function ListScreen() {
     };
   }, []);
 
-  const renderItem = ({ item, index }: any) => {
+  const renderItem = ({ item, index }: { item: Track; index: number }) => {
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
     const backgroundStyle = index % 2 === 1 ? styles.itemDark : styles.itemLight;
     const isLoading = loadingMap[index];
-    const isFav = favourites.some(t => t.title === item.title); // ✅ Is this track a favorite?
+    const isFav = favourites.some(t => t.title === item.title);
 
     return (
       <TouchableOpacity onPress={() => handleTrackPress(index)} style={styles.itemWrapper}>
         <View style={[styles.item, backgroundStyle]}>
+          {/* Artwork + loader + play/pause overlay */}
           <View style={styles.imageBox}>
             {isLoading && (
               <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />
@@ -117,19 +114,14 @@ export default function ListScreen() {
             />
             <View style={styles.iconOverlay}>
               <Ionicons
-                name={
-                  playingIndex === index
-                    ? isPaused
-                      ? 'play'
-                      : 'pause'
-                    : 'play'
-                }
+                name={playingIndex === index ? (isPaused ? 'play' : 'pause') : 'play'}
                 size={18}
                 color="#fff"
               />
             </View>
           </View>
 
+          {/* Title / Composer */}
           <View style={styles.textBox}>
             <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
               {item.title}
@@ -137,11 +129,20 @@ export default function ListScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
+          {/* Heart (favourite) — stop click from bubbling to row */}
           <View style={styles.actionsBox}>
-            <TouchableOpacity onPress={() => toggleFavourite(item)}>
+            <TouchableOpacity
+              onPress={(e) => {
+                // prevent triggering row onPress (play/pause)
+                // @ts-ignore RN PressEvent has stopPropagation at runtime
+                e.stopPropagation?.();
+                toggleFavourite(item);
+              }}
+              hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
+            >
               <Ionicons
                 name={isFav ? 'heart' : 'heart-outline'}
-                size={28}
+                size={30}
                 color={isFav ? '#ff4d4d' : '#fff'}
               />
             </TouchableOpacity>
@@ -152,10 +153,7 @@ export default function ListScreen() {
   };
 
   return (
-    <LinearGradient
-      colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']}
-      style={styles.background}
-    >
+    <LinearGradient colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']} style={styles.background}>
       <View style={styles.container}>
         <FlatList
           data={trackList}
@@ -171,16 +169,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 0,
-    paddingHorizontal: 0, 
+    paddingHorizontal: 0,
   },
-  background: {
-    flex: 1,
-  },
-  itemWrapper: {
-    marginBottom: -2,
-  },
+  background: { flex: 1 },
+  itemWrapper: { marginBottom: -2 },
   item: {
     flexDirection: 'row',
+    alignItems: 'center',
     backgroundColor: 'rgba(255,255,255,0.15)',
     paddingVertical: 4,
     paddingHorizontal: 25,
@@ -190,29 +185,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 6,
-    alignItems: 'center',
   },
-  itemLight: {
-    backgroundColor: '#3e2723',
-  },
-  itemDark: {
-    backgroundColor: 'rgba(0,0,0,0.35)',
-  },
-  trackTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-    color: '#fff',
-  },
-  trackComposer: {
-    fontSize: 14,
-    color: '#ddd',
-    marginTop: 4,
-  },
-  trackImage: {
-    width: 90,
-    height: 90,
-    borderRadius: 0,
-  },
+  itemLight: { backgroundColor: '#3e2723' },
+  itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
+
+  trackTitle: { fontSize: 15, fontWeight: '600', color: '#fff' },
+  trackComposer: { fontSize: 14, color: '#ddd', marginTop: 4 },
+
+  trackImage: { width: 90, height: 90, borderRadius: 0 },
   imageBox: {
     width: 90,
     height: 90,
@@ -222,10 +202,8 @@ const styles = StyleSheet.create({
     marginLeft: -20,
     position: 'relative',
   },
-  imageLoader: {
-    position: 'absolute',
-    zIndex: 1,
-  },
+  imageLoader: { position: 'absolute', zIndex: 1 },
+
   iconOverlay: {
     position: 'absolute',
     top: '50%',
@@ -235,10 +213,9 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     padding: 4,
   },
-  textBox: {
-    flex: 1,
-    justifyContent: 'center',
-  },
+
+  textBox: { flex: 1, justifyContent: 'center' },
+
   actionsBox: {
     justifyContent: 'center',
     alignItems: 'center',
