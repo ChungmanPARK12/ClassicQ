@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 28,
     borderRadius: 30,
     marginTop: 20,
-    width: '70%',
+    width: 250,
     alignItems: 'center',
     borderWidth: 1,
     borderColor: 'rgba(255, 255, 255, 0.3)',
@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 1,
     width: '100%',
+    textAlign: 'center',
   },
 
   loader: {

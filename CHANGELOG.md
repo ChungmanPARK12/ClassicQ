@@ -185,6 +185,23 @@ All notable changes to this project will be documented in this file.
 - `handleopen` Navigation screen using `NavigationProps` to `NavigationParamList` in AppNavigator.
 - Loading Screen Implementation, `bgLoaded`, `LinearGradient` and `ActivityIndicator` with styling, color...
 
+## [2025-08-23] – [2025-08-24]
+
+### Codereview(PlayingScreen)
+- React hooks `useState, useRef, useEffect`
+- The record spin using `Anumaged.loop()`.
+- Set dynamic blink speed based on volume. 
+- Applied `LiearGradient` for loading screen.
+
+### Tracks
+- Updated the trackList to 100.
+
+### HomeScreen
+- Removed the space in the `Text` to make the button size in manual
+- Fixed `textAlign` center in buttonText and `width` in button.
+
+
+
 
 
 
