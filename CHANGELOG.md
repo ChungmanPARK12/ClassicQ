@@ -200,6 +200,63 @@ All notable changes to this project will be documented in this file.
 - Removed the space in the `Text` to make the button size in manual
 - Fixed `textAlign` center in buttonText and `width` in button.
 
+## [2025-08-30] – [2025-08-31]
+
+### Codereview(ListScreen)
+- Added detailed inline documentation explaining logic for state, functions, effects and UI component.
+### Learned
+- Importance of clearing timers(setTimeout) when pausing or ummounting to prevent unexpected behavior.
+- Performance benefits of memorized rows and FlatList tuning for large datasets.
+- The blinking animation, row press handling, and image loader state.
+
+## [2025-09-06] – [2025-09-07]
+
+### Codereview(FavouriteScreen)
+- Improved Animation, `stopBlinking`, reset to null to prevent memory leaks.
+- Alternating itemLight / itemDark styles for even/odd rows, plus itemActive highlight while dragging. 
+
+## [2025-09-12] – [2025-09-14]
+
+### Codereview(FavouriteContext)
+
+## Potential Issues
+- Duplicate entries: `addToFavourites` always pushes a tack, even if it already exists, duplicates possible, better to enforce inside context, this could happend if expand the another kind of list screen(Fixed giving `storageKey in useEffect`). 
+- Identity by title only: Recommend using a unique id track to be safer, example: incorrectly possible to remove the same title(Symphony No.1, 3, 5)(good to skip)
+- AsyncStorage erros not surfaced?(good to skip)
+
+## [2025-09-25] – [2025-09-29]
+
+### CodeReview(FavouriteContext)
+- `favoutireContextType` is rules/declaration in TypeScript.
+- `const favouriteContext` is a container/channel creating an container(empty), by default, when you wrap the app in `favouriteProvider`, this container gets filled with the real state and functions, pass data and functions down through components without props. 
+
+### CodeReview(FavouriteScreen)
+
+## Potential issues
+- Index fallback(`getIndex?.();`)
+- if `getIndex()` fails, everything falls back to 0, could cause multiple items sharing index 0.
+- Fixed to check for `undefined` and return `null` render if missing. 
+
+## [2025-10-16] – [2025-10-20] - Documentation
+- Documentation `homescreen, playscreen, navigation` clear.
+
+## [2025-10-22] – [2025-10-28] - Documentation
+- Documentation `favouriteScreen`.
+- Common method Auto play, timeout and pause between ListScreen and FavouriteScreen `listLength` is parameter and `favouriteLength` is user's saved which is fluctuating length.
+- Documentation `favouriteContext`.
+- `STORAGE_KEY` handle local data persistence, identifier as the key storing and retrieving data in `AsyncStorage`.
+- `AsyncStorage` can remember saved data without a database but limits, only local device and small to medium-sized data. 
+
+
+
+
+       
+
+
+
+
+
+
 
 
 

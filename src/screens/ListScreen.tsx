@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
-
 import { trackList } from '../data/tracks';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { Track } from '../navigation/types';
@@ -22,12 +21,16 @@ export default function ListScreen() {
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  //Image loading status
   const [loadingMap, setLoadingMap] = useState<Record<number, boolean>>({});
 
+  // Call the method from FavouriteContext
   const { favourites, addToFavourites, removeFromFavourites } = useFavourite();
 
+  // Click icon, add to Favourites, one more click to remove
   const toggleFavourite = (track: Track) => {
-    const isFav = favourites.some(t => t.title === track.title); // or compare by id if you add one
+    const isFav = favourites.some(t => t.title === track.title); 
     isFav ? removeFromFavourites(track) : addToFavourites(track);
   };
 
@@ -48,6 +51,7 @@ export default function ListScreen() {
     fadeAnim.setValue(1);
   };
 
+  // Control play and pause, play next after timeout 3000
   const handleTrackPress = (index: number) => {
     if (index === playingIndex) {
       setIsPaused(prev => !prev);
@@ -65,7 +69,6 @@ export default function ListScreen() {
       stopBlinking();
       return;
     }
-
     startBlinking();
 
     timeoutRef.current = setTimeout(() => {
@@ -90,7 +93,7 @@ export default function ListScreen() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
-
+  // Displays the items the track list
   const renderItem = ({ item, index }: { item: Track; index: number }) => {
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
@@ -101,7 +104,7 @@ export default function ListScreen() {
     return (
       <TouchableOpacity onPress={() => handleTrackPress(index)} style={styles.itemWrapper}>
         <View style={[styles.item, backgroundStyle]}>
-          {/* Artwork + loader + play/pause overlay */}
+          {/* Artwork(image) + loader + play/pause overlay icon */}
           <View style={styles.imageBox}>
             {isLoading && (
               <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />

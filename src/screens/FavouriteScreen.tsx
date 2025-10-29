@@ -41,6 +41,7 @@ export default function FavouriteScreen() {
 
   const stopBlinking = () => {
     animationRef.current?.stop();
+    animationRef.current = null;
     fadeAnim.setValue(1);
   };
 
@@ -85,8 +86,11 @@ export default function FavouriteScreen() {
     };
   }, []);
 
+  // Drag items
   const renderItem = ({ item, drag, isActive, getIndex }: RenderItemParams<Track>) => {
-    const index = getIndex?.() ?? 0;
+    const index = getIndex?.();
+    if (index === undefined) return null;
+
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
 
