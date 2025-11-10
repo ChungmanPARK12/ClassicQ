@@ -1,23 +1,16 @@
 // screens/context/FavouriteContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { Track } from '../../navigation/types';              // ✅ import shared Track (has id)
+import { trackIdOf } from '../../data/trackId';                   // ✅ for migration
 
-// Defines the shape of a single track object.
-// It about the rule by TrypeScript that every track must have a title, composer and image.
-type Track = { title: string; composer: string; image: any };
-
-// Defines the shape of the context data.
-// Declaration the three functions below.
 type FavouriteContextType = {
   favourites: Track[];
   addToFavourites: (track: Track) => void;
-  removeFromFavourites: (track: Track) => void;
-  reorderFavourites: (newOrder: Track[]) => void; // ✅ new
+  removeFromFavourites: (track: Track) => void;                   // keep same call-site API
+  reorderFavourites: (newOrder: Track[]) => void;
 };
 
-// Defines the actually create the context.
-// This is container created by React, pass the data and fuctions down to components.
-// Once you wrap your app with <FavouriteProvider>, context filled with real data and functions. 
 const FavouriteContext = createContext<FavouriteContextType>({
   favourites: [],
   addToFavourites: () => {},
@@ -29,54 +22,53 @@ export const useFavourite = () => useContext(FavouriteContext);
 
 export const FavouriteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [favourites, setFavourites] = useState<Track[]>([]);
-  const STORAGE_KEY = '@classicq_favourites';
+  const STORAGE_KEY = '@classicq_favourites';                     // keep same key; we’ll migrate in-place
 
-  // Load favourites from persistent storage(AsyncStorage) once on mount.
-  // If data exist, initialize state with it. 
+  // Load & migrate once on mount
   useEffect(() => {
     const loadFavourites = async () => {
       try {
         const json = await AsyncStorage.getItem(STORAGE_KEY);
-        if (json) setFavourites(JSON.parse(json));
+        if (!json) return;
+
+        const saved: any[] = JSON.parse(json);
+
+        // ✅ Migration: ensure each item has a stable id
+        const migrated: Track[] = saved.map((it) => {
+          if (it.id) return it as Track;
+          const id = trackIdOf(it.title, it.composer);
+          return { id, title: it.title, composer: it.composer, image: it.image } as Track;
+        });
+
+        // de-dup by id (just in case)
+        const uniq = Array.from(new Map(migrated.map(t => [t.id, t])).values());
+
+        setFavourites(uniq);
+        await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(uniq));
       } catch (err) {
         console.error('Failed to load favourites:', err);
       }
     };
     loadFavourites();
   }, []);
-  
-  // Persit the given list of favourites to AsyncStorage
-  // Called internally whenever favourites are updated
-  const persist = async (list: Track[]) => {
-    try {
-      await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(list));
-    } catch (err) {
-      console.error('Failed to save favourites:', err);
-    }
-  };
 
-  // Duplicate prevention inside the context itself in the future for controling heart button in the multiple screen.
+  // Persist on change
+  useEffect(() => {
+    AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(favourites)).catch(() => {});
+  }, [favourites]);
+
   const addToFavourites = (track: Track) => {
-  const exists = favourites.some(
-    t => t.title === track.title && t.composer === track.composer
-  );
-  if (exists) return;   // silently skip if already in list.
-
-  const updated = [...favourites, track];
-  setFavourites(updated);
-  persist(updated);
-};
+    setFavourites((prev) => (prev.some(t => t.id === track.id) ? prev : [...prev, track]));
+  };
 
   const removeFromFavourites = (track: Track) => {
-    const updated = favourites.filter(t => t.title !== track.title);
-    setFavourites(updated);
-    persist(updated);
+    setFavourites((prev) => prev.filter(t => t.id !== track.id));
   };
 
-  // Reorder the list after drag
   const reorderFavourites = (newOrder: Track[]) => {
-    setFavourites(newOrder);
-    persist(newOrder);
+    // trust provided order by id
+    const byId = new Map(newOrder.map(t => [t.id, t]));
+    setFavourites((prev) => prev.filter(t => byId.has(t.id)).map(t => byId.get(t.id)!));
   };
 
   return (

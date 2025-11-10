@@ -1,7 +1,9 @@
-import { Track } from '../navigation/types';
+// src/data/tracks.ts
+import type { Track } from '../navigation/types';
+import { trackIdOf } from './trackId';
 
-export const trackList: Track[] = [
-  // --- Your original 20 ---
+// --- Raw data list without IDs ---
+const RAW_TRACKS = [
   { title: 'Moonlight Sonata', composer: 'Beethoven', image: require('../../assets/tracks/moonlight.png') },
   { title: 'Clair de Lune', composer: 'Debussy', image: require('../../assets/tracks/clair.png') },
   { title: 'The Four Seasons', composer: 'Vivaldi', image: require('../../assets/tracks/thefour.png') },
@@ -22,8 +24,6 @@ export const trackList: Track[] = [
   { title: 'Prelude in E Minor', composer: 'Chopin', image: require('../../assets/tracks/prelude.png') },
   { title: 'Ave Maria', composer: 'Schubert', image: require('../../assets/tracks/maria.png') },
   { title: 'Carmen: Habanera', composer: 'Bizet', image: require('../../assets/tracks/carmen.png') },
-
-  // --- New entries use a safe placeholder image ---
   { title: 'Symphony No.9 "Ode to Joy"', composer: 'Beethoven', image: require('../../assets/tracks/symphony9.png') },
   { title: 'Water Music', composer: 'Handel', image: require('../../assets/tracks/watermusic.png') },
   { title: 'Rhapsody in Blue', composer: 'Gershwin', image: require('../../assets/tracks/rhapsody.png') },
@@ -34,7 +34,6 @@ export const trackList: Track[] = [
   { title: 'The Nutcracker: Dance of the Sugar Plum Fairy', composer: 'Tchaikovsky', image: require('../../assets/tracks/dancesugar.png') },
   { title: 'La Mer', composer: 'Debussy', image: require('../../assets/tracks/lamer.png') },
   { title: 'Radetzky March', composer: 'Johann Strauss I', image: require('../../assets/tracks/radetzky.png') },
-
   { title: 'Also sprach Zarathustra', composer: 'Richard Strauss', image: require('../../assets/tracks/sprach.png') },
   { title: 'Nessun dorma', composer: 'Puccini', image: require('../../assets/tracks/dorma.png') },
   { title: 'The Barber of Seville: Overture', composer: 'Rossini', image: require('../../assets/tracks/barber.png') },
@@ -45,7 +44,6 @@ export const trackList: Track[] = [
   { title: 'Ride of the Valkyries', composer: 'Wagner', image: require('../../assets/tracks/rideofthe.png') },
   { title: 'William Tell: Overture', composer: 'Rossini', image: require('../../assets/tracks/williamtell.png') },
   { title: 'Pomp and Circumstance March No.1', composer: 'Elgar', image: require('../../assets/tracks/pompand.png') },
-
   { title: 'Serenade for Strings', composer: 'Tchaikovsky', image: require('../../assets/tracks/serendafor.png') },
   { title: 'Symphony No.94 "Surprise"', composer: 'Haydn', image: require('../../assets/tracks/symphony94.png') },
   { title: 'Symphony No.104 "London"', composer: 'Haydn', image: require('../../assets/tracks/symphony104.png') },
@@ -56,7 +54,6 @@ export const trackList: Track[] = [
   { title: 'Piano Concerto No.2', composer: 'Rachmaninoff', image: require('../../assets/tracks/pianoconcert2.png') },
   { title: 'Prelude in C Major BWV 846', composer: 'Bach', image: require('../../assets/tracks/preludec.png') },
   { title: 'Arabesque No.1', composer: 'Debussy', image: require('../../assets/tracks/arabesque1.png') },
-
   { title: 'Pavane pour une infante défunte', composer: 'Ravel', image: require('../../assets/tracks/pavanepour.png') },
   { title: 'Dances of the Knights (Romeo and Juliet)', composer: 'Prokofiev', image: require('../../assets/tracks/danceknights.png') },
   { title: 'Romeo and Juliet Fantasy Overture', composer: 'Tchaikovsky', image: require('../../assets/tracks/romeoand.png') },
@@ -67,7 +64,6 @@ export const trackList: Track[] = [
   { title: 'Symphony No.9 "From the New World"', composer: 'Dvořák', image: require('../../assets/tracks/symphony9dvorak.png') },
   { title: 'Slavonic Dance Op.46 No.8', composer: 'Dvořák', image: require('../../assets/tracks/slavonic8.png') },
   { title: 'The Moldau', composer: 'Smetana', image: require('../../assets/tracks/themoldau.png') },
-
   { title: 'In the Hall of the Mountain King', composer: 'Grieg', image: require('../../assets/tracks/mountainking.png') },
   { title: 'Fantaisie-Impromptu', composer: 'Chopin', image: require('../../assets/tracks/fantaisieimpro.png') },
   { title: 'Minute Waltz', composer: 'Chopin', image: require('../../assets/tracks/minutewaltz.png') },
@@ -78,7 +74,6 @@ export const trackList: Track[] = [
   { title: 'The Ruins of Athens: Turkish March', composer: 'Beethoven', image: require('../../assets/tracks/theruinsathens.png') },
   { title: 'Liebestraum No.3', composer: 'Liszt', image: require('../../assets/tracks/liebestraum.png') },
   { title: 'La Campanella', composer: 'Liszt', image: require('../../assets/tracks/lacampanella.png') },
-
   { title: 'The Sorcerer’s Apprentice', composer: 'Dukas', image: require('../../assets/tracks/sorcerapprentice.png') },
   { title: 'Méditation from Thaïs', composer: 'Massenet', image: require('../../assets/tracks/meditationthais.png') },
   { title: 'Barcarolle (The Tales of Hoffmann)', composer: 'Offenbach', image: require('../../assets/tracks/barcarolle.png') },
@@ -89,7 +84,6 @@ export const trackList: Track[] = [
   { title: 'Samson and Delilah: Bacchanale', composer: 'Saint-Saëns', image: require('../../assets/tracks/samsondeliah.png') },
   { title: 'Adagio in G minor', composer: 'Albinoni/Giazotto', image: require('../../assets/tracks/adigogminor.png') },
   { title: 'Symphony No.6 "Pathétique"', composer: 'Tchaikovsky', image: require('../../assets/tracks/symphony6pathetique.png') },
-
   { title: 'Symphony No.8 "Unfinished"', composer: 'Schubert', image: require('../../assets/tracks/symphony8unfinished.png') },
   { title: 'Symphony No.5: Adagietto', composer: 'Mahler', image: require('../../assets/tracks/symphony5adagietto.png') },
   { title: 'Carmina Burana: O Fortuna', composer: 'Orff', image: require('../../assets/tracks/carminaburana.png') },
@@ -100,7 +94,6 @@ export const trackList: Track[] = [
   { title: 'Zadok the Priest', composer: 'Handel', image: require('../../assets/tracks/zadokthepriestHandel.png') },
   { title: 'Orfeo ed Euridice: Dance of the Blessed Spirits', composer: 'Gluck', image: require('../../assets/tracks/orfeoedeuridicedance.png') },
   { title: 'Night on Bald Mountain', composer: 'Mussorgsky', image: require('../../assets/tracks/nightonbaldmountain.png') },
-
   { title: 'The Firebird: Infernal Dance', composer: 'Stravinsky', image: require('../../assets/tracks/firbirdinternational.png') },
   { title: 'The Rite of Spring: Dance of the Adolescents', composer: 'Stravinsky', image: require('../../assets/tracks/riteofspringdance.png') },
   { title: 'Gnossienne No.1', composer: 'Satie', image: require('../../assets/tracks/gnossienneno1.png') },
@@ -112,3 +105,16 @@ export const trackList: Track[] = [
   { title: 'Cavalleria rusticana: Intermezzo', composer: 'Mascagni', image: require('../../assets/tracks/cavalleria.png') },
   { title: 'Orpheus in the Underworld: Can-Can', composer: 'Offenbach', image: require('../../assets/tracks/orpheusintheunderworld.png') },
 ];
+
+// --- Map and attach stable ids ---
+const seen = new Set<string>();
+
+export const trackList: Track[] = RAW_TRACKS.map((t) => {
+  let id = trackIdOf(t.title, t.composer);
+  let salt = 1;
+  while (seen.has(id)) {
+    id = trackIdOf(t.title, t.composer, String(salt++));
+  }
+  seen.add(id);
+  return { id, ...t };
+});

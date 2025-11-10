@@ -14,6 +14,9 @@ import { Ionicons } from '@expo/vector-icons';
 import { trackList } from '../data/tracks';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { Track } from '../navigation/types';
+//debugg
+import { debugValidateTracks } from '../utils/debugTracks';
+import { trackIdOf } from '../data/trackId';
 
 export default function ListScreen() {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
@@ -23,10 +26,15 @@ export default function ListScreen() {
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   //Image loading status
-  const [loadingMap, setLoadingMap] = useState<Record<number, boolean>>({});
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
 
   // Call the method from FavouriteContext
   const { favourites, addToFavourites, removeFromFavourites } = useFavourite();
+
+  /// Debugging ///
+  useEffect(() => {
+  debugValidateTracks(trackList, 10); // runs only in __DEV__
+}, []);
 
   // Click icon, add to Favourites, one more click to remove
   const toggleFavourite = (track: Track) => {
@@ -93,13 +101,16 @@ export default function ListScreen() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
+  
   // Displays the items the track list
   const renderItem = ({ item, index }: { item: Track; index: number }) => {
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
     const backgroundStyle = index % 2 === 1 ? styles.itemDark : styles.itemLight;
-    const isLoading = loadingMap[index];
-    const isFav = favourites.some(t => t.title === item.title);
+    const isLoading = !!loadingMap[item.id];
+    const isFav = favourites.some(t => t.id === item.id);
+
+    //const isFav = favourites.some(t => t.title === item.title);
 
     return (
       <TouchableOpacity onPress={() => handleTrackPress(index)} style={styles.itemWrapper}>
@@ -112,8 +123,8 @@ export default function ListScreen() {
             <Image
               source={item.image}
               style={styles.trackImage}
-              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [index]: true }))}
-              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [index]: false }))}
+              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [item.id]: true }))}
+              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [item.id]: false }))}
             />
             <View style={styles.iconOverlay}>
               <Ionicons
@@ -160,7 +171,7 @@ export default function ListScreen() {
       <View style={styles.container}>
         <FlatList
           data={trackList}
-          keyExtractor={(item, index) => `${item.title}-${index}`}
+          keyExtractor={(item) => item.id}
           renderItem={renderItem}
         />
       </View>

@@ -14,19 +14,27 @@ import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flat
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useFavourite } from '../screens/context/FavouriteContext';
-
-type Track = { title: string; composer: string; image: any };
+import type { Track } from '../navigation/types';
+// Debugging
+import { debugValidateTracks } from '../utils/debugTracks';
 
 export default function FavouriteScreen() {
   const { favourites, removeFromFavourites, reorderFavourites } = useFavourite();
 
-  const [loadingMap, setLoadingMap] = useState<{ [index: number]: boolean }>({});
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
 
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Debugging
+  useEffect(() => {
+  if (!__DEV__) return;
+  if (!favourites || favourites.length === 0) return; // nothing selected yet
+  debugValidateTracks(favourites, Math.min(10, favourites.length));
+}, [favourites]);
 
   const startBlinking = () => {
     fadeAnim.setValue(1);
@@ -100,7 +108,7 @@ export default function FavouriteScreen() {
       ? styles.itemDark
       : styles.itemLight;
 
-    const isLoading = loadingMap[index];
+    const isLoading = loadingMap[item.id];
 
     return (
       <TouchableOpacity
@@ -114,8 +122,8 @@ export default function FavouriteScreen() {
             <Image
               source={item.image}
               style={styles.trackImage}
-              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [index]: true }))}
-              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [index]: false }))}
+              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [item.id]: true }))}
+              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [item.id]: false }))}
             />
             <View style={styles.iconOverlay}>
               <Ionicons
@@ -159,13 +167,13 @@ export default function FavouriteScreen() {
 
   // Keep playback tied to same track after reorder (by title)
   const onDragEnd = ({ data }: { data: Track[] }) => {
-    const prevPlayingTitle =
-      playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].title : null;
+    const prevPlayingId =
+      playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].id : null;
 
     reorderFavourites(data);
 
-    if (prevPlayingTitle) {
-      const newIndex = data.findIndex(t => t.title === prevPlayingTitle);
+    if (prevPlayingId) {
+      const newIndex = data.findIndex(t => t.title === prevPlayingId);
       setPlayingIndex(newIndex >= 0 ? newIndex : null);
     }
   };
@@ -176,7 +184,7 @@ export default function FavouriteScreen() {
         <View style={styles.container}>
           <DraggableFlatList
             data={favourites}
-            keyExtractor={(item, index) => `${item.title}-${index}`}
+            keyExtractor={(item) => item.id}
             renderItem={renderItem}
             onDragEnd={onDragEnd}
             ListEmptyComponent={<Text style={styles.empty}>No favourites yet.</Text>}

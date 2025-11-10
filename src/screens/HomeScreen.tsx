@@ -13,6 +13,8 @@ import styles from './HomeScreen.style';
 import { trackList } from '../data/tracks';
 import { LinearGradient } from 'expo-linear-gradient';
 
+//console.log("🎵 Total tracks:", trackList.length); / Clear to check 100 list
+
 // Define a type-safe navigation prop for the HomeScreen
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 

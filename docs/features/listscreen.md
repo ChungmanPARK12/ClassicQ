@@ -20,6 +20,15 @@ This document explains the structure, logic, and main functionalities of the **L
 
 ---
 
+## Debugging
+- import `debugValidateTracks()` utility.
+- Ensures each track has a valid id, title, and composer.
+```ts
+  useEffect(() => {
+  debugValidateTracks(trackList, 10); 
+}, []);
+``` 
+
 ## Main Component
 
 ### `ListScreen`

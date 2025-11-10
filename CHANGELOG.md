@@ -240,12 +240,61 @@ All notable changes to this project will be documented in this file.
 ## [2025-10-16] – [2025-10-20] - Documentation
 - Documentation `homescreen, playscreen, navigation` clear.
 
-## [2025-10-22] – [2025-10-28] - Documentation
+## [2025-10-22] – [2025-10-28] - End documentation
 - Documentation `favouriteScreen`.
 - Common method Auto play, timeout and pause between ListScreen and FavouriteScreen `listLength` is parameter and `favouriteLength` is user's saved which is fluctuating length.
 - Documentation `favouriteContext`.
 - `STORAGE_KEY` handle local data persistence, identifier as the key storing and retrieving data in `AsyncStorage`.
 - `AsyncStorage` can remember saved data without a database but limits, only local device and small to medium-sized data. 
+# ListScreen, image box loading status 
+- Change spinner `ActivitiIndicator` to View, Text, Color rendering structure. 
+
+## [2025-11-01] – [2025-11-2] - Before the First Portfolio Update
+- Debugging to check 100 list with simple print LOG, `length.trackList`.
+# Future plan
+- Debugging to check 100 list(clear). 
+- Assigning stable unique IDs to all tracks for consistent rendering and state management. 
+- Replace default ActivityIndicator, basic spiiner with ClassicQ splash-style loading screen(brown background + main title).
+
+## [2025-11-03] – [2025-11-08] - Assigning stable IDs
+- Added `id:string` in types. 
+- Created a new `trackId.ts`, the ID generator.
+- Put the track list to `RAW_TRACKS` and wrapped them and import the generator from `trackId`.
+## [2025-11-04] - Updated
+# ListScreen
+- Replaced all title-based checks with `id`: `favourites.some(t => t.id === item.id)`.
+- Changed `loadMap` key type to `Record<string, boolean>` and mapped by `item.id`.
+- Updated `keyExtractor` → `keyExtractor={(item) => item.id}` for stable rendering.
+# FavouriteScreen
+- Removed local `Track` type and improted shared one with `id`.
+- Updaetd all image loading, playback, and reorder login to key by `item.id`.
+- Updated `keyExtractor` → `keyExtractor={(item) => item.id}` for stable rendering.
+# FavouriteContext
+- Updated add/remove/reorder methods to work by `id`.
+- Added `trackIdOf()` import for Id generator logic.
+## [2025-11-06] - Mini test and debugging(Successful)
+- Added `debugTracks` under src/utils as a method.
+# Function debugValidateTracks(tracks: Track[])
+- Duplicate ID detection
+- Missing field (id/title/composer) detection
+- Cross-check for ID consistency
+- Optional console table preview
+# Logs detailed summary
+`[Tracks] total=100 uniqueIds=100 dup=0 missingRows=0 mismatches=0`
+# Debug hooks in both major screens
+- `ListScreen`, validates the master `trackList`.
+- `FavouriteScreen`, validates the `favourite.length` which is added list.
+# Documentation
+- Method of identify in `trackId.ts` and import identifiers in `track.ts`.
+
+## [2025-11-10] – [2025-11-15] - Change image loading status in ListScreen and FavoutrieScreen. 
+
+
+
+
+
+
+   
 
 
 

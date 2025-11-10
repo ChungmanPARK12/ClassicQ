@@ -21,6 +21,16 @@ This document explains the structure, logic, and main functionalities of the **F
 
 ---
 
+## Debugging
+- import `debugValidateTracks()` utility.
+- Ensures each track has a valid id, title, and composer within `favourite.length`.
+```ts
+  useEffect(() => {
+  if (!__DEV__) return;
+  if (!favourites || favourites.length === 0) return; // nothing selected yet
+  debugValidateTracks(favourites, Math.min(10, favourites.length));
+}, [favourites]);
+```
 ## Main Component
 
 ### `FavouriteScreen`
