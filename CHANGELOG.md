@@ -288,6 +288,11 @@ All notable changes to this project will be documented in this file.
 - Method of identify in `trackId.ts` and import identifiers in `track.ts`.
 
 ## [2025-11-10] – [2025-11-15] - Change image loading status in ListScreen and FavoutrieScreen. 
+- Components `LoadingOverlay.tsx`, splash and blinking text.
+- hooks, `useImageReady.ts`, handle image loading map.
+- theme `colors`, provides the color background and text.
+# [2025-11-13] - Change to per-image loading status. 
+
 
 
 

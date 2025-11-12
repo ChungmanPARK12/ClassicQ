@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   View,
   Text,
@@ -7,16 +7,16 @@ import {
   TouchableOpacity,
   Animated,
   Image,
-  ActivityIndicator,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { trackList } from '../data/tracks';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { Track } from '../navigation/types';
-//debugg
+// debug
 import { debugValidateTracks } from '../utils/debugTracks';
-import { trackIdOf } from '../data/trackId';
+import { LoadingOverlay } from '../components/LoadingOverlay';
+import { useImagesReady } from '../hooks/useImagesReady';
 
 export default function ListScreen() {
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
@@ -25,20 +25,21 @@ export default function ListScreen() {
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  //Image loading status
-  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
-
   // Call the method from FavouriteContext
   const { favourites, addToFavourites, removeFromFavourites } = useFavourite();
 
   /// Debugging ///
   useEffect(() => {
-  debugValidateTracks(trackList, 10); // runs only in __DEV__
-}, []);
+    debugValidateTracks(trackList, 10); // runs only in __DEV__
+  }, []);
+
+  // --- Splash-style overlay control via useImagesReady ---
+  const sources = useMemo(() => trackList.map(t => t.image), []);
+  const { ready, markLoaded } = useImagesReady(sources);
 
   // Click icon, add to Favourites, one more click to remove
   const toggleFavourite = (track: Track) => {
-    const isFav = favourites.some(t => t.title === track.title); 
+    const isFav = favourites.some(t => t.id === track.id);
     isFav ? removeFromFavourites(track) : addToFavourites(track);
   };
 
@@ -101,30 +102,23 @@ export default function ListScreen() {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
     };
   }, []);
-  
+
   // Displays the items the track list
   const renderItem = ({ item, index }: { item: Track; index: number }) => {
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
     const backgroundStyle = index % 2 === 1 ? styles.itemDark : styles.itemLight;
-    const isLoading = !!loadingMap[item.id];
-    const isFav = favourites.some(t => t.id === item.id);
-
-    //const isFav = favourites.some(t => t.title === item.title);
 
     return (
       <TouchableOpacity onPress={() => handleTrackPress(index)} style={styles.itemWrapper}>
         <View style={[styles.item, backgroundStyle]}>
-          {/* Artwork(image) + loader + play/pause overlay icon */}
+          {/* Artwork(image) + play/pause overlay icon */}
           <View style={styles.imageBox}>
-            {isLoading && (
-              <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />
-            )}
             <Image
               source={item.image}
               style={styles.trackImage}
-              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [item.id]: true }))}
-              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [item.id]: false }))}
+              onLoadEnd={() => markLoaded(index)}
+              fadeDuration={150}
             />
             <View style={styles.iconOverlay}>
               <Ionicons
@@ -155,9 +149,9 @@ export default function ListScreen() {
               hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }}
             >
               <Ionicons
-                name={isFav ? 'heart' : 'heart-outline'}
+                name={favourites.some(t => t.id === item.id) ? 'heart' : 'heart-outline'}
                 size={30}
-                color={isFav ? '#ff4d4d' : '#fff'}
+                color={favourites.some(t => t.id === item.id) ? '#ff4d4d' : '#fff'}
               />
             </TouchableOpacity>
           </View>
@@ -169,6 +163,7 @@ export default function ListScreen() {
   return (
     <LinearGradient colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']} style={styles.background}>
       <View style={styles.container}>
+        {!ready && <LoadingOverlay subtitle="Loading library…" />}
         <FlatList
           data={trackList}
           keyExtractor={(item) => item.id}
@@ -216,7 +211,6 @@ const styles = StyleSheet.create({
     marginLeft: -20,
     position: 'relative',
   },
-  imageLoader: { position: 'absolute', zIndex: 1 },
 
   iconOverlay: {
     position: 'absolute',
