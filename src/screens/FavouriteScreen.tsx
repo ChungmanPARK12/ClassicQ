@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Animated,
   Image,
-  ActivityIndicator,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
@@ -31,10 +30,10 @@ export default function FavouriteScreen() {
 
   // Debugging
   useEffect(() => {
-  if (!__DEV__) return;
-  if (!favourites || favourites.length === 0) return; // nothing selected yet
-  debugValidateTracks(favourites, Math.min(10, favourites.length));
-}, [favourites]);
+    if (!__DEV__) return;
+    if (!favourites || favourites.length === 0) return; // nothing selected yet
+    debugValidateTracks(favourites, Math.min(10, favourites.length));
+  }, [favourites]);
 
   const startBlinking = () => {
     fadeAnim.setValue(1);
@@ -102,13 +101,14 @@ export default function FavouriteScreen() {
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
 
-    const bgStyle = isActive
-      ? styles.itemActive
-      : index % 2 === 1
-      ? styles.itemDark
-      : styles.itemLight;
+    const bgStyle =
+      isActive
+        ? styles.itemActive
+        : index % 2 === 1
+          ? styles.itemDark
+          : styles.itemLight;
 
-    const isLoading = loadingMap[item.id];
+    const isLoading = !!loadingMap[item.id];
 
     return (
       <TouchableOpacity
@@ -117,23 +117,45 @@ export default function FavouriteScreen() {
         style={styles.itemWrapper}
       >
         <View style={[styles.item, bgStyle]}>
-          <View style={styles.imageBox}>
-            {isLoading && <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />}
+          {/* Artwork column – same structure as ListScreen */}
+          <View style={styles.artContainer}>
+            {/* Real image */}
             <Image
               source={item.image}
-              style={styles.trackImage}
-              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [item.id]: true }))}
-              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [item.id]: false }))}
+              style={styles.artImage}
+              resizeMode="cover"
+              onLoadStart={() =>
+                setLoadingMap(prev => ({ ...prev, [item.id]: true }))
+              }
+              onLoadEnd={() =>
+                setLoadingMap(prev => ({ ...prev, [item.id]: false }))
+              }
             />
-            <View style={styles.iconOverlay}>
+
+            {/* Placeholder overlay (same size/position as artImage) */}
+            {isLoading && (
+              <Animated.View style={[styles.artImage, styles.placeholderBox]}>
+                <Text style={styles.placeholderText}>ClassiQ</Text>
+              </Animated.View>
+            )}
+
+            {/* Play / pause overlay */}
+            <View style={styles.playIconOverlay}>
               <Ionicons
-                name={index === playingIndex ? (isPaused ? 'play' : 'pause') : 'play'}
-                size={18}
+                name={
+                  index === playingIndex
+                    ? isPaused
+                      ? 'play'
+                      : 'pause'
+                    : 'play'
+                }
+                size={14}
                 color="#fff"
               />
             </View>
           </View>
 
+          {/* Text column */}
           <View style={styles.textBox}>
             <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
               {item.title}
@@ -141,6 +163,7 @@ export default function FavouriteScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
+          {/* Right actions: heart + drag */}
           <View style={styles.actionsBox}>
             <TouchableOpacity
               onPress={() => removeFromFavourites(item)}
@@ -165,15 +188,17 @@ export default function FavouriteScreen() {
     );
   };
 
-  // Keep playback tied to same track after reorder (by title)
+  // Keep playback tied to same track after reorder (by id)
   const onDragEnd = ({ data }: { data: Track[] }) => {
     const prevPlayingId =
-      playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].id : null;
+      playingIndex !== null && favourites[playingIndex]
+        ? favourites[playingIndex].id
+        : null;
 
     reorderFavourites(data);
 
     if (prevPlayingId) {
-      const newIndex = data.findIndex(t => t.title === prevPlayingId);
+      const newIndex = data.findIndex(t => t.id === prevPlayingId);
       setPlayingIndex(newIndex >= 0 ? newIndex : null);
     }
   };
@@ -194,6 +219,11 @@ export default function FavouriteScreen() {
     </GestureHandlerRootView>
   );
 }
+
+/** same art constants as ListScreen */
+const ART_BOX = 80;
+const IMAGE_SIZE = 85;
+const PLAY_BADGE = 20;
 
 const styles = StyleSheet.create({
   background: { flex: 1 },
@@ -216,25 +246,48 @@ const styles = StyleSheet.create({
   itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
   itemActive: { backgroundColor: '#274627' },
 
-  trackImage: { width: 90, height: 90, borderRadius: 6 },
-  imageBox: {
-    width: 90,
-    height: 90,
+  // Fixed-size art column (same as ListScreen)
+  artContainer: {
+    width: ART_BOX,
+    height: ART_BOX,
+    borderRadius: 8,
+    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
     marginLeft: -20,
     position: 'relative',
   },
-  imageLoader: { position: 'absolute', zIndex: 1 },
-  iconOverlay: {
+  artImage: {
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
+    borderRadius: 8,
+  },
+  placeholderBox: {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -9 }, { translateY: -9 }],
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
+    borderRadius: 8,
+    backgroundColor: '#5C3A2E',
+  },
+  placeholderText: {
+    fontFamily: 'Lora_700Bold',
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#1e1e1e',
+  },
+  playIconOverlay: {
+    position: 'absolute',
+    left: (ART_BOX - PLAY_BADGE) / 2,
+    top: (ART_BOX - PLAY_BADGE) / 2,
+    width: PLAY_BADGE,
+    height: PLAY_BADGE,
+    borderRadius: PLAY_BADGE / 2,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 12,
-    padding: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   textBox: { flex: 1, justifyContent: 'center' },
@@ -243,7 +296,13 @@ const styles = StyleSheet.create({
 
   actionsBox: { flexDirection: 'row', alignItems: 'center', paddingLeft: 10 },
   heartBtn: { paddingHorizontal: 20, paddingVertical: 8 },
-  dragHandle: { paddingHorizontal: 0, paddingVertical: 8, marginRight:-10},
+  dragHandle: { paddingHorizontal: 0, paddingVertical: 8, marginRight: -10 },
 
-  empty: { marginTop: 40, textAlign: 'center', color: '#ccc', fontSize: 16, fontStyle: 'italic' },
+  empty: {
+    marginTop: 40,
+    textAlign: 'center',
+    color: '#ccc',
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
 });

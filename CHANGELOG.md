@@ -291,9 +291,18 @@ All notable changes to this project will be documented in this file.
 - Components `LoadingOverlay.tsx`, splash and blinking text.
 - hooks, `useImageReady.ts`, handle image loading map.
 - theme `colors`, provides the color background and text.
-# [2025-11-13] - Change to per-image loading status. 
+## [2025-11-13] - Change to per-image loading status. 
+# Succesfull per-image loading status in the image box but some bugs to fix. 
+- As reduce the image size, shrink the line together
+- Need to adjust object.image size. 
+## [2025-11-14] - Sucess full implement per-image loading status and solid layout.
+- Added `artContainer` as a container for solid layout, everything can adjust within column.
+- `placeholderbox` contains loadig-screen same size with the actual image.
+- Loading status, `isLoading` method in `placeholderbox`.
+# Consider to remove or re-locate the Playicon. 
 
-
+## [2025-11-17] – [2025-11-22] - Change image loading status in FavoutrieScreen same method in ListScreen.
+ 
 
 
 
