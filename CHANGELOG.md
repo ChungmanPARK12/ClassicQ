@@ -302,6 +302,8 @@ All notable changes to this project will be documented in this file.
 # Consider to remove or re-locate the Playicon. 
 
 ## [2025-11-17] – [2025-11-22] - Change image loading status in FavoutrieScreen same method in ListScreen.
+# Some bug for dragging and reorder the list in FavouriteScreen.
+- 
  
 
 

@@ -1,4 +1,3 @@
-// screens/FavouriteScreen.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -14,7 +13,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import type { Track } from '../navigation/types';
-// Debugging
 import { debugValidateTracks } from '../utils/debugTracks';
 
 export default function FavouriteScreen() {
@@ -31,7 +29,7 @@ export default function FavouriteScreen() {
   // Debugging
   useEffect(() => {
     if (!__DEV__) return;
-    if (!favourites || favourites.length === 0) return; // nothing selected yet
+    if (!favourites || favourites.length === 0) return;
     debugValidateTracks(favourites, Math.min(10, favourites.length));
   }, [favourites]);
 
@@ -57,18 +55,21 @@ export default function FavouriteScreen() {
       setIsPaused(prev => !prev);
       return;
     }
+
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     stopBlinking();
+
     setIsPaused(false);
     setPlayingIndex(index);
   };
 
-  // Blink title + auto-next after 3000ms
+  // Blink + Next Track
   useEffect(() => {
     if (playingIndex === null || isPaused) {
       stopBlinking();
       return;
     }
+
     startBlinking();
 
     timeoutRef.current = setTimeout(() => {
@@ -93,8 +94,15 @@ export default function FavouriteScreen() {
     };
   }, []);
 
-  // Drag items
-  const renderItem = ({ item, drag, isActive, getIndex }: RenderItemParams<Track>) => {
+  // ------------------------
+  // Render Item
+  // ------------------------
+  const renderItem = ({
+    item,
+    drag,
+    isActive,
+    getIndex,
+  }: RenderItemParams<Track>) => {
     const index = getIndex?.();
     if (index === undefined) return null;
 
@@ -105,8 +113,8 @@ export default function FavouriteScreen() {
       isActive
         ? styles.itemActive
         : index % 2 === 1
-          ? styles.itemDark
-          : styles.itemLight;
+        ? styles.itemDark
+        : styles.itemLight;
 
     const isLoading = !!loadingMap[item.id];
 
@@ -117,9 +125,8 @@ export default function FavouriteScreen() {
         style={styles.itemWrapper}
       >
         <View style={[styles.item, bgStyle]}>
-          {/* Artwork column – same structure as ListScreen */}
+          {/* Artwork */}
           <View style={styles.artContainer}>
-            {/* Real image */}
             <Image
               source={item.image}
               style={styles.artImage}
@@ -132,14 +139,14 @@ export default function FavouriteScreen() {
               }
             />
 
-            {/* Placeholder overlay (same size/position as artImage) */}
+            {/* Placeholder */}
             {isLoading && (
               <Animated.View style={[styles.artImage, styles.placeholderBox]}>
                 <Text style={styles.placeholderText}>ClassiQ</Text>
               </Animated.View>
             )}
 
-            {/* Play / pause overlay */}
+            {/* Overlay Icon */}
             <View style={styles.playIconOverlay}>
               <Ionicons
                 name={
@@ -155,7 +162,7 @@ export default function FavouriteScreen() {
             </View>
           </View>
 
-          {/* Text column */}
+          {/* Text */}
           <View style={styles.textBox}>
             <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
               {item.title}
@@ -163,7 +170,7 @@ export default function FavouriteScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
-          {/* Right actions: heart + drag */}
+          {/* Actions */}
           <View style={styles.actionsBox}>
             <TouchableOpacity
               onPress={() => removeFromFavourites(item)}
@@ -173,7 +180,6 @@ export default function FavouriteScreen() {
               <Ionicons name="heart" size={30} color="#ff4d4d" />
             </TouchableOpacity>
 
-            {/* Drag handle */}
             <TouchableOpacity
               onLongPress={drag}
               disabled={isActive}
@@ -188,7 +194,7 @@ export default function FavouriteScreen() {
     );
   };
 
-  // Keep playback tied to same track after reorder (by id)
+  // Reorder keep playing track
   const onDragEnd = ({ data }: { data: Track[] }) => {
     const prevPlayingId =
       playingIndex !== null && favourites[playingIndex]
@@ -205,11 +211,14 @@ export default function FavouriteScreen() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <LinearGradient colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']} style={styles.background}>
+      <LinearGradient
+        colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']}
+        style={styles.background}
+      >
         <View style={styles.container}>
           <DraggableFlatList
             data={favourites}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             renderItem={renderItem}
             onDragEnd={onDragEnd}
             ListEmptyComponent={<Text style={styles.empty}>No favourites yet.</Text>}
@@ -220,7 +229,10 @@ export default function FavouriteScreen() {
   );
 }
 
-/** same art constants as ListScreen */
+/* ----------------------------------------- */
+/* STYLES */
+/* ----------------------------------------- */
+
 const ART_BOX = 80;
 const IMAGE_SIZE = 85;
 const PLAY_BADGE = 20;
@@ -228,7 +240,9 @@ const PLAY_BADGE = 20;
 const styles = StyleSheet.create({
   background: { flex: 1 },
   container: { flex: 1, paddingTop: 0 },
+
   itemWrapper: { marginBottom: 0 },
+
   item: {
     flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.15)',
@@ -242,11 +256,11 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     alignItems: 'center',
   },
+
   itemLight: { backgroundColor: '#3e2723' },
   itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
   itemActive: { backgroundColor: '#274627' },
 
-  // Fixed-size art column (same as ListScreen)
   artContainer: {
     width: ART_BOX,
     height: ART_BOX,
@@ -258,11 +272,13 @@ const styles = StyleSheet.create({
     marginLeft: -20,
     position: 'relative',
   },
+
   artImage: {
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
     borderRadius: 8,
   },
+
   placeholderBox: {
     position: 'absolute',
     justifyContent: 'center',
@@ -272,12 +288,14 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#5C3A2E',
   },
+
   placeholderText: {
     fontFamily: 'Lora_700Bold',
     fontSize: 12,
     fontWeight: 'bold',
     color: '#1e1e1e',
   },
+
   playIconOverlay: {
     position: 'absolute',
     left: (ART_BOX - PLAY_BADGE) / 2,
