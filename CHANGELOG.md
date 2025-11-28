@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 ### Feature: Music Playback UI & Interaction
 
 #### Added
+
 - **Play Button**:
   - Implemented using `useState` to toggle between play/pause.
   - Used `TouchableOpacity` and conditionally rendered icon changes.
@@ -54,12 +55,10 @@ All notable changes to this project will be documented in this file.
 - Reorganized the `loadResources` function for clarity and consistency.
 - Reduced splash image size from 1.52 MB to 52 KB, optimizing performance in line with the Grab project (which uses a 32 KB image).
 
-
 #### Learned
 - When defining new screens, ensure they are added to `types.ts` under `RootStackParamList` to avoid navigation and typing errors.
 - Manual splash rendering using `<Image>` improves control but introduces a slight delay due to image load timing.
 - Native splash configuration in `app.json` is no longer needed when manually managing the splash screen in `App.tsx`.
-
 
 ## [2025-06-07] – [2025-06-08]
 
@@ -204,6 +203,7 @@ All notable changes to this project will be documented in this file.
 
 ### Codereview(ListScreen)
 - Added detailed inline documentation explaining logic for state, functions, effects and UI component.
+
 ### Learned
 - Importance of clearing timers(setTimeout) when pausing or ummounting to prevent unexpected behavior.
 - Performance benefits of memorized rows and FlatList tuning for large datasets.
@@ -246,11 +246,14 @@ All notable changes to this project will be documented in this file.
 - Documentation `favouriteContext`.
 - `STORAGE_KEY` handle local data persistence, identifier as the key storing and retrieving data in `AsyncStorage`.
 - `AsyncStorage` can remember saved data without a database but limits, only local device and small to medium-sized data. 
+
 # ListScreen, image box loading status 
 - Change spinner `ActivitiIndicator` to View, Text, Color rendering structure. 
 
 ## [2025-11-01] – [2025-11-2] - Before the First Portfolio Update
+
 - Debugging to check 100 list with simple print LOG, `length.trackList`.
+
 # Future plan
 - Debugging to check 100 list(clear). 
 - Assigning stable unique IDs to all tracks for consistent rendering and state management. 
@@ -260,30 +263,39 @@ All notable changes to this project will be documented in this file.
 - Added `id:string` in types. 
 - Created a new `trackId.ts`, the ID generator.
 - Put the track list to `RAW_TRACKS` and wrapped them and import the generator from `trackId`.
+
 ## [2025-11-04] - Updated
+
 # ListScreen
 - Replaced all title-based checks with `id`: `favourites.some(t => t.id === item.id)`.
 - Changed `loadMap` key type to `Record<string, boolean>` and mapped by `item.id`.
 - Updated `keyExtractor` → `keyExtractor={(item) => item.id}` for stable rendering.
+
 # FavouriteScreen
 - Removed local `Track` type and improted shared one with `id`.
 - Updaetd all image loading, playback, and reorder login to key by `item.id`.
 - Updated `keyExtractor` → `keyExtractor={(item) => item.id}` for stable rendering.
+
 # FavouriteContext
 - Updated add/remove/reorder methods to work by `id`.
 - Added `trackIdOf()` import for Id generator logic.
+
 ## [2025-11-06] - Mini test and debugging(Successful)
 - Added `debugTracks` under src/utils as a method.
+
 # Function debugValidateTracks(tracks: Track[])
 - Duplicate ID detection
 - Missing field (id/title/composer) detection
 - Cross-check for ID consistency
 - Optional console table preview
+
 # Logs detailed summary
 `[Tracks] total=100 uniqueIds=100 dup=0 missingRows=0 mismatches=0`
+
 # Debug hooks in both major screens
 - `ListScreen`, validates the master `trackList`.
 - `FavouriteScreen`, validates the `favourite.length` which is added list.
+
 # Documentation
 - Method of identify in `trackId.ts` and import identifiers in `track.ts`.
 
@@ -291,19 +303,57 @@ All notable changes to this project will be documented in this file.
 - Components `LoadingOverlay.tsx`, splash and blinking text.
 - hooks, `useImageReady.ts`, handle image loading map.
 - theme `colors`, provides the color background and text.
+
 ## [2025-11-13] - Change to per-image loading status. 
+
 # Succesfull per-image loading status in the image box but some bugs to fix. 
 - As reduce the image size, shrink the line together
 - Need to adjust object.image size. 
+
 ## [2025-11-14] - Sucess full implement per-image loading status and solid layout.
 - Added `artContainer` as a container for solid layout, everything can adjust within column.
 - `placeholderbox` contains loadig-screen same size with the actual image.
 - Loading status, `isLoading` method in `placeholderbox`.
+
 # Consider to remove or re-locate the Playicon. 
 
 ## [2025-11-17] – [2025-11-22] - Change image loading status in FavoutrieScreen same method in ListScreen.
+
 # Some bug for dragging and reorder the list in FavouriteScreen.
-- 
+- During a drag gesture, the item's index becomes unstable or undefined. 
+- This causes the dragging item to render as empty, and the list to lose row alignment after dropping. 
+
+# Diagnosis
+- Older versions of the code, library behavior changes...
+- Find out that previous version of code also appearig the bug, especially for the `FavouriteScreen` as well which was working well.
+
+# Conclusion
+- Plan to test the previous code with basic spinner loaing status for first-finishing-portfolio, git clone(clear).
+
+## [2025-11-28] - Completed the test for first-finishing-portfolio
+- `FlatList` is one of the rendering Layer with `View, ScrollView` etc... manage the things from rendering data to UI.
+
+# Diagnosis
+- The older project(first-finishing-protfolio) used a different set of dependency versions and internal Metro/bundler behavior. 
+- Even after downgrading `react-native-draggable-flatlist` to 4.0.3, the issue persisted, confirming that the root cause is not a single package, but the combination of Expo SDK 53, RN 0.79, Reanimated 3.17 and Gesture Handler 2.24.
+- In this environment, the draggable list produces unstable indices, causing: 
+- empty-looking drag items, 
+- Misaligned, zebra rows, 
+- Incorrect re-render after dropping. 
+- The previous project worked because it ran on a different environment stack, not because the code was different. 
+
+## Options A and B
+
+# Option A(Possible but not recommended)
+- Rollback to the previous environment, `Expo, RN, Gesture, Reanumated`.
+- Replicate the exactly the same environment as the past. 
+
+# Option B(Recomended)
+- Maintain current SDK/RN/Renimated versions(no rollback).
+- Implement a stable drag-and-drop pattern compatible with the current environment. 
+
+# Summary
+- The drag issue was caused by environment-level changes, UI based engines(`Expo53, RN0.79, Reaimated, GestureHandler`), not by screen logic. 
  
 
 
