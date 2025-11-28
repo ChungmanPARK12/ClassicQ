@@ -17,26 +17,29 @@ import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import { LinearGradient } from 'expo-linear-gradient';
 
-
 type PlayingScreenRouteProp = RouteProp<RootStackParamList, 'NowPlaying'>;
-
 type Props = {
   route: PlayingScreenRouteProp;
 };
 
 export default function PlayingScreen({ route }: Props) {
+  // Control tracks playing, stores previous track
   const initialTrack = { title: route.params.title, composer: route.params.composer };
   const [currentTrack, setCurrentTrack] = useState(initialTrack);
   const [previousTrack, setPreviousTrack] = useState<typeof currentTrack | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
+
+  // Control loading state of images
   const [bgLoaded, setBgLoaded] = useState(false);
   const [recordLoaded, setRecordLoaded] = useState(false);
 
+  // Rotation of record image, blinking titme and composer
   const spinAnim = useRef(new Animated.Value(0)).current;
   const blinkAnim = useRef(new Animated.Value(1)).current;
   const spinLoop = useRef<Animated.CompositeAnimation | null>(null);
   const blinkLoop = useRef<Animated.CompositeAnimation | null>(null);
 
+  // Volume check
   const [volume, setVolume] = useState(1.0);
   const soundRef = useRef<Audio.Sound | null>(null);
 
@@ -52,11 +55,13 @@ export default function PlayingScreen({ route }: Props) {
     await soundRef.current?.setStatusAsync({ volume: newVolume });
   };
 
+  // Rotation angle for the record image
   const spin = spinAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
   });
 
+  // Record rotation
   const startAnimation = () => {
     spinAnim.setValue(0);
     spinLoop.current = Animated.loop(
@@ -70,12 +75,14 @@ export default function PlayingScreen({ route }: Props) {
     spinLoop.current.start();
   };
 
+  // Stop record
   const stopAnimation = () => {
     spinLoop.current?.stop();
     blinkLoop.current?.stop();
     spinAnim.setValue(0);
   };
 
+  // Control blink depending on current volume
   const updateBlinkAnimation = () => {
     blinkLoop.current?.stop();
     const blinkDuration = 1000 - volume * 700;
@@ -97,12 +104,14 @@ export default function PlayingScreen({ route }: Props) {
     blinkLoop.current.start();
   };
 
+  // Update blinking by volume while playing
   useEffect(() => {
     if (isPlaying) {
       updateBlinkAnimation();
     }
   }, [volume]);
 
+  // Toggle switch play and pause button
   const handleTogglePlay = () => {
     if (!isPlaying) {
       startAnimation();
@@ -113,6 +122,7 @@ export default function PlayingScreen({ route }: Props) {
     setIsPlaying(!isPlaying);
   };
 
+  // Plays a random track from the list
   const handlePlayNext = () => {
     const otherTracks = trackList.filter(t => t.title !== currentTrack.title);
     const random = otherTracks[Math.floor(Math.random() * otherTracks.length)];
@@ -126,6 +136,7 @@ export default function PlayingScreen({ route }: Props) {
     }
   };
 
+  // Goes back to the last track
   const handlePlayPrevious = () => {
     if (previousTrack) {
       setCurrentTrack(previousTrack);
@@ -138,18 +149,19 @@ export default function PlayingScreen({ route }: Props) {
     }
   };
 
+  // Loading screen
   return (
     <>
       {!(bgLoaded && recordLoaded) && (
-  <LinearGradient
-colors={['#2c1e1a', '#4b2e24', '#6f4e37']} // warm brown gradient
+        <LinearGradient
+          colors={['#2c1e1a', '#4b2e24', '#6f4e37']} // warm brown gradient
 
-    style={styles.loader}
-  >
-    <ActivityIndicator size="large" color="#ffffff" />
-  </LinearGradient>
-)}
-
+          style={styles.loader}
+          >
+          <ActivityIndicator size="large" color="#ffffff" />
+        </LinearGradient>
+      )}
+   
       <ImageBackground
         source={require('../../assets/background2.jpg')}
         style={styles.container}

@@ -1,6 +1,9 @@
-import { Track } from '../navigation/types';
+// src/data/tracks.ts
+import type { Track } from '../navigation/types';
+import { trackIdOf } from './trackId';
 
-export const trackList: Track[] = [
+// --- Raw data list without IDs ---
+const RAW_TRACKS = [
   { title: 'Moonlight Sonata', composer: 'Beethoven', image: require('../../assets/tracks/moonlight.png') },
   { title: 'Clair de Lune', composer: 'Debussy', image: require('../../assets/tracks/clair.png') },
   { title: 'The Four Seasons', composer: 'Vivaldi', image: require('../../assets/tracks/thefour.png') },
@@ -18,7 +21,100 @@ export const trackList: Track[] = [
   { title: 'Adagio for Strings', composer: 'Barber', image: require('../../assets/tracks/adigo.png') },
   { title: 'The Blue Danube', composer: 'Strauss II', image: require('../../assets/tracks/theblue.png') },
   { title: 'Pictures at an Exhibition', composer: 'Mussorgsky', image: require('../../assets/tracks/pictures.png') },
-  // { title: 'Prelude in E Minor', composer: 'Chopin', image: require('../../assets/tracks/prelude.png') },
-  // { title: 'Ave Maria', composer: 'Schubert', image: require('../../assets/tracks/maria.png') },
-  // { title: 'Carmen: Habanera', composer: 'Bizet', image: require('../../assets/tracks/carmen.png') },
+  { title: 'Prelude in E Minor', composer: 'Chopin', image: require('../../assets/tracks/prelude.png') },
+  { title: 'Ave Maria', composer: 'Schubert', image: require('../../assets/tracks/maria.png') },
+  { title: 'Carmen: Habanera', composer: 'Bizet', image: require('../../assets/tracks/carmen.png') },
+  { title: 'Symphony No.9 "Ode to Joy"', composer: 'Beethoven', image: require('../../assets/tracks/symphony9.png') },
+  { title: 'Water Music', composer: 'Handel', image: require('../../assets/tracks/watermusic.png') },
+  { title: 'Rhapsody in Blue', composer: 'Gershwin', image: require('../../assets/tracks/rhapsody.png') },
+  { title: 'Carnival of the Animals', composer: 'Saint-Saëns', image: require('../../assets/tracks/carnival.png') },
+  { title: 'Finlandia', composer: 'Sibelius', image: require('../../assets/tracks/finlandia.png') },
+  { title: 'The Planets: Jupiter', composer: 'Holst', image: require('../../assets/tracks/planet.png') },
+  { title: 'Symphony No.40 in G minor', composer: 'Mozart', image: require('../../assets/tracks/sympony40.png') },
+  { title: 'The Nutcracker: Dance of the Sugar Plum Fairy', composer: 'Tchaikovsky', image: require('../../assets/tracks/dancesugar.png') },
+  { title: 'La Mer', composer: 'Debussy', image: require('../../assets/tracks/lamer.png') },
+  { title: 'Radetzky March', composer: 'Johann Strauss I', image: require('../../assets/tracks/radetzky.png') },
+  { title: 'Also sprach Zarathustra', composer: 'Richard Strauss', image: require('../../assets/tracks/sprach.png') },
+  { title: 'Nessun dorma', composer: 'Puccini', image: require('../../assets/tracks/dorma.png') },
+  { title: 'The Barber of Seville: Overture', composer: 'Rossini', image: require('../../assets/tracks/barber.png') },
+  { title: 'Symphony No.7: Allegretto', composer: 'Beethoven', image: require('../../assets/tracks/symphony7.png') },
+  { title: 'Symphony No.3 "Eroica"', composer: 'Beethoven', image: require('../../assets/tracks/symphony3.png') },
+  { title: 'Brandenburg Concerto No.3', composer: 'Bach', image: require('../../assets/tracks/brandberg.png') },
+  { title: 'Toccata and Fugue in D minor', composer: 'Bach', image: require('../../assets/tracks/toccata.png') },
+  { title: 'Ride of the Valkyries', composer: 'Wagner', image: require('../../assets/tracks/rideofthe.png') },
+  { title: 'William Tell: Overture', composer: 'Rossini', image: require('../../assets/tracks/williamtell.png') },
+  { title: 'Pomp and Circumstance March No.1', composer: 'Elgar', image: require('../../assets/tracks/pompand.png') },
+  { title: 'Serenade for Strings', composer: 'Tchaikovsky', image: require('../../assets/tracks/serendafor.png') },
+  { title: 'Symphony No.94 "Surprise"', composer: 'Haydn', image: require('../../assets/tracks/symphony94.png') },
+  { title: 'Symphony No.104 "London"', composer: 'Haydn', image: require('../../assets/tracks/symphony104.png') },
+  { title: 'String Quartet No.14 "Death and the Maiden"', composer: 'Schubert', image: require('../../assets/tracks/quartet14.png') },
+  { title: 'String Quartet No.62 "Emperor"', composer: 'Haydn', image: require('../../assets/tracks/quartet62.png') },
+  { title: 'Symphony No.41 "Jupiter"', composer: 'Mozart', image: require('../../assets/tracks/symphony41.png') },
+  { title: 'Piano Concerto No.21 "Elvira Madigan"', composer: 'Mozart', image: require('../../assets/tracks/pianoconcert21.png') },
+  { title: 'Piano Concerto No.2', composer: 'Rachmaninoff', image: require('../../assets/tracks/pianoconcert2.png') },
+  { title: 'Prelude in C Major BWV 846', composer: 'Bach', image: require('../../assets/tracks/preludec.png') },
+  { title: 'Arabesque No.1', composer: 'Debussy', image: require('../../assets/tracks/arabesque1.png') },
+  { title: 'Pavane pour une infante défunte', composer: 'Ravel', image: require('../../assets/tracks/pavanepour.png') },
+  { title: 'Dances of the Knights (Romeo and Juliet)', composer: 'Prokofiev', image: require('../../assets/tracks/danceknights.png') },
+  { title: 'Romeo and Juliet Fantasy Overture', composer: 'Tchaikovsky', image: require('../../assets/tracks/romeoand.png') },
+  { title: 'Scheherazade', composer: 'Rimsky-Korsakov', image: require('../../assets/tracks/schelerazade.png') },
+  { title: 'Capriccio Espagnol', composer: 'Rimsky-Korsakov', image: require('../../assets/tracks/capriccio.png') },
+  { title: 'Hungarian Dance No.5', composer: 'Brahms', image: require('../../assets/tracks/hungarian5.png') },
+  { title: 'Symphony No.1 in C minor', composer: 'Brahms', image: require('../../assets/tracks/symphony1.png') },
+  { title: 'Symphony No.9 "From the New World"', composer: 'Dvořák', image: require('../../assets/tracks/symphony9dvorak.png') },
+  { title: 'Slavonic Dance Op.46 No.8', composer: 'Dvořák', image: require('../../assets/tracks/slavonic8.png') },
+  { title: 'The Moldau', composer: 'Smetana', image: require('../../assets/tracks/themoldau.png') },
+  { title: 'In the Hall of the Mountain King', composer: 'Grieg', image: require('../../assets/tracks/mountainking.png') },
+  { title: 'Fantaisie-Impromptu', composer: 'Chopin', image: require('../../assets/tracks/fantaisieimpro.png') },
+  { title: 'Minute Waltz', composer: 'Chopin', image: require('../../assets/tracks/minutewaltz.png') },
+  { title: 'Polonaise in A major "Military" Op.40 No.1', composer: 'Chopin', image: require('../../assets/tracks/polonaiseop40no1.png') },
+  { title: 'Étude Op.10 No.12 "Revolutionary"', composer: 'Chopin', image: require('../../assets/tracks/etudeop10no12.png') },
+  { title: 'Étude Op.10 No.3 "Tristesse"', composer: 'Chopin', image: require('../../assets/tracks/etudeop10no13.png') },
+  { title: 'Piano Sonata No.11: Rondo alla Turca', composer: 'Mozart', image: require('../../assets/tracks/pianosonatano11.png') },
+  { title: 'The Ruins of Athens: Turkish March', composer: 'Beethoven', image: require('../../assets/tracks/theruinsathens.png') },
+  { title: 'Liebestraum No.3', composer: 'Liszt', image: require('../../assets/tracks/liebestraum.png') },
+  { title: 'La Campanella', composer: 'Liszt', image: require('../../assets/tracks/lacampanella.png') },
+  { title: 'The Sorcerer’s Apprentice', composer: 'Dukas', image: require('../../assets/tracks/sorcerapprentice.png') },
+  { title: 'Méditation from Thaïs', composer: 'Massenet', image: require('../../assets/tracks/meditationthais.png') },
+  { title: 'Barcarolle (The Tales of Hoffmann)', composer: 'Offenbach', image: require('../../assets/tracks/barcarolle.png') },
+  { title: 'O mio babbino caro', composer: 'Puccini', image: require('../../assets/tracks/omiobabbinocaro.png') },
+  { title: 'Carmen: Toreador Song', composer: 'Bizet', image: require('../../assets/tracks/carmentoreador.png') },
+  { title: 'L’Arlésienne Suite No.2: Farandole', composer: 'Bizet', image: require('../../assets/tracks/arlesiennesuite.png') },
+  { title: 'Danse Macabre', composer: 'Saint-Saëns', image: require('../../assets/tracks/danemacabre.png') },
+  { title: 'Samson and Delilah: Bacchanale', composer: 'Saint-Saëns', image: require('../../assets/tracks/samsondeliah.png') },
+  { title: 'Adagio in G minor', composer: 'Albinoni/Giazotto', image: require('../../assets/tracks/adigogminor.png') },
+  { title: 'Symphony No.6 "Pathétique"', composer: 'Tchaikovsky', image: require('../../assets/tracks/symphony6pathetique.png') },
+  { title: 'Symphony No.8 "Unfinished"', composer: 'Schubert', image: require('../../assets/tracks/symphony8unfinished.png') },
+  { title: 'Symphony No.5: Adagietto', composer: 'Mahler', image: require('../../assets/tracks/symphony5adagietto.png') },
+  { title: 'Carmina Burana: O Fortuna', composer: 'Orff', image: require('../../assets/tracks/carminaburana.png') },
+  { title: 'Requiem: Lacrimosa', composer: 'Mozart', image: require('../../assets/tracks/requiemlacrimosa.png') },
+  { title: 'Requiem: Dies Irae', composer: 'Verdi', image: require('../../assets/tracks/requiemdiesirae.png') },
+  { title: 'Ave verum corpus', composer: 'Mozart', image: require('../../assets/tracks/aveverumcorpus.png') },
+  { title: 'Stabat Mater (Pergolesi)', composer: 'Pergolesi', image: require('../../assets/tracks/stabatmater.png') },
+  { title: 'Zadok the Priest', composer: 'Handel', image: require('../../assets/tracks/zadokthepriestHandel.png') },
+  { title: 'Orfeo ed Euridice: Dance of the Blessed Spirits', composer: 'Gluck', image: require('../../assets/tracks/orfeoedeuridicedance.png') },
+  { title: 'Night on Bald Mountain', composer: 'Mussorgsky', image: require('../../assets/tracks/nightonbaldmountain.png') },
+  { title: 'The Firebird: Infernal Dance', composer: 'Stravinsky', image: require('../../assets/tracks/firbirdinternational.png') },
+  { title: 'The Rite of Spring: Dance of the Adolescents', composer: 'Stravinsky', image: require('../../assets/tracks/riteofspringdance.png') },
+  { title: 'Gnossienne No.1', composer: 'Satie', image: require('../../assets/tracks/gnossienneno1.png') },
+  { title: 'Enigma Variations: Nimrod', composer: 'Elgar', image: require('../../assets/tracks/enigmavariations.png') },
+  { title: 'Wiegenlied (Lullaby) Op.49 No.4', composer: 'Brahms', image: require('../../assets/tracks/wiegenlied.png') },
+  { title: 'Jesu, Joy of Man’s Desiring', composer: 'Bach', image: require('../../assets/tracks/jesujoyofmans.png') },
+  { title: 'Harpsichord Concerto in F minor BWV 1056: Largo', composer: 'Bach', image: require('../../assets/tracks/harpsichordconcerto.png') },
+  { title: 'Kinderszenen: Träumerei', composer: 'Schumann', image: require('../../assets/tracks/kinderszenen.png') },
+  { title: 'Cavalleria rusticana: Intermezzo', composer: 'Mascagni', image: require('../../assets/tracks/cavalleria.png') },
+  { title: 'Orpheus in the Underworld: Can-Can', composer: 'Offenbach', image: require('../../assets/tracks/orpheusintheunderworld.png') },
 ];
+
+// --- Map and attach stable ids ---
+const seen = new Set<string>();
+
+export const trackList: Track[] = RAW_TRACKS.map((t) => {
+  let id = trackIdOf(t.title, t.composer);
+  let salt = 1;
+  while (seen.has(id)) {
+    id = trackIdOf(t.title, t.composer, String(salt++));
+  }
+  seen.add(id);
+  return { id, ...t };
+});

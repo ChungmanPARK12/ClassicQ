@@ -1,4 +1,3 @@
-// screens/FavouriteScreen.tsx
 import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
@@ -7,26 +6,32 @@ import {
   TouchableOpacity,
   Animated,
   Image,
-  ActivityIndicator,
 } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useFavourite } from '../screens/context/FavouriteContext';
-
-type Track = { title: string; composer: string; image: any };
+import type { Track } from '../navigation/types';
+import { debugValidateTracks } from '../utils/debugTracks';
 
 export default function FavouriteScreen() {
   const { favourites, removeFromFavourites, reorderFavourites } = useFavourite();
 
-  const [loadingMap, setLoadingMap] = useState<{ [index: number]: boolean }>({});
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
 
   const fadeAnim = useRef(new Animated.Value(1)).current;
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // Debugging
+  useEffect(() => {
+    if (!__DEV__) return;
+    if (!favourites || favourites.length === 0) return;
+    debugValidateTracks(favourites, Math.min(10, favourites.length));
+  }, [favourites]);
 
   const startBlinking = () => {
     fadeAnim.setValue(1);
@@ -41,6 +46,7 @@ export default function FavouriteScreen() {
 
   const stopBlinking = () => {
     animationRef.current?.stop();
+    animationRef.current = null;
     fadeAnim.setValue(1);
   };
 
@@ -49,18 +55,21 @@ export default function FavouriteScreen() {
       setIsPaused(prev => !prev);
       return;
     }
+
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     stopBlinking();
+
     setIsPaused(false);
     setPlayingIndex(index);
   };
 
-  // Blink title + auto-next after 3000ms
+  // Blink + Next Track
   useEffect(() => {
     if (playingIndex === null || isPaused) {
       stopBlinking();
       return;
     }
+
     startBlinking();
 
     timeoutRef.current = setTimeout(() => {
@@ -85,18 +94,29 @@ export default function FavouriteScreen() {
     };
   }, []);
 
-  const renderItem = ({ item, drag, isActive, getIndex }: RenderItemParams<Track>) => {
-    const index = getIndex?.() ?? 0;
+  // ------------------------
+  // Render Item
+  // ------------------------
+  const renderItem = ({
+    item,
+    drag,
+    isActive,
+    getIndex,
+  }: RenderItemParams<Track>) => {
+    const index = getIndex?.();
+    if (index === undefined) return null;
+
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
 
-    const bgStyle = isActive
-      ? styles.itemActive
-      : index % 2 === 1
-      ? styles.itemDark
-      : styles.itemLight;
+    const bgStyle =
+      isActive
+        ? styles.itemActive
+        : index % 2 === 1
+        ? styles.itemDark
+        : styles.itemLight;
 
-    const isLoading = loadingMap[index];
+    const isLoading = !!loadingMap[item.id];
 
     return (
       <TouchableOpacity
@@ -105,23 +125,44 @@ export default function FavouriteScreen() {
         style={styles.itemWrapper}
       >
         <View style={[styles.item, bgStyle]}>
-          <View style={styles.imageBox}>
-            {isLoading && <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />}
+          {/* Artwork */}
+          <View style={styles.artContainer}>
             <Image
               source={item.image}
-              style={styles.trackImage}
-              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [index]: true }))}
-              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [index]: false }))}
+              style={styles.artImage}
+              resizeMode="cover"
+              onLoadStart={() =>
+                setLoadingMap(prev => ({ ...prev, [item.id]: true }))
+              }
+              onLoadEnd={() =>
+                setLoadingMap(prev => ({ ...prev, [item.id]: false }))
+              }
             />
-            <View style={styles.iconOverlay}>
+
+            {/* Placeholder */}
+            {isLoading && (
+              <Animated.View style={[styles.artImage, styles.placeholderBox]}>
+                <Text style={styles.placeholderText}>ClassiQ</Text>
+              </Animated.View>
+            )}
+
+            {/* Overlay Icon */}
+            <View style={styles.playIconOverlay}>
               <Ionicons
-                name={index === playingIndex ? (isPaused ? 'play' : 'pause') : 'play'}
-                size={18}
+                name={
+                  index === playingIndex
+                    ? isPaused
+                      ? 'play'
+                      : 'pause'
+                    : 'play'
+                }
+                size={14}
                 color="#fff"
               />
             </View>
           </View>
 
+          {/* Text */}
           <View style={styles.textBox}>
             <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
               {item.title}
@@ -129,6 +170,7 @@ export default function FavouriteScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
+          {/* Actions */}
           <View style={styles.actionsBox}>
             <TouchableOpacity
               onPress={() => removeFromFavourites(item)}
@@ -138,7 +180,6 @@ export default function FavouriteScreen() {
               <Ionicons name="heart" size={30} color="#ff4d4d" />
             </TouchableOpacity>
 
-            {/* Drag handle */}
             <TouchableOpacity
               onLongPress={drag}
               disabled={isActive}
@@ -153,26 +194,31 @@ export default function FavouriteScreen() {
     );
   };
 
-  // Keep playback tied to same track after reorder (by title)
+  // Reorder keep playing track
   const onDragEnd = ({ data }: { data: Track[] }) => {
-    const prevPlayingTitle =
-      playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].title : null;
+    const prevPlayingId =
+      playingIndex !== null && favourites[playingIndex]
+        ? favourites[playingIndex].id
+        : null;
 
     reorderFavourites(data);
 
-    if (prevPlayingTitle) {
-      const newIndex = data.findIndex(t => t.title === prevPlayingTitle);
+    if (prevPlayingId) {
+      const newIndex = data.findIndex(t => t.id === prevPlayingId);
       setPlayingIndex(newIndex >= 0 ? newIndex : null);
     }
   };
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <LinearGradient colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']} style={styles.background}>
+      <LinearGradient
+        colors={['#0d1b0d', '#1e3a1e', '#3b5b2e']}
+        style={styles.background}
+      >
         <View style={styles.container}>
           <DraggableFlatList
             data={favourites}
-            keyExtractor={(item, index) => `${item.title}-${index}`}
+            keyExtractor={item => item.id}
             renderItem={renderItem}
             onDragEnd={onDragEnd}
             ListEmptyComponent={<Text style={styles.empty}>No favourites yet.</Text>}
@@ -183,10 +229,20 @@ export default function FavouriteScreen() {
   );
 }
 
+/* ----------------------------------------- */
+/* STYLES */
+/* ----------------------------------------- */
+
+const ART_BOX = 80;
+const IMAGE_SIZE = 85;
+const PLAY_BADGE = 20;
+
 const styles = StyleSheet.create({
   background: { flex: 1 },
   container: { flex: 1, paddingTop: 0 },
+
   itemWrapper: { marginBottom: 0 },
+
   item: {
     flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.15)',
@@ -200,29 +256,56 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     alignItems: 'center',
   },
+
   itemLight: { backgroundColor: '#3e2723' },
   itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
   itemActive: { backgroundColor: '#274627' },
 
-  trackImage: { width: 90, height: 90, borderRadius: 6 },
-  imageBox: {
-    width: 90,
-    height: 90,
+  artContainer: {
+    width: ART_BOX,
+    height: ART_BOX,
+    borderRadius: 8,
+    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
     marginLeft: -20,
     position: 'relative',
   },
-  imageLoader: { position: 'absolute', zIndex: 1 },
-  iconOverlay: {
+
+  artImage: {
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
+    borderRadius: 8,
+  },
+
+  placeholderBox: {
     position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: [{ translateX: -9 }, { translateY: -9 }],
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
+    borderRadius: 8,
+    backgroundColor: '#5C3A2E',
+  },
+
+  placeholderText: {
+    fontFamily: 'Lora_700Bold',
+    fontSize: 12,
+    fontWeight: 'bold',
+    color: '#1e1e1e',
+  },
+
+  playIconOverlay: {
+    position: 'absolute',
+    left: (ART_BOX - PLAY_BADGE) / 2,
+    top: (ART_BOX - PLAY_BADGE) / 2,
+    width: PLAY_BADGE,
+    height: PLAY_BADGE,
+    borderRadius: PLAY_BADGE / 2,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    borderRadius: 12,
-    padding: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 
   textBox: { flex: 1, justifyContent: 'center' },
@@ -231,7 +314,13 @@ const styles = StyleSheet.create({
 
   actionsBox: { flexDirection: 'row', alignItems: 'center', paddingLeft: 10 },
   heartBtn: { paddingHorizontal: 20, paddingVertical: 8 },
-  dragHandle: { paddingHorizontal: 0, paddingVertical: 8, marginRight:-10},
+  dragHandle: { paddingHorizontal: 0, paddingVertical: 8, marginRight: -10 },
 
-  empty: { marginTop: 40, textAlign: 'center', color: '#ccc', fontSize: 16, fontStyle: 'italic' },
+  empty: {
+    marginTop: 40,
+    textAlign: 'center',
+    color: '#ccc',
+    fontSize: 16,
+    fontStyle: 'italic',
+  },
 });
