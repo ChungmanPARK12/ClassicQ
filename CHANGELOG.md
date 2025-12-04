@@ -345,7 +345,7 @@ All notable changes to this project will be documented in this file.
 ## Options A and B
 
 # Option A(Possible but not recommended)
-- Rollback to the previous environment, `Expo, RN, Gesture, Reanumated`.
+- Rollback to the previous environment, `Expo/RN, Gesture, Reanumated, DraggableFlatList`.
 - Replicate the exactly the same environment as the past. 
 
 # Option B(Recomended)
@@ -354,7 +354,14 @@ All notable changes to this project will be documented in this file.
 
 # Summary
 - The drag issue was caused by environment-level changes, UI based engines(`Expo53, RN0.79, Reaimated, GestureHandler`), not by screen logic. 
- 
+
+## [2025-12-04] – [2025-12-05] - Bug fix for favouriteScreen
+- Debugging with test local dummy 10 data without image, animation and extra state(Caused same bug).
+
+# Diagnosis
+- As we got the same bug issue, it's not the structure of code, it's about ver invironment environment, `Expo/RN, Gesture, Reanumated, DraggableFlatList`.
+
+
 
 
 
