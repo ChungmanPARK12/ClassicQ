@@ -51,7 +51,7 @@ export default function HomeScreen() {
       resizeMode="cover"
       onLoadEnd={handleBgLoaded}
     >
-  
+      {/* Loading status: ClassicQSplash to overlay */}
       {!bgLoaded ? (
         <ClassicQSplash />
       ) : (

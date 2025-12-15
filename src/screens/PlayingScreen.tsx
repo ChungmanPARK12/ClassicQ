@@ -6,7 +6,6 @@ import {
   Animated,
   Easing,
   ImageBackground,
-  ActivityIndicator,
 } from 'react-native';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/types';
@@ -15,8 +14,9 @@ import { trackList } from '../data/tracks';
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
-import { LinearGradient } from 'expo-linear-gradient';
+import { Asset } from 'expo-asset';
 
+import ClassicQSplash from '../components/ClassicQSplash';
 
 type PlayingScreenRouteProp = RouteProp<RootStackParamList, 'NowPlaying'>;
 
@@ -28,9 +28,10 @@ export default function PlayingScreen({ route }: Props) {
   const initialTrack = { title: route.params.title, composer: route.params.composer };
   const [currentTrack, setCurrentTrack] = useState(initialTrack);
   const [previousTrack, setPreviousTrack] = useState<typeof currentTrack | null>(null);
+
   const [isPlaying, setIsPlaying] = useState(false);
-  const [bgLoaded, setBgLoaded] = useState(false);
-  const [recordLoaded, setRecordLoaded] = useState(false);
+
+  const [isReady, setIsReady] = useState(false);
 
   const spinAnim = useRef(new Animated.Value(0)).current;
   const blinkAnim = useRef(new Animated.Value(1)).current;
@@ -39,6 +40,30 @@ export default function PlayingScreen({ route }: Props) {
 
   const [volume, setVolume] = useState(1.0);
   const soundRef = useRef<Audio.Sound | null>(null);
+
+  // Image pre-load (background2 + vinyl)
+  useEffect(() => {
+    let mounted = true;
+
+    const preload = async () => {
+      try {
+        const bg = require('../../assets/background2.jpg');
+        const record = require('../../assets/vinyl-record.png');
+
+        await Asset.loadAsync([bg, record]);
+
+        if (mounted) setIsReady(true);
+      } catch (e) {
+        
+        if (mounted) setIsReady(true);
+      }
+    };
+
+    preload();
+    return () => {
+      mounted = false;
+    };
+  }, []);
 
   const increaseVolume = async () => {
     const newVolume = Math.min(volume + 0.1, 1.0);
@@ -98,9 +123,7 @@ export default function PlayingScreen({ route }: Props) {
   };
 
   useEffect(() => {
-    if (isPlaying) {
-      updateBlinkAnimation();
-    }
+    if (isPlaying) updateBlinkAnimation();
   }, [volume]);
 
   const handleTogglePlay = () => {
@@ -138,93 +161,86 @@ export default function PlayingScreen({ route }: Props) {
     }
   };
 
+  // ✅ HomeScreen과 동일: 준비 전엔 로딩 화면만 반환
+  if (!isReady) {
+    return <ClassicQSplash />;
+  }
+
   return (
-    <>
-      {!(bgLoaded && recordLoaded) && (
-  <LinearGradient
-colors={['#2c1e1a', '#4b2e24', '#6f4e37']} // warm brown gradient
+    <ImageBackground
+      source={require('../../assets/background2.jpg')}
+      style={styles.container}
+      resizeMode="cover"
+    >
+      <Animated.Image
+        source={require('../../assets/vinyl-record.png')}
+        style={[
+          styles.record,
+          isPlaying ? { transform: [{ rotate: spin }] } : {},
+        ]}
+      />
 
-    style={styles.loader}
-  >
-    <ActivityIndicator size="large" color="#ffffff" />
-  </LinearGradient>
-)}
-
-      <ImageBackground
-        source={require('../../assets/background2.jpg')}
-        style={styles.container}
-        resizeMode="cover"
-        onLoadEnd={() => setBgLoaded(true)}
-      >
-        <Animated.Image
-          source={require('../../assets/vinyl-record.png')}
-          onLoadEnd={() => setRecordLoaded(true)}
-          style={[
-            styles.record,
-            isPlaying ? { transform: [{ rotate: spin }] } : {},
-          ]}
-        />
-
-        <View style={styles.playerBox}>
-          <View style={styles.infoBox}>
-            <Animated.Text style={[styles.label, { opacity: isPlaying ? blinkAnim : 1 }]}>
-              Now Playing:
-            </Animated.Text>
-            <Animated.Text style={[styles.track, { opacity: isPlaying ? blinkAnim : 1 }]}>
-              {currentTrack.title}
-            </Animated.Text>
-            <Animated.Text style={[styles.composer, { opacity: isPlaying ? blinkAnim : 1 }]}>
-              by {currentTrack.composer}
-            </Animated.Text>
-          </View>
+      <View style={styles.playerBox}>
+        <View style={styles.infoBox}>
+          <Animated.Text style={[styles.label, { opacity: isPlaying ? blinkAnim : 1 }]}>
+            Now Playing:
+          </Animated.Text>
+          <Animated.Text style={[styles.track, { opacity: isPlaying ? blinkAnim : 1 }]}>
+            {currentTrack.title}
+          </Animated.Text>
+          <Animated.Text style={[styles.composer, { opacity: isPlaying ? blinkAnim : 1 }]}>
+            by {currentTrack.composer}
+          </Animated.Text>
         </View>
+      </View>
 
-        <View style={styles.controlsContainer}>
-          <TouchableOpacity onPress={handlePlayPrevious} style={styles.controlButton}>
-            <Ionicons name="play-skip-back" size={36} color="white" />
-          </TouchableOpacity>
+      <View style={styles.controlsContainer}>
+        <TouchableOpacity onPress={handlePlayPrevious} style={styles.controlButton}>
+          <Ionicons name="play-skip-back" size={36} color="white" />
+        </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={handleTogglePlay}
-            style={[styles.controlButton, { transform: [{ translateX: 3 }] }]}
-          >
-            <Ionicons name={isPlaying ? 'pause' : 'play'} size={44} color="white" />
-          </TouchableOpacity>
+        <TouchableOpacity
+          onPress={handleTogglePlay}
+          style={[styles.controlButton, { transform: [{ translateX: 3 }] }]}
+        >
+          <Ionicons name={isPlaying ? 'pause' : 'play'} size={44} color="white" />
+        </TouchableOpacity>
 
-          <TouchableOpacity onPress={handlePlayNext} style={styles.controlButton}>
-            <Ionicons name="play-skip-forward" size={36} color="white" />
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handlePlayNext} style={styles.controlButton}>
+          <Ionicons name="play-skip-forward" size={36} color="white" />
+        </TouchableOpacity>
+      </View>
 
-        <View style={{
+      <View
+        style={{
           flexDirection: 'row',
           alignItems: 'center',
           justifyContent: 'center',
-          marginTop: 30
-        }}>
-          <TouchableOpacity onPress={decreaseVolume} style={{ marginRight: 16 }}>
-            <Ionicons name="volume-low" size={28} color="white" />
-          </TouchableOpacity>
+          marginTop: 30,
+        }}
+      >
+        <TouchableOpacity onPress={decreaseVolume} style={{ marginRight: 16 }}>
+          <Ionicons name="volume-low" size={28} color="white" />
+        </TouchableOpacity>
 
-          <Slider
-            style={{ width: 200 }}
-            minimumValue={0}
-            maximumValue={1}
-            value={volume}
-            onValueChange={async (val) => {
-              setVolume(val);
-              await soundRef.current?.setStatusAsync({ volume: val });
-            }}
-            minimumTrackTintColor="#ffffff"
-            maximumTrackTintColor="#888"
-            thumbTintColor="#fff"
-          />
+        <Slider
+          style={{ width: 200 }}
+          minimumValue={0}
+          maximumValue={1}
+          value={volume}
+          onValueChange={async (val) => {
+            setVolume(val);
+            await soundRef.current?.setStatusAsync({ volume: val });
+          }}
+          minimumTrackTintColor="#ffffff"
+          maximumTrackTintColor="#888"
+          thumbTintColor="#fff"
+        />
 
-          <TouchableOpacity onPress={increaseVolume} style={{ marginLeft: 16 }}>
-            <Ionicons name="volume-high" size={28} color="white" />
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </>
+        <TouchableOpacity onPress={increaseVolume} style={{ marginLeft: 16 }}>
+          <Ionicons name="volume-high" size={28} color="white" />
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
