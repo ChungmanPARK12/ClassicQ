@@ -361,6 +361,13 @@ All notable changes to this project will be documented in this file.
 # Diagnosis
 - As we got the same bug issue, it's not the structure of code, it's about ver invironment environment, `Expo/RN, Gesture, Reanumated, DraggableFlatList`.
 
+## [2025-12-15] – [2025-12-19] - ClasscQSplash
+- Added `components/classicQSplash` as a shared a loading/status screen with `PlayingScreen`. 
+- Implemented preloading method on `PlayindScreen`, loading screen appears only on first visit. 
+
+# App.tsx
+- Added preloading method, `HomeScreen` now renders immediately without intermediate loading states. 
+
 
 
 

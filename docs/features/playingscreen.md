@@ -30,6 +30,8 @@ This document explains the structure, logic, and main functionalities of the **P
   ```
 - **Connected Data** Uses `route.params.track` passed from `Homescreen`.
 
+- This screen shared loading/status screen `ClassicQSplash` and prelod method.
+
 ## Major Functions & Logic
 
 ### `loadTrack`

@@ -28,7 +28,6 @@ This document explains the structure, logic, and main functionalities of the **H
   type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
   const navigation = useNavigation<NavigationProp>();
 
-
 ## Major Functions & Logic
 
 ### `handlePlayRandom`

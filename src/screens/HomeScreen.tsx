@@ -1,24 +1,17 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-} from 'react-native';
+// src/screens/HomeScreen.tsx
+import React from 'react';
+import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
 import { RootStackParamList } from '../navigation/types';
 import styles from './HomeScreen.style';
 import { trackList } from '../data/tracks';
-import ClassicQSplash from '../components/ClassicQSplash';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export default function HomeScreen() {
   const navigation = useNavigation<NavigationProp>();
-  const [bgLoaded, setBgLoaded] = useState(false);
-
-  const didSetLoadedRef = useRef(false);
 
   const handlePlayRandom = () => {
     const randomIndex = Math.floor(Math.random() * trackList.length);
@@ -38,43 +31,31 @@ export default function HomeScreen() {
     navigation.navigate('Favourite');
   };
 
-  const handleBgLoaded = () => {
-    if (didSetLoadedRef.current) return;
-    didSetLoadedRef.current = true;
-    setBgLoaded(true);
-  };
-
   return (
     <ImageBackground
       source={require('../../assets/background.jpg')}
       style={styles.backgroundImage}
       resizeMode="cover"
-      onLoadEnd={handleBgLoaded}
     >
-      {/* Loading status: ClassicQSplash to overlay */}
-      {!bgLoaded ? (
-        <ClassicQSplash />
-      ) : (
-        <>
-          <View style={styles.header}>
-            <Text style={styles.title}>🎼 ClassiQ</Text>
-          </View>
+      {/* Home UI should render immediately.
+          App-level splash (App.tsx) handles global loading. */}
+      <View style={styles.header}>
+        <Text style={styles.title}>🎼 ClassiQ</Text>
+      </View>
 
-          <View style={styles.body}>
-            <TouchableOpacity style={styles.button} onPress={handlePlayRandom}>
-              <Text style={styles.buttonText}>Play Random Music</Text>
-            </TouchableOpacity>
+      <View style={styles.body}>
+        <TouchableOpacity style={styles.button} onPress={handlePlayRandom}>
+          <Text style={styles.buttonText}>Play Random Music</Text>
+        </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleOpenList}>
-              <Text style={styles.buttonText}>        Music List        </Text>
-            </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleOpenList}>
+          <Text style={styles.buttonText}>        Music List        </Text>
+        </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button} onPress={handleOpenFavourite}>
-              <Text style={styles.buttonText}>         Favourite         </Text>
-            </TouchableOpacity>
-          </View>
-        </>
-      )}
+        <TouchableOpacity style={styles.button} onPress={handleOpenFavourite}>
+          <Text style={styles.buttonText}>         Favourite         </Text>
+        </TouchableOpacity>
+      </View>
     </ImageBackground>
   );
 }
