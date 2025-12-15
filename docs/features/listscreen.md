@@ -74,7 +74,7 @@ const handleTrackPress = (index: number) => {
 ```ts
 <FlatList
   data={trackList}
-  keyExtractor={(item) => item.title}
+  keyExtractor={(item) => item.id}
   renderItem={renderTrackItem}
 />
 
@@ -83,5 +83,5 @@ const handleTrackPress = (index: number) => {
 - Displaying all tracks available in the app in an organized list view. 
 - Allowing users to select a specific track to play. 
 - Managint inline play/pause, blinking animation for the active item, and 3-second auto-advance across the list. 
-- Handling image loading state with a per-item spinner. 
+- Handling image loading state with a ClassicQ logo. 
 
