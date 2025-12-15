@@ -13,9 +13,9 @@ export type RootStackParamList = {
     Favourite: undefined;
   };
   export type Track = {
-  title: string;
-  composer: string;
-  image: ImageSourcePropType; // optional if some items don't have images yet
-  // id?: string; // uncomment if you want a stable id key
+    id: string;
+    title: string;
+    composer: string;
+    image: ImageSourcePropType; 
 };
   

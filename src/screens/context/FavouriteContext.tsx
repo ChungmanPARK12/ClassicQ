@@ -1,8 +1,7 @@
 // screens/context/FavouriteContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
-type Track = { title: string; composer: string; image: any };
+import type { Track } from '../../navigation/types';
 
 type FavouriteContextType = {
   favourites: Track[];

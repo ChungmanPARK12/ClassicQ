@@ -14,11 +14,15 @@ import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flat
 import { LinearGradient } from 'expo-linear-gradient';
 import { Ionicons } from '@expo/vector-icons';
 import { useFavourite } from '../screens/context/FavouriteContext';
-
-type Track = { title: string; composer: string; image: any };
+import { debugValidateTracks } from '../utils/debugTracks';
+import { Track } from '../navigation/types';
 
 export default function FavouriteScreen() {
   const { favourites, removeFromFavourites, reorderFavourites } = useFavourite();
+
+  useEffect(() => {
+  debugValidateTracks(favourites, Math.min(10, favourites.length));
+}, [favourites]);
 
   const [loadingMap, setLoadingMap] = useState<{ [index: number]: boolean }>({});
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
