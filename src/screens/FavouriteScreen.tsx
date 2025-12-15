@@ -208,10 +208,10 @@ const styles = StyleSheet.create({
   itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
   itemActive: { backgroundColor: '#274627' },
 
-  trackImage: { width: 90, height: 90, borderRadius: 6 },
+  trackImage: { width: 90, height: 80, borderRadius: 6 },
   imageBox: {
     width: 90,
-    height: 90,
+    height: 80,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
