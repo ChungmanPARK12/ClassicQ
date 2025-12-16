@@ -12,18 +12,24 @@ Full App Flow
 
 ---
 
-**Source:** `src/screens/HomeScreen.tsx`
+**Source:** `App.tsx`
 
 - Keeps the splash screen visible until the Home screen is ready.  
 - A short **preload** delay is applied on the first visit only and skipped on subsequent launches.
 
-- 
+---
+
 ### 2. Home Screen
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/0a4bbad2-87c3-4a85-9369-2f971bd97661" width="280"/>
 </p>
 
+- Displays the main entry screen of ClassicQ.
 
+**Source:** `src/screens/HomeScreen.tsx`
+
+- Provides access to Random Music playback, Music List, and Favourite screens.  
+- Each menu routes to its corresponding screen using React Navigation.
 
 ---
