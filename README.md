@@ -2,11 +2,11 @@
 
 ![Image](https://github.com/user-attachments/assets/ea6ba522-58e8-4d9d-8354-5ce60532dd69)
 
-My first self-initiated project built with React Native, focused on clean UI, structured navigation, and practical mobile app architecture.
+My first self-initiated project built with React Native + Expo mobile app, developed through AI-assisted planning, design, and implementation, with full ownership of architectural and code decisions.
 
 ## Project Overview
 
-This project demonstrates how I structure and implement a real-world mobile app flow using React Native.
+This project demonstrates how I structure and implement a mobile app flow using React Native.
 
 It focuses on the app’s initial user experience:
 
@@ -31,8 +31,6 @@ This repository is part of my portfolio and highlights:
 - Random playback across the full music library.
 - Favorites screen for saved tracks.
 - Clean and predictable navigation structure.
-
-
 
 ## Full App Flow
 - Link to docs/full-app-flow.md (or equivalent)
