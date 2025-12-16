@@ -2,16 +2,37 @@
 
 ![Image](https://github.com/user-attachments/assets/ea6ba522-58e8-4d9d-8354-5ce60532dd69)
 
-Short one-line description
+My first self-initiated project built with React Native, focused on clean UI, structured navigation, and practical mobile app architecture.
 
 ## Project Overview
-- What problem this project focuses on
-- What kind of flow or system it demonstrates
+
+This project demonstrates how I structure and implement a real-world mobile app flow using React Native.
+
+It focuses on the app’s initial user experience:
+
+**Splash → Home → Loader → Playlist / Track List / Favorites**
+
+The focus is on:
+
+- Clean and predictable navigation structure
+- Controlled loading and splash screen behavior
+- A calm, distraction-free UX inspired by classical music listening
+
+This repository is part of my portfolio and highlights:
+
+- A solid UI and navigation foundation for a music-focused mobile app.
+- A scalable structure prepared for future features such as expanded playlist logic and content management.
+
 
 ## Features
-- Core feature group 1
-- Core feature group 2
-- Core feature group 3
+
+- Splash screen with controlled app initialization.
+- Track list with basic playback flow.
+- Random playback across the full music library.
+- Favorites screen for saved tracks.
+- Clean and predictable navigation structure.
+
+
 
 ## Full App Flow
 - Link to docs/full-app-flow.md (or equivalent)
