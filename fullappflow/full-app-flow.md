@@ -15,7 +15,7 @@ Full App Flow
 ### 2. Home Screen
 
 <p align="center">
-  <img src="Image" src="https://github.com/user-attachments/assets/0a4bbad2-87c3-4a85-9369-2f971bd97661" width="280"/>
+  <img src="https://github.com/user-attachments/assets/0a4bbad2-87c3-4a85-9369-2f971bd97661" width="280"/>
 </p>
 
 - Displays the ClassicQ brand as the app initializes.
