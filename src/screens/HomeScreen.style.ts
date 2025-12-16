@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   
   title: {
     fontFamily: 'Lora_700Bold',
-    fontSize: 36,
+    fontSize: 32,
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#1e1e1e',

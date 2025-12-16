@@ -30,7 +30,6 @@ export default function PlayingScreen({ route }: Props) {
   const [previousTrack, setPreviousTrack] = useState<typeof currentTrack | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
-
   const [isReady, setIsReady] = useState(false);
 
   const spinAnim = useRef(new Animated.Value(0)).current;

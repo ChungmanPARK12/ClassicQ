@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
 
   loading: {
     marginTop: 10,
-    fontSize: 20,
+    fontSize: 24,
     color: '#2f2f2f',
     opacity: 0.8,
   },
