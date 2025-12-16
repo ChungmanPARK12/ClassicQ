@@ -33,7 +33,11 @@ This repository is part of my portfolio and highlights:
 - Clean and predictable navigation structure.
 
 ## Full App Flow
-- Link to docs/full-app-flow.md (or equivalent)
+
+An overview of the application flow from launch to the main service screens.
+
+- [Full App Flow Documentation](docs/full-app-flow.md)
+
 
 ## Installation
 
