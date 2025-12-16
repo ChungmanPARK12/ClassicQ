@@ -34,7 +34,7 @@ This repository is part of my portfolio and highlights:
 
 ## Full App Flow
 
-An overview of the application flow from launch to the main service screens.
+An overview of the application flow from launch to the main service screens:
 
 - [Full App Flow Documentation](fullappflow/full-app-flow.md)
 
