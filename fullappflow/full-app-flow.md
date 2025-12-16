@@ -34,3 +34,19 @@ Full App Flow
 - The **random track** is selected before navigation to ensure the **Ramdom Play screen** receives a fully resolved track state.
 
 ---
+
+### 2. Random Play Screen
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/2a361232-4e39-4eb9-bdc1-b59a1e76efcf" width="280"/>
+</p>
+
+- Displays the random playback screen, showing the currently selected track and playback state.
+
+**Source:** `src/screens/PlayingScreen.tsx`
+
+- Receives a pre-selected **random track** before navigation and renders it immediately.
+- Uses a **preload** phase to wait until background and vinyl assets are ready before displaying the UI.
+- Applies subtle **animation** and **blinking** effects to indicate active playback state.
+
+---
