@@ -3,7 +3,7 @@
 <img 
   src="https://github.com/user-attachments/assets/7f2a890f-a83e-47da-8a98-bed8ac832f15"
   alt="ClassicQ App Screenshot"
-  width="360"
+  height="560"
 />
 
 
