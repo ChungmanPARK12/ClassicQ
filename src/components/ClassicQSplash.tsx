@@ -26,7 +26,7 @@ const ClassicQSplash = () => {
     return (
     <View style={styles.container}>
         <Animated.View style={[styles.content, { opacity }]}>
-        <Text style={styles.title}>🎼 ClassiQ</Text>
+        <Text style={styles.title}>🎼 ClassicQ</Text>
         <Text style={styles.loading}>Setting the mood...</Text>
         </Animated.View>
     </View>

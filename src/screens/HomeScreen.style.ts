@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   
-
   title: {
     fontFamily: 'Lora_700Bold',
     fontSize: 36,
@@ -36,8 +35,6 @@ const styles = StyleSheet.create({
     color: '#1e1e1e',
   },
   
-  
-  // Buttons
   button: {
     backgroundColor: 'rgba(255, 255, 255, 0.15)', // semi-transparent for background harmony
     paddingVertical: 14,
@@ -52,7 +49,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.15,
     shadowRadius: 8,
-    
   },
 
   favButton: {

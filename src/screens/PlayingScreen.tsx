@@ -161,7 +161,6 @@ export default function PlayingScreen({ route }: Props) {
     }
   };
 
-  // ✅ HomeScreen과 동일: 준비 전엔 로딩 화면만 반환
   if (!isReady) {
     return <ClassicQSplash />;
   }

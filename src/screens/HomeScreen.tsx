@@ -40,7 +40,7 @@ export default function HomeScreen() {
       {/* Home UI should render immediately.
           App-level splash (App.tsx) handles global loading. */}
       <View style={styles.header}>
-        <Text style={styles.title}>🎼 ClassiQ</Text>
+        <Text style={styles.title}>🎼 ClassicQ</Text>
       </View>
 
       <View style={styles.body}>

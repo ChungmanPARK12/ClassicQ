@@ -52,7 +52,7 @@ export default function App() {
     return (
       <View style={styles.splashContainer}>
         <StatusBar hidden />
-        <Text style={styles.title}>🎼 ClassiQ</Text>
+        <Text style={styles.title}>🎼 ClassicQ</Text>
       </View>
     );
   }
