@@ -29,7 +29,8 @@ Full App Flow
 
 **Source:** `src/screens/HomeScreen.tsx`
 
-- Provides access to Random Music playback, Music List, and Favourite screens.  
-- Each menu routes to its corresponding screen using React Navigation.
+- Provides access to **Random Music playback**, **Music List**, and **Favourite screen**.  
+- Uses `handlePlayRandom()` to enable immediate random playback from the full music list, navigating directly to the **Random Play screen**.
+- The **random track** is selected before navigation to ensure the **Ramdom Play screen** receives a fully resolved track state.
 
 ---
