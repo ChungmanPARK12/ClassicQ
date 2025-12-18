@@ -15,12 +15,12 @@ const styles = StyleSheet.create({
     width: 200,
     height: 200,
     position: 'absolute',
-    top: '42.5%',
+    top: '45%',
     zIndex: 1,
     opacity: 0.8,
   },
 
-  playerBox: {
+ playerBox: {
   width: 350,
   minHeight: 650,
   paddingTop: 40,
@@ -40,7 +40,7 @@ infoBox: {
   width: '100%',
   backgroundColor: 'rgba(255, 255, 255, 0.04)',
   borderRadius: 16,
-  paddingVertical: 50,
+  paddingVertical: 5,
   paddingHorizontal: 24,
   alignItems: 'center',
   justifyContent: 'center',

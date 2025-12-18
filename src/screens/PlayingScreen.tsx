@@ -199,8 +199,11 @@ export default function PlayingScreen({ route }: Props) {
 
         <TouchableOpacity
           onPress={handleTogglePlay}
-          style={[styles.controlButton, { transform: [{ translateX: 3 }] }]}
-        >
+          style={[
+            styles.controlButton,
+            !isPlaying ? { transform: [{ translateX: 3 }] } : null, // ✅ play일 때만
+          ]}
+         >
           <Ionicons name={isPlaying ? 'pause' : 'play'} size={44} color="white" />
         </TouchableOpacity>
 
