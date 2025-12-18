@@ -1,11 +1,10 @@
 // src/screens/HomeScreen.tsx
 import React from 'react';
+import styles from './HomeScreen.style';
 import { View, Text, TouchableOpacity, ImageBackground } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-
 import { RootStackParamList } from '../navigation/types';
-import styles from './HomeScreen.style';
 import { trackList } from '../data/tracks';
 
 type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;

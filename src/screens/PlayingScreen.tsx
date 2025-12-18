@@ -7,15 +7,14 @@ import {
   Easing,
   ImageBackground,
 } from 'react-native';
+import styles from './PlayingScreen.style';
 import { RouteProp } from '@react-navigation/native';
 import { RootStackParamList } from '../navigation/types';
-import styles from './PlayingScreen.style';
 import { trackList } from '../data/tracks';
 import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import { Asset } from 'expo-asset';
-
 import ClassicQSplash from '../components/ClassicQSplash';
 
 type PlayingScreenRouteProp = RouteProp<RootStackParamList, 'NowPlaying'>;
@@ -25,7 +24,11 @@ type Props = {
 };
 
 export default function PlayingScreen({ route }: Props) {
-  const initialTrack = { title: route.params.title, composer: route.params.composer };
+  const initialTrack = { 
+    title: route.params.title, 
+    composer: route.params.composer 
+  };
+
   const [currentTrack, setCurrentTrack] = useState(initialTrack);
   const [previousTrack, setPreviousTrack] = useState<typeof currentTrack | null>(null);
 

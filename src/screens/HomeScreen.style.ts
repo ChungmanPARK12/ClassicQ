@@ -1,3 +1,4 @@
+// src/HomeScreen.style.ts
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -70,8 +71,7 @@ const styles = StyleSheet.create({
   justifyContent: 'center',
   alignItems: 'center',
   zIndex: 10,
-}
-
+  }
   
 });
 

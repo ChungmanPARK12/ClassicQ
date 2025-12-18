@@ -1,3 +1,4 @@
+// src/screens/PlayingScreen.style.ts
 import { StyleSheet, Dimensions } from 'react-native';
 
 const { width, height } = Dimensions.get('window');
@@ -94,7 +95,7 @@ infoBox: {
     marginTop: -150,
   },
 
-  controlButton: {
+ controlButton: {
     flex: 1,
     alignItems: 'center',
   },
