@@ -4,18 +4,21 @@ import {
   View,
   Text,
   FlatList,
-  StyleSheet,
   TouchableOpacity,
   Animated,
   Image,
 } from 'react-native';
 import styles from './ListScreen.style';
+
+// Renders a three-color linear gradient background.
 import { LinearGradient } from 'expo-linear-gradient';
+
+// Play and pause icon on the image.
 import { Ionicons } from '@expo/vector-icons';
 import { trackList } from '../data/tracks';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { Track } from '../navigation/types';
-// debug
+// debug.
 import { debugValidateTracks } from '../utils/debugTracks';
 
 
@@ -26,24 +29,21 @@ export default function ListScreen() {
   const animationRef = useRef<Animated.CompositeAnimation | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // per-image loading status
+  // per-image loading status.
   const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
-
-  // FavouriteContext
   const { favourites, addToFavourites, removeFromFavourites } = useFavourite();
 
-  // Debugging
+  // Debug output 100 list in ListScreen.
   useEffect(() => {
     debugValidateTracks(trackList, 10); // runs only in __DEV__
   }, []);
 
-  // toggle favourite
+  // Add and remove the favourite state for the selected track.
   const toggleFavourite = (track: Track) => {
     const isFav = favourites.some(t => t.id === track.id);
     isFav ? removeFromFavourites(track) : addToFavourites(track);
   };
 
-  // blink animation
   const startBlinking = () => {
     fadeAnim.setValue(1);
     animationRef.current = Animated.loop(
@@ -101,19 +101,18 @@ export default function ListScreen() {
     };
   }, []);
 
-  // render item
   const renderItem = ({ item, index }: { item: Track; index: number }) => {
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
+
+    // Alternate background color by row index.
     const backgroundStyle = index % 2 === 1 ? styles.itemDark : styles.itemLight;
     const isLoading = !!loadingMap[item.id];
 
     return (
       <TouchableOpacity onPress={() => handleTrackPress(index)} style={styles.itemWrapper}>
         <View style={[styles.item, backgroundStyle]}>
-          {/* Artwork container - fixed width column */}
           <View style={styles.artContainer}>
-            {/* Real Image (centered in fixed column) */}
             <Image
               source={item.image}
               style={styles.artImage}
@@ -124,22 +123,24 @@ export default function ListScreen() {
 
             {/* Placeholder - exactly same size/position as artImage */}
             {isLoading && (
+              // Placeholder container (Animated for future blinking/shimmer effects).
               <Animated.View style={[styles.artImage, styles.placeholderBox]}>
                 <Text style={styles.placeholderText}>🎼 ClassiQ</Text>
               </Animated.View>
             )}
 
-            {/* Play/Pause icon overlay - always centered over ART_BOX */}
-            {/* <View style={styles.playIconOverlay}>
-              <Ionicons
-                name={playingIndex === index ? (isPaused ? 'play' : 'pause') : 'play'}
-                size={18}
-                color="#fff"
-              />
-            </View> */}
+            {/* Play/Pause icon overlay - show only after artwork is loaded */}
+            {!isLoading && (
+              <View style={styles.playIconOverlay}>
+                <Ionicons
+                  name={playingIndex === index ? (isPaused ? 'play' : 'pause') : 'play'}
+                  size={18}
+                  color="#fff"
+                />
+              </View>
+            )}
           </View>
 
-          {/* Text */}
           <View style={styles.textBox}>
             <TextComponent style={[styles.trackTitle, isPlaying && { opacity: fadeAnim }]}>
               {item.title}
@@ -147,7 +148,7 @@ export default function ListScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
-          {/* Heart */}
+          {/* Heart button add to favourite and cancel */}
           <View style={styles.actionsBox}>
             <TouchableOpacity
               onPress={(e) => {

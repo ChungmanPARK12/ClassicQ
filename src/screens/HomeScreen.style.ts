@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   },
   
   button: {
-    backgroundColor: 'rgba(255, 255, 255, 0.15)', // semi-transparent for background harmony
+    backgroundColor: 'rgba(255, 255, 255, 0.15)', 
     paddingVertical: 14,
     paddingHorizontal: 28,
     borderRadius: 30,
@@ -51,11 +51,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 8,
   },
-
-  favButton: {
-    backgroundColor: 'rgba(228, 93, 127, 0.2)', // subtle pink shade
-    borderColor: 'rgba(228, 93, 127, 0.4)',
-  },
   
   buttonText: {
     color: '#ffffff',
@@ -65,14 +60,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 
-  loader: {
-  ...StyleSheet.absoluteFillObject,
- 
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 10,
-  }
-  
 });
 
 export default styles;

@@ -107,6 +107,7 @@ const RAW_TRACKS = [
 ];
 
 // --- Map and attach stable ids ---
+// Detect and resolve rare hash collisions.
 const seen = new Set<string>();
 
 export const trackList: Track[] = RAW_TRACKS.map((t) => {

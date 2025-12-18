@@ -1,6 +1,8 @@
+// src/components/ClassicQSplash.tsx
 import React, { useEffect, useRef } from 'react';
 import { View, StyleSheet, Animated, Text } from 'react-native';
 
+// Loading status method
 const ClassicQSplash = () => {
   const opacity = useRef(new Animated.Value(1)).current;
 

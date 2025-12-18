@@ -1,11 +1,7 @@
 // src/screens/ListScreen.style.ts
 import { StyleSheet } from 'react-native';
 
-/** Layout constants
- * ART_BOX: reserved column width/height for artwork (doesn't change row layout)
- * IMAGE_SIZE: actual picture/placeholder size inside the column (safe to tweak)
- * PLAY_BADGE: overlay badge size (auto-centered with math from constants)
- */
+// Layout constants
 const ART_BOX = 80;
 const IMAGE_SIZE = 85;   // <- change this freely; alignment won’t move
 const PLAY_BADGE = 20;
@@ -16,8 +12,10 @@ const styles = StyleSheet.create({
     paddingTop: 0,
     paddingHorizontal: 0,
   },
+
   background: { flex: 1 },
   itemWrapper: { marginBottom: -2 },
+
   item: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -31,10 +29,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 6,
   },
+
   itemLight: { backgroundColor: '#3e2723' },
   itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
 
-  // Fixed-size art column (keeps row alignment stable)
   artContainer: {
     width: ART_BOX,
     height: ART_BOX,
@@ -52,7 +50,6 @@ const styles = StyleSheet.create({
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
     borderRadius: 8,
-    //backgroundColor: '#6b4436',
   },
 
   // Placeholder matches artImage exactly
@@ -65,6 +62,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     backgroundColor: '#5C3A2E',
   },
+
   placeholderText: {
     fontFamily: 'Lora_700Bold',
     fontSize: 12,
@@ -72,7 +70,6 @@ const styles = StyleSheet.create({
     color: '#1e1e1e',
   },
 
-  // Centered overlay computed from constants
   playIconOverlay: {
     position: 'absolute',
     left: (ART_BOX - PLAY_BADGE) / 2,
@@ -88,6 +85,8 @@ const styles = StyleSheet.create({
   textBox: { flex: 1, justifyContent: 'center' },
   trackTitle: { fontSize: 15, fontWeight: '600', color: '#fff' },
   trackComposer: { fontSize: 14, color: '#ddd', marginTop: 4 },
+
+  // Heart button
   actionsBox: {
     justifyContent: 'center',
     alignItems: 'center',

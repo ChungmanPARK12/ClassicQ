@@ -3,16 +3,23 @@ import React, { useEffect, useRef, useState } from 'react';
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Animated,
   Image,
   ActivityIndicator,
 } from 'react-native';
 import styles from './FavouriteScreen.style';
+
+// Handles advanced gestures (drag, long-press, swipe).
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+
+// Provides a drag-and-drop FlatList for reordering items.
 import DraggableFlatList, { RenderItemParams } from 'react-native-draggable-flatlist';
+
+// Renders a three-color linear gradient background.
 import { LinearGradient } from 'expo-linear-gradient';
+
+// Play and pause icon on the image
 import { Ionicons } from '@expo/vector-icons';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { debugValidateTracks } from '../utils/debugTracks';
@@ -21,6 +28,7 @@ import { Track } from '../navigation/types';
 export default function FavouriteScreen() {
   const { favourites, removeFromFavourites, reorderFavourites } = useFavourite();
 
+  // Debug output all the list in Favourite
   useEffect(() => {
   debugValidateTracks(favourites, Math.min(10, favourites.length));
 }, [favourites]);
@@ -94,7 +102,8 @@ export default function FavouriteScreen() {
     const index = getIndex?.() ?? 0;
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
-
+  
+    // Change background color when dragging, otherwise alternate by row.
     const bgStyle = isActive
       ? styles.itemActive
       : index % 2 === 1
@@ -134,6 +143,7 @@ export default function FavouriteScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
+           {/* Click heart icon to remove the item */}
           <View style={styles.actionsBox}>
             <TouchableOpacity
               onPress={() => removeFromFavourites(item)}
@@ -158,7 +168,7 @@ export default function FavouriteScreen() {
     );
   };
 
-  // Keep playback tied to same track after reorder (by title)
+  // Keep playback to same track after reorder (by title)
   const onDragEnd = ({ data }: { data: Track[] }) => {
     const prevPlayingTitle =
       playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].title : null;

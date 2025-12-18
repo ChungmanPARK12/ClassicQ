@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react';
 import {
   View,
-  Text,
   TouchableOpacity,
   Animated,
   Easing,
@@ -15,6 +14,7 @@ import { Ionicons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import { Audio } from 'expo-av';
 import { Asset } from 'expo-asset';
+// Loading status
 import ClassicQSplash from '../components/ClassicQSplash';
 
 type PlayingScreenRouteProp = RouteProp<RootStackParamList, 'NowPlaying'>;

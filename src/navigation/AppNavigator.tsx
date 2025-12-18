@@ -5,10 +5,9 @@ import HomeScreen from '../screens/HomeScreen';
 import PlayingScreen from '../screens/PlayingScreen';
 import ListScreen from '../screens/ListScreen';
 import FavouriteScreen from '../screens/FavouriteScreen';
+import { RootStackParamList } from './types'; 
 
-import { RootStackParamList } from './types'; // ✅ Import type
-
-const Stack = createNativeStackNavigator<RootStackParamList>(); // ✅ Apply type here
+const Stack = createNativeStackNavigator<RootStackParamList>(); 
 
 export default function AppNavigator() {
   return (

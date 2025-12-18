@@ -18,11 +18,13 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     alignItems: 'center',
   },
+  
   itemLight: { backgroundColor: '#3e2723' },
   itemDark: { backgroundColor: 'rgba(0,0,0,0.35)' },
   itemActive: { backgroundColor: '#274627' },
 
   trackImage: { width: 90, height: 80, borderRadius: 6 },
+
   imageBox: {
     width: 90,
     height: 80,
@@ -32,7 +34,9 @@ const styles = StyleSheet.create({
     marginLeft: -20,
     position: 'relative',
   },
+
   imageLoader: { position: 'absolute', zIndex: 1 },
+
   iconOverlay: {
     position: 'absolute',
     top: '50%',

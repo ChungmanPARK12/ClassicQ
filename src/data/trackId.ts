@@ -1,13 +1,12 @@
 // src/data/trackId.ts
 const normalize = (s: string) =>
   s
-    .normalize("NFKC")
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, " "); // collapse spaces
+    .normalize("NFKC") // Unicode normalization
+    .toLowerCase() // Convert to lowercase
+    .trim() // Remove whitespace
+    .replace(/\s+/g, " "); // Collapse multiple spaces into a single space
 
-// 32-bit FNV-1a hash
-// Hashcode simplifier identity with numeric print and safe data handleing and storage
+// 32-bit FNV-1a hash used to generate stable numeric identifiers
 const fnv1a32 = (str: string): number => {
   let hash = 0x811c9dc5;
   for (let i = 0; i < str.length; i++) {
@@ -18,10 +17,10 @@ const fnv1a32 = (str: string): number => {
   return hash >>> 0;
 };
 
-// Convert to short text (base36)
+// Convert to short text (base36, 0-9, a-z)
 const toBase36 = (n: number) => n.toString(36);
 
-// Main function
+// Generate a stable track ID from normalized metadata.
 export const trackIdOf = (title: string, composer: string, extra?: string) => {
   const key = extra
     ? `${normalize(title)}|${normalize(composer)}|${normalize(extra)}`

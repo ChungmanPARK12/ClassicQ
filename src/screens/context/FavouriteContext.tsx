@@ -7,9 +7,10 @@ type FavouriteContextType = {
   favourites: Track[];
   addToFavourites: (track: Track) => void;
   removeFromFavourites: (track: Track) => void;
-  reorderFavourites: (newOrder: Track[]) => void; // ✅ new
+  reorderFavourites: (newOrder: Track[]) => void; 
 };
 
+// Create a context for managing favourite tracks. 
 const FavouriteContext = createContext<FavouriteContextType>({
   favourites: [],
   addToFavourites: () => {},
@@ -17,12 +18,15 @@ const FavouriteContext = createContext<FavouriteContextType>({
   reorderFavourites: () => {},
 });
 
+// Custom hook to access the FaouriteContext
 export const useFavourite = () => useContext(FavouriteContext);
 
+// Provider component that owns favourite state and persistence logic.
 export const FavouriteProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [favourites, setFavourites] = useState<Track[]>([]);
   const STORAGE_KEY = '@classicq_favourites';
 
+  // Load favourites from persistent storage on app start.
   useEffect(() => {
     const loadFavourites = async () => {
       try {
@@ -35,6 +39,7 @@ export const FavouriteProvider: React.FC<{ children: React.ReactNode }> = ({ chi
     loadFavourites();
   }, []);
 
+  // Persist the current favourites list to AsyncStorage.
   const persist = async (list: Track[]) => {
     try {
       await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(list));
