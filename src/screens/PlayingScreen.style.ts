@@ -12,44 +12,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  record: {
+  recordImage: {
     width: 200,
     height: 200,
-    position: 'absolute',
-    top: '45%',
-    zIndex: 1,
     opacity: 0.8,
   },
 
- playerBox: {
-  width: 350,
-  minHeight: 650,
-  paddingTop: 40,
-  paddingBottom: 60,
-  paddingHorizontal: 30,
-  backgroundColor: 'rgba(255, 255, 255, 0.05)',
-  borderRadius: 20,
-  borderWidth: 1,
-  borderColor: 'rgba(255,255,255,0.2)',
-  alignItems: 'center',
-  justifyContent: 'flex-start',
-  marginTop: -60,
-  gap: 30, // ✅ optional: clean spacing between child elements
-},
+  recordWrapper: {
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    alignSelf: 'center',
+  },
 
-infoBox: {
-  width: '100%',
-  backgroundColor: 'rgba(255, 255, 255, 0.04)',
-  borderRadius: 16,
-  paddingVertical: 5,
-  paddingHorizontal: 24,
-  alignItems: 'center',
-  justifyContent: 'center',
-  borderWidth: 1,
-  borderColor: 'rgba(255,255,255,0.2)',
-  marginBottom: 20, // ✅ slightly less to avoid pushing elements too far
-  marginTop: -20,
-},
+  infoBox: {
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+    borderRadius: 16,
+    height: 450,
+    paddingHorizontal: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    position: 'relative',
+    overflow: 'hidden',
+    marginTop: -20,
+  },
+
+  playerBox: {
+    width: 350,
+    minHeight: 650,
+    paddingTop: 40,
+    paddingBottom: 60,
+    paddingHorizontal: 30,
+    backgroundColor: 'rgba(255, 255, 255, 0.05)',
+    borderRadius: 20,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    marginTop: -60,
+  },
+
+  textArea: {
+    marginTop: 30,
+    width: '100%',
+    alignItems: 'center',
+  },
 
   titleContainer: {
     position: 'absolute',
@@ -58,7 +67,7 @@ infoBox: {
   },
 
   label: {
-    fontSize: 20,
+    fontSize: 30,
     marginBottom: 8,
     color: '#f5f5f5',
     fontFamily: 'Lora_700Bold',
@@ -68,7 +77,7 @@ infoBox: {
   },
 
   track: {
-    fontSize: 32,
+    fontSize: 25,
     color: '#ffffff',
     textAlign: 'center',
     fontFamily: 'Lora_700Bold',
@@ -95,30 +104,28 @@ infoBox: {
     marginTop: -150,
   },
 
- controlButton: {
+  controlButton: {
     flex: 1,
     alignItems: 'center',
   },
 
- playText: {
-  fontSize: 26,
-  fontWeight: '600',
-  color: '#ffffff',
-  fontFamily: 'Lora_700Bold',
-  textShadowColor: 'rgba(0,0,0,0.5)',
-  textShadowOffset: { width: 1, height: 1 },
-  textShadowRadius: 2,
-},
+  playText: {
+    fontSize: 26,
+    fontWeight: '600',
+    color: '#ffffff',
+    fontFamily: 'Lora_700Bold',
+    textShadowColor: 'rgba(0,0,0,0.5)',
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
 
-loader: {
-  ...StyleSheet.absoluteFillObject,
-  justifyContent: 'center',
-  alignItems: 'center',
- // backgroundColor: '#7B4A2D',
-  zIndex: 999,
-},
-
-
+  loader: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // backgroundColor: '#7B4A2D',
+    zIndex: 999,
+  },
 });
 
 export default styles;

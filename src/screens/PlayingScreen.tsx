@@ -7,13 +7,21 @@ import {
   ImageBackground,
 } from 'react-native';
 import styles from './PlayingScreen.style';
+
+// Type-safe route params (RootStack)
 import { RouteProp } from '@react-navigation/native';
+
+// Type definition for RootStack routes and parameters.
 import { RootStackParamList } from '../navigation/types';
 import { trackList } from '../data/tracks';
 import { Ionicons } from '@expo/vector-icons';
+
+// Slide bar for the volume control.
 import Slider from '@react-native-community/slider';
-import { Audio } from 'expo-av';
+
+// Preload two images in Asset.
 import { Asset } from 'expo-asset';
+
 // Loading status
 import ClassicQSplash from '../components/ClassicQSplash';
 
@@ -24,9 +32,9 @@ type Props = {
 };
 
 export default function PlayingScreen({ route }: Props) {
-  const initialTrack = { 
-    title: route.params.title, 
-    composer: route.params.composer 
+  const initialTrack = {
+    title: route.params.title,
+    composer: route.params.composer
   };
 
   const [currentTrack, setCurrentTrack] = useState(initialTrack);
@@ -41,9 +49,8 @@ export default function PlayingScreen({ route }: Props) {
   const blinkLoop = useRef<Animated.CompositeAnimation | null>(null);
 
   const [volume, setVolume] = useState(1.0);
-  const soundRef = useRef<Audio.Sound | null>(null);
 
-  // Image pre-load (background2 + vinyl)
+  // Image pre-load (background2 + record)
   useEffect(() => {
     let mounted = true;
 
@@ -56,7 +63,7 @@ export default function PlayingScreen({ route }: Props) {
 
         if (mounted) setIsReady(true);
       } catch (e) {
-        
+
         if (mounted) setIsReady(true);
       }
     };
@@ -70,15 +77,14 @@ export default function PlayingScreen({ route }: Props) {
   const increaseVolume = async () => {
     const newVolume = Math.min(volume + 0.1, 1.0);
     setVolume(newVolume);
-    await soundRef.current?.setStatusAsync({ volume: newVolume });
   };
 
   const decreaseVolume = async () => {
     const newVolume = Math.max(volume - 0.1, 0.0);
     setVolume(newVolume);
-    await soundRef.current?.setStatusAsync({ volume: newVolume });
   };
 
+  // Spins the record with a full 360° rotation
   const spin = spinAnim.interpolate({
     inputRange: [0, 1],
     outputRange: ['0deg', '360deg'],
@@ -103,6 +109,7 @@ export default function PlayingScreen({ route }: Props) {
     spinAnim.setValue(0);
   };
 
+  // Updates the blinking animation speed based on the current volume level
   const updateBlinkAnimation = () => {
     blinkLoop.current?.stop();
     const blinkDuration = 1000 - volume * 700;
@@ -173,25 +180,47 @@ export default function PlayingScreen({ route }: Props) {
       style={styles.container}
       resizeMode="cover"
     >
-      <Animated.Image
-        source={require('../../assets/vinyl-record.png')}
-        style={[
-          styles.record,
-          isPlaying ? { transform: [{ rotate: spin }] } : {},
-        ]}
-      />
+
 
       <View style={styles.playerBox}>
         <View style={styles.infoBox}>
-          <Animated.Text style={[styles.label, { opacity: isPlaying ? blinkAnim : 1 }]}>
-            Now Playing:
-          </Animated.Text>
-          <Animated.Text style={[styles.track, { opacity: isPlaying ? blinkAnim : 1 }]}>
-            {currentTrack.title}
-          </Animated.Text>
-          <Animated.Text style={[styles.composer, { opacity: isPlaying ? blinkAnim : 1 }]}>
-            by {currentTrack.composer}
-          </Animated.Text>
+          <View style={styles.textArea}>
+            <Animated.Text style={[styles.label, { opacity: isPlaying ? blinkAnim : 1 }]}>
+              Now Playing:
+            </Animated.Text>
+
+            <Animated.Text
+              style={[styles.track, { opacity: isPlaying ? blinkAnim : 1 }]}
+              numberOfLines={3}
+              ellipsizeMode="tail"
+            >
+              {currentTrack.title}
+            </Animated.Text>
+
+            <Animated.Text
+              style={[styles.composer, { opacity: isPlaying ? blinkAnim : 1 }]}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              by {currentTrack.composer}
+            </Animated.Text>
+          </View>
+
+          <View style={styles.recordWrapper}>
+            <Animated.Image
+              source={require('../../assets/vinyl-record.png')}
+              style={[
+                styles.recordImage,
+                {
+                  transform: [
+                    { translateX: 40 },
+                    { rotate: isPlaying ? spin : '0deg' },
+                  ],
+                },
+              ]}
+            />
+
+          </View>
         </View>
       </View>
 
@@ -204,9 +233,9 @@ export default function PlayingScreen({ route }: Props) {
           onPress={handleTogglePlay}
           style={[
             styles.controlButton,
-            !isPlaying ? { transform: [{ translateX: 3 }] } : null, // ✅ play일 때만
+            !isPlaying ? { transform: [{ translateX: 3 }] } : null,
           ]}
-         >
+        >
           <Ionicons name={isPlaying ? 'pause' : 'play'} size={44} color="white" />
         </TouchableOpacity>
 
@@ -215,6 +244,7 @@ export default function PlayingScreen({ route }: Props) {
         </TouchableOpacity>
       </View>
 
+      {/*Volume control bar */}
       <View
         style={{
           flexDirection: 'row',
@@ -233,8 +263,7 @@ export default function PlayingScreen({ route }: Props) {
           maximumValue={1}
           value={volume}
           onValueChange={async (val) => {
-            setVolume(val);
-            await soundRef.current?.setStatusAsync({ volume: val });
+            setVolume(val)
           }}
           minimumTrackTintColor="#ffffff"
           maximumTrackTintColor="#888"
