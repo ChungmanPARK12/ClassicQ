@@ -12,33 +12,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  recordImage: {
-    width: 200,
-    height: 200,
-    opacity: 0.8,
-  },
-
-  recordWrapper: {
-    position: 'absolute',
-    bottom: 10,
-    left: 0,
-    right: 0,
-    alignSelf: 'center',
-  },
-
-  infoBox: {
-    width: '100%',
-    backgroundColor: 'rgba(255, 255, 255, 0.04)',
-    borderRadius: 16,
-    height: 450,
-    paddingHorizontal: 24,
-    borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.2)',
-    position: 'relative',
-    overflow: 'hidden',
-    marginTop: -20,
-  },
-
   playerBox: {
     width: 350,
     minHeight: 650,
@@ -54,16 +27,37 @@ const styles = StyleSheet.create({
     marginTop: -60,
   },
 
+  infoBox: {
+    width: '100%',
+    backgroundColor: 'rgba(255, 255, 255, 0.04)',
+    borderRadius: 16,
+    height: 450,
+    paddingHorizontal: 24,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.2)',
+    position: 'relative',
+    overflow: 'hidden',
+    marginTop: -20,
+  },
+
   textArea: {
     marginTop: 30,
     width: '100%',
     alignItems: 'center',
   },
 
-  titleContainer: {
+  recordWrapper: {
     position: 'absolute',
-    top: '10%',
-    alignItems: 'center',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    alignSelf: 'center',
+  },
+
+  recordImage: {
+    width: 200,
+    height: 200,
+    opacity: 0.8,
   },
 
   label: {
@@ -96,9 +90,10 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
 
+  // Play, forward, backward button
   controlsContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-evenly', // ensures equal space
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     width: '70%',
     marginTop: -150,
@@ -109,23 +104,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  playText: {
-    fontSize: 26,
-    fontWeight: '600',
-    color: '#ffffff',
-    fontFamily: 'Lora_700Bold',
-    textShadowColor: 'rgba(0,0,0,0.5)',
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 2,
-  },
-
-  loader: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-    // backgroundColor: '#7B4A2D',
-    zIndex: 999,
-  },
 });
 
 export default styles;

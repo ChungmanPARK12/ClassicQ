@@ -180,8 +180,6 @@ export default function PlayingScreen({ route }: Props) {
       style={styles.container}
       resizeMode="cover"
     >
-
-
       <View style={styles.playerBox}>
         <View style={styles.infoBox}>
           <View style={styles.textArea}>
@@ -189,6 +187,7 @@ export default function PlayingScreen({ route }: Props) {
               Now Playing:
             </Animated.Text>
 
+            {/* Track title */}
             <Animated.Text
               style={[styles.track, { opacity: isPlaying ? blinkAnim : 1 }]}
               numberOfLines={3}
@@ -197,6 +196,7 @@ export default function PlayingScreen({ route }: Props) {
               {currentTrack.title}
             </Animated.Text>
 
+            {/* Composer */}
             <Animated.Text
               style={[styles.composer, { opacity: isPlaying ? blinkAnim : 1 }]}
               numberOfLines={1}
@@ -219,7 +219,6 @@ export default function PlayingScreen({ route }: Props) {
                 },
               ]}
             />
-
           </View>
         </View>
       </View>

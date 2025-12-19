@@ -1,5 +1,7 @@
 // screens/context/FavouriteContext.tsx
 import React, { createContext, useContext, useEffect, useState } from 'react';
+
+// Local key-value storage for persisting data on the device (e.g. favourites list).
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Track } from '../../navigation/types';
 
