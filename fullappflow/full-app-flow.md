@@ -22,7 +22,7 @@ Full App Flow
 ### 2. Home Screen
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/0a4bbad2-87c3-4a85-9369-2f971bd97661" width="280"/>
+  <img src="https://github.com/user-attachments/assets/ffcadcd6-3f30-482d-993e-65ff30ecbf25" width="280"/>
 </p>
 
 - Displays the main entry screen of ClassicQ.
@@ -41,7 +41,7 @@ Full App Flow
 
 <p align="center">
   <img
-    src="https://github.com/user-attachments/assets/2a361232-4e39-4eb9-bdc1-b59a1e76efcf"
+    src="https://github.com/user-attachments/assets/184fc6c4-3dc6-4e31-a496-06183bb79c00"
     width="280"
   />
 </p>
