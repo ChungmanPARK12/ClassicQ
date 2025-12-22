@@ -59,5 +59,6 @@ Full App Flow
 ---
 
  **Demo video:**  
- - [Watch Random Play demo](https://github.com/ChungmanPARK12/classicq-media/blob/4866299bdfde37a609795eb0015914458f125fc8/randomplay1.mp4)
+- [Watch Random Play demo](https://raw.githubusercontent.com/ChungmanPARK12/classicq-media/4866299bdfde37a609795eb0015914458f125fc8/randomplay1.mp4)
+
 
