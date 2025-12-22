@@ -59,6 +59,7 @@
 - **Random track selection** applied before navigation.
 - **Playback-driven visuals** (blinking indicator and vinyl record rotation).
 - **Volume-based interaction**, affecting blinking speed.
+- **Control button interaction**, allowing users to move to the next track in the list.
 
 ---
 
