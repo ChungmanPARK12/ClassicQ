@@ -1,4 +1,4 @@
-Full App Flow 
+## Full App Flow 
 
 ---
 
@@ -32,8 +32,7 @@ Full App Flow
 **Source:** `src/screens/HomeScreen.tsx`
 
 - Provides access to **Random Music playback**, **Music List**, and **Favourite screen**.  
-- Uses `handlePlayRandom()` to enable immediate random playback from the full music list, navigating directly to the **Random Play screen**.
-- The **random track** is selected before navigation to ensure the **Ramdom Play screen** receives a fully resolved track state.
+- Uses `handlePlayRandom()` to resolve a random track state before navigating to the **Random Play screen**.
 
 ---
 
@@ -46,14 +45,11 @@ Full App Flow
   />
 </p>
 
-- Displays the random playback screen, showing the currently selected track and playback state.
+- Displays the random music playback screen, showing the currently selected track and playback state.
 
 ---
 
 **Source:** `src/screens/PlayingScreen.tsx`
-
-- Receives a pre-selected **random track** before navigation and renders it immediately.
-- Uses a **preload** phase to wait until background and vinyl record images are ready before displaying the UI.
 
 **Implementation note**
 - Playback behavior is driven by explicit **screen state**, not real audio.
