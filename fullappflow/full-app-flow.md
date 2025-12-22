@@ -8,13 +8,13 @@
   <img src="https://github.com/user-attachments/assets/824f7faa-edd9-4ef7-b772-a74bf22f5db9" width="280"/>
 </p>
 
-- Displays the ClassicQ brand while the app initializes.
+- Displays the **ClassicQ logo**  while the app initializes.
 
 ---
 
 **Source:** `App.tsx`
 
-- Keeps the splash screen visible until the Home screen is ready.  
+- Keeps the splash screen visible until the **Home screen** is ready.  
 - A short **preload** delay is applied on the first visit only and skipped on subsequent launches.
 
 ---
@@ -31,8 +31,8 @@
 
 **Source:** `src/screens/HomeScreen.tsx`
 
-- Provides access to **Random Music playback**, **Music List**, and **Favourite screen**.  
-- Uses `handlePlayRandom()` to resolve a random track state before navigating to the **Random Play screen**.
+- Provides access to **Random Music playback**, **Music List**, and **Favourite screens**.  
+- Uses `handlePlayRandom()` to pre-select a random track state before navigating to the **Random Play screen**.
 
 ---
 
@@ -56,8 +56,8 @@
 - UI animations and indicators react to derived state changes.
 
 **Demo highlights (shown in the video):**
-- **Random track selection** applied before navigation.
-- **Playback-driven visuals** (blinking indicator and vinyl record rotation).
+- **Random track selection**, applied before navigation.
+- **Playback-driven visuals**, blinking indicator and vinyl record rotation.
 - **Volume-based interaction**, affecting blinking speed.
 - **Control button interaction**, allowing users to move to the next track in the list.
 
