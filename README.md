@@ -2,42 +2,39 @@
 
 ![Image](https://github.com/user-attachments/assets/ea6ba522-58e8-4d9d-8354-5ce60532dd69)
 
-My first self-initiated project built with React Native + Expo mobile app, developed through AI-assisted planning, design, and implementation, with full ownership of architectural and code decisions.
+A self-initiated React Native mobile app project, developed with full
+ownership of architecture and code decisions.
 
 ## Project Overview
 
-This project demonstrates how I structure and implement a mobile app flow using React Native.
-
-It focuses on the app’s initial user experience:
-
-**Splash → Home → Loader → Playlist / Track List / Favorites**
+This project showcases how I design and structure the core navigation
+and startup experience of a mobile app.
 
 The focus is on:
 
-- Clean and predictable navigation structure
-- Controlled loading and splash screen behavior
-- A calm, distraction-free UX inspired by classical music listening
+- Clean and predictable navigation structure.
+- Controlled loading and splash screen behavior.
+- A calm, distraction-free UX inspired by classical music listening.
+- Screen-specific logic that goes beyond simple UI transitions.
 
 This repository is part of my portfolio and highlights:
 
 - A solid UI and navigation foundation for a music-focused mobile app.
 - A scalable structure prepared for future features such as expanded playlist logic and content management.
 
-
 ## Features
 
-- Splash screen with controlled app initialization.
-- Track list with basic playback flow.
-- Random playback across the full music library.
-- Favorites screen for saved tracks.
-- Clean and predictable navigation structure.
+- **Controlled splash screen** with explicit app initialization handling.
+- **Track list and playback flow** designed for predictable state transitions.
+- **Random playback logic** across the full music library.
+- **Favorites screen** for persisting user-selected tracks.
+- A **clean and consistent navigation structure** across all screens.
 
 ## Full App Flow
 
 An overview of the application flow from launch to the main service screens:
 
 - [Full App Flow Documentation](fullappflow/full-app-flow.md)
-
 
 ## Installation
 
