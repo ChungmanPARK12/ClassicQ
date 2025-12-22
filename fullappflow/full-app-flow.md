@@ -53,15 +53,24 @@ Full App Flow
 **Source:** `src/screens/PlayingScreen.tsx`
 
 - Receives a pre-selected **random track** before navigation and renders it immediately.
-- Uses a **preload** phase to wait until background and vinyl assets are ready before displaying the UI.
-- Applies subtle **animation** and **blinking** effects to indicate active playback state.
+- Uses a **preload** phase to wait until background and vinyl record images are ready before displaying the UI.
+
+**Implementation note**
+- Playback behavior is driven by explicit **screen state**, not real audio.
+- UI animations and indicators react to derived state changes.
+
+**Demo highlights (shown in the video):**
+- **Random track selection** applied before navigation.
+- **Playback-driven visuals** (blinking indicator and vinyl record rotation).
+- **Volume-based interaction**, affecting blinking speed.
 
 ---
 
- **Demo video:**  
+**Demo video:**  
 - [Watch Random Play demo](https://chungmanpark12.github.io/classicq-media/random-play.html)
 
 ---
+
 
 
 
