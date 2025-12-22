@@ -27,6 +27,8 @@ Full App Flow
 
 - Displays the main entry screen of ClassicQ.
 
+---
+
 **Source:** `src/screens/HomeScreen.tsx`
 
 - Provides access to **Random Music playback**, **Music List**, and **Favourite screen**.  
@@ -38,10 +40,15 @@ Full App Flow
 ### 2. Random Play Screen
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/2a361232-4e39-4eb9-bdc1-b59a1e76efcf" width="280"/>
+  <img
+    src="https://github.com/user-attachments/assets/2a361232-4e39-4eb9-bdc1-b59a1e76efcf"
+    width="280"
+  />
 </p>
 
 - Displays the random playback screen, showing the currently selected track and playback state.
+
+---
 
 **Source:** `src/screens/PlayingScreen.tsx`
 
@@ -50,3 +57,7 @@ Full App Flow
 - Applies subtle **animation** and **blinking** effects to indicate active playback state.
 
 ---
+
+ **Demo video:**  
+ - [Watch Random Play demo](https://github.com/ChungmanPARK12/classicq-media/blob/4866299bdfde37a609795eb0015914458f125fc8/randomplay1.mp4)
+
