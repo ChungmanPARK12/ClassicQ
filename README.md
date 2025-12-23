@@ -2,8 +2,7 @@
 
 ![Image](https://github.com/user-attachments/assets/ea6ba522-58e8-4d9d-8354-5ce60532dd69)
 
-A self-initiated React Native mobile app project, developed with full
-ownership of architecture and code decisions.
+A self-initiated **React Native** mobile app project, developed with full ownership of architecture and code decisions, in collaboration with AI for design and implementation improvements.
 
 ## Project Overview
 
