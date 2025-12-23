@@ -15,7 +15,7 @@
 **Source:** `App.tsx`
 
 - Keeps the splash screen visible until the **Home screen** is ready.  
-- A short **preload** delay is applied on the first visit only and skipped on subsequent launches.
+- Uses a **preload** method on the first visit; subsequent visits replace image loading with a fixed 2-second branding delay.
 
 ---
 
@@ -36,7 +36,7 @@
 
 ---
 
-### 3. Loading Status Screen (ClassicQSplash)
+### 3. Loading Status Screen 
 
 <table align="center" cellspacing="0" cellpadding="12">
   <tr>
@@ -63,7 +63,7 @@
 
 ---
 
-**Source:** `src/components/ClassicQSplash.tsx`, `src/screens/PlayingScreen.tsx`
+**Source:** `src/components/ClassicQSplash.tsx`
 
 - Applies a **subtle blinking animation** to the logo and message as the loading status.
 
@@ -86,8 +86,8 @@
 **Source:** `src/screens/PlayingScreen.tsx`
 
 - The **Random Play screen** renders `<ClassicQSplash />` until `isReady` becomes `true`.
-- `isReady` is set after the background and vinyl images are preloaded via `Asset.loadAsync()`.
-- Uses a `preload()` method to load required assets on the first visit; after the initial load, navigation proceeds without showing the loading status screen.
+- `isReady` is set after the background and vinyl record images are preloaded via `Asset.loadAsync()`.
+- Uses a **preload** method on the first visit; subsequent visits skip the **loading state** and navigate directly.
 
 **Implementation note**
 - Playback behavior is driven by explicit **screen state**, not real audio.
