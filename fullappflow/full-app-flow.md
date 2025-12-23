@@ -87,6 +87,7 @@
 
 - The **Random Play screen** renders `<ClassicQSplash />` until `isReady` becomes `true`.
 - `isReady` is set after the background and vinyl images are preloaded via `Asset.loadAsync()`.
+- Uses a `preload()` method to load required assets on the first visit; after the initial load, navigation proceeds without showing the loading status screen.
 
 **Implementation note**
 - Playback behavior is driven by explicit **screen state**, not real audio.
