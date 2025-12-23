@@ -36,20 +36,21 @@ const styles = StyleSheet.create({
   artContainer: {
     width: ART_BOX,
     height: ART_BOX,
-    borderRadius: 8,
+    borderRadius: 0,
     overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 15,
     marginLeft: -20,
     position: 'relative',
+    
   },
 
   // Actual image (centered inside the fixed column)
   artImage: {
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
-    borderRadius: 8,
+  
   },
 
   // Placeholder matches artImage exactly
@@ -59,8 +60,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: IMAGE_SIZE,
     height: IMAGE_SIZE,
-    borderRadius: 8,
     backgroundColor: '#5C3A2E',
+    borderWidth: 1,
+    borderColor: '#000',
   },
 
   placeholderText: {

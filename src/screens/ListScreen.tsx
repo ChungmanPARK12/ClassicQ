@@ -15,6 +15,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 // Play and pause icon on the image.
 import { Ionicons } from '@expo/vector-icons';
+
+// List of 100 tracks
 import { trackList } from '../data/tracks';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { Track } from '../navigation/types';

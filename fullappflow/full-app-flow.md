@@ -95,7 +95,7 @@
 
 **Demo highlights (shown in the video):**
 - **Random track selection**, applied before navigation.
-- **Playback-driven visuals**, blinking indicator and vinyl record rotation.
+- **Playback-driven visuals**, with a blinking indicator applied to the title and composer, and vinyl record rotation.
 - **Volume-based interaction**, affecting blinking speed.
 - **Control button interaction**, allowing users to move to the next track in the list.
 
@@ -105,6 +105,46 @@
 - [Watch Random Play demo](https://chungmanpark12.github.io/classicq-media/random-play.html)
 
 ---
+
+### 5. List Screen
+
+<table align="center" cellspacing="0" cellpadding="12">
+  <tr>
+    <td align="center" width="50%" 
+        style="border: 1px solid #dcdcdc; border-radius: 24px;">
+      <img
+        src="https://github.com/user-attachments/assets/83edc421-152c-4582-ac2b-6e1f6ce74dce"
+        width="280"
+        style="border-radius: 18px;"
+      />
+    </td>
+    <td align="center" width="50%" 
+        style="border: 1px solid #dcdcdc; border-radius: 24px;">
+      <img
+        src="https://github.com/user-attachments/assets/b44c5ec4-60d3-4caa-8044-f96d37d87200"
+        width="280"
+        style="border-radius: 18px;"
+      />
+    </td>
+  </tr>
+</table>
+
+- Displays a scrollable list of 100 classical tracks.
+- Demonstrates state-driven playback behavior using blinking visual indicators.
+
+---
+
+**Source:** `src/screens/ListScreen.tsx`
+
+**Demo highlights (shown in the video):**
+- **Per-item image loading handling**, showing a placeholder until the track image is fully loaded.
+- **Play/pause overlay behavior**, displayed only after the track image is ready.
+- **Playback-driven visuals**, with a blinking indicator applied to the title and composer.
+- **Automatic track progression**, advancing to the next item after a 3-second interval.
+- **Favourite toggle interaction**, allowing tracks to be **added to or removed** from favourites via the heart icon.
+
+---
+
 
 
 
