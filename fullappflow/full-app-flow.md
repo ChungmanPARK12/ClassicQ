@@ -15,7 +15,7 @@
 **Source:** `App.tsx`
 
 - Keeps the splash screen visible until the **Home screen** is ready.  
-- Uses a **preload** method on the first visit; subsequent visits replace image loading with a fixed 2-second branding delay.
+- Uses a **preload** method on the first visit; subsequent visits replace background-image loading from Home screen with a fixed 2-second branding delay.
 
 ---
 
