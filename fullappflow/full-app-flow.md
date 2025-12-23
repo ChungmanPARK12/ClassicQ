@@ -46,7 +46,7 @@
       <sub>Loading state (logo + message)</sub>
     </td>
     <td align="center" width="50%">
-      <img src="Image" src="https://github.com/user-attachments/assets/7f14166b-55eb-46e0-8cd8-be1ba38ae62e" width="280" />
+      <img src="https://github.com/user-attachments/assets/7f14166b-55eb-46e0-8cd8-be1ba38ae62e" width="280" />
       <br />
       <sub>Refined layout (reduced logo size)</sub>
     </td>
