@@ -38,20 +38,22 @@
 
 ### 3. Loading Status Screen (ClassicQSplash)
 
-<table align="center">
+<table align="center" cellspacing="0" cellpadding="12">
   <tr>
-    <td align="center" width="50%">
+    <td align="center" width="50%" 
+        style="border: 1px solid #dcdcdc; border-radius: 24px;">
       <img
         src="https://github.com/user-attachments/assets/6f72ef01-e4d6-438f-8d29-766babb6e516"
         width="280"
-        style="border-radius: 24px; border: 1px solid #e5e5e5;"
+        style="border-radius: 18px;"
       />
     </td>
-    <td align="center" width="50%">
+    <td align="center" width="50%" 
+        style="border: 1px solid #dcdcdc; border-radius: 24px;">
       <img
         src="https://github.com/user-attachments/assets/7f14166b-55eb-46e0-8cd8-be1ba38ae62e"
         width="280"
-        style="border-radius: 24px; border: 1px solid #e5e5e5;"
+        style="border-radius: 18px;"
       />
     </td>
   </tr>
