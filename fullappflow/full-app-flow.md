@@ -41,15 +41,15 @@
 <table align="center">
   <tr>
     <td align="center" width="50%">
-      <img 
-        src="PASTE_IMAGE_URL_1_HERE" 
+      <img
+        src="https://github.com/user-attachments/assets/6f72ef01-e4d6-438f-8d29-766babb6e516"
         width="280"
         style="border-radius: 24px; border: 1px solid #e5e5e5;"
       />
     </td>
     <td align="center" width="50%">
-      <img 
-        src="PASTE_IMAGE_URL_2_HERE" 
+      <img
+        src="https://github.com/user-attachments/assets/7f14166b-55eb-46e0-8cd8-be1ba38ae62e"
         width="280"
         style="border-radius: 24px; border: 1px solid #e5e5e5;"
       />
@@ -61,11 +61,12 @@
 
 ---
 
-**Source:** `src/components/ClassicQSplash.tsx`
+**Source:** `src/components/ClassicQSplash.tsx`, `src/screens/PlayingScreen.tsx`
 
 - Applies a **subtle blinking animation** to the logo and message as the loading status.
 
 ---
+
 
 ### 4. Random Play Screen
 
