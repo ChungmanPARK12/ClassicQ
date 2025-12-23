@@ -31,12 +31,40 @@
 
 **Source:** `src/screens/HomeScreen.tsx`
 
-- Provides access to **Random Music playback**, **Music List**, and **Favourite screens**.  
+- Provides access to **Random Play**, **Music List**, and **Favourite screens**.  
 - Uses `handlePlayRandom()` to pre-select a random track state before navigating to the **Random Play screen**.
 
 ---
 
-### 2. Random Play Screen
+### 3. Loading Status Screen (ClassicQSplash)
+
+<table align="center">
+  <tr>
+    <td align="center" width="50%">
+      <img src="https://github.com/user-attachments/assets/6f72ef01-e4d6-438f-8d29-766babb6e516" width="280" />
+      <br />
+      <sub>Loading state (logo + message)</sub>
+    </td>
+    <td align="center" width="50%">
+      <img src="Image" src="https://github.com/user-attachments/assets/5931d78b-01a3-4a72-be9e-dd4feb88a8ab" width="280" />
+      <br />
+      <sub>Refined layout (reduced logo size)</sub>
+    </td>
+  </tr>
+</table>
+
+- Displays a calm **loading state** while the **Random Play screen** prepares required visual assets.
+
+---
+
+**Source:** `src/components/ClassicQSplash.tsx`, `src/screens/PlayingScreen.tsx`
+
+- Applies a **subtle blinking animation** to the logo and message as the loading status.
+
+---
+
+
+### 4. Random Play Screen
 
 <p align="center">
   <img
@@ -50,6 +78,9 @@
 ---
 
 **Source:** `src/screens/PlayingScreen.tsx`
+
+- The **Random Play screen** renders `<ClassicQSplash />` until `isReady` becomes `true`.
+- `isReady` is set after the background and vinyl images are preloaded via `Asset.loadAsync()`.
 
 **Implementation note**
 - Playback behavior is driven by explicit **screen state**, not real audio.
