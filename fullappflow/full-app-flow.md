@@ -188,7 +188,7 @@
 ---
 
 **Demo video:**  
-- [Watch List Screen demo](https://chungmanpark12.github.io/classicq-media/favouritescreen.html)
+- [Watch Favourite Screen demo](https://chungmanpark12.github.io/classicq-media/favouritescreen.html)
 
 ---
 
