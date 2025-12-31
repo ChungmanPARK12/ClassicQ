@@ -1,7 +1,5 @@
 ## Full App Flow 
 
----
-
 ### 1. Splash Screen
 
 <p align="center">

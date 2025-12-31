@@ -2,12 +2,12 @@
 
 ![Image](https://github.com/user-attachments/assets/ea6ba522-58e8-4d9d-8354-5ce60532dd69)
 
-A self-initiated **React Native** mobile app project, developed with full ownership of architecture and code decisions, in collaboration with AI for design and implementation improvements.
+A self-initiated React Native + Expo mobile app project, developed with full ownership of architecture and code decisions, in collaboration with AI for design and implementation improvements.
 
 ## Project Overview
 
-This project showcases how I design and structure the core navigation
-and startup experience of a mobile app.
+This project showcases how I design and structure the core navigation and startup experience of a mobile app.
+It covers the full onboarding-to-playback flow, from initial app launch, through the intro flow, and into the main service experience.
 
 - Clean and predictable navigation structure
 - Clear separation between app initialization and navigation flow
@@ -111,7 +111,7 @@ The project was developed and tested with the following environment:
 
 - **Node.js**: v20.x
 - **Expo CLI**: via `npx expo`
-- **React Native**: 0.79.2 (Expo-managed)
+- **React Native**: 0.79.x (Expo-managed)
 - **Expo SDK**: SDK 53
 - **Tested on**:
   - iOS (Expo Go)
