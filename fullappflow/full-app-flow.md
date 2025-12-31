@@ -173,7 +173,7 @@
   </tr>
 </table>
 
-- Displays the user's saved favourites list of classical tracks
+- Displays the user's saved favourites list from `ListScreen` of classical tracks
 - Applies the same play/pause logic as `ListScreen`
 
 ---
@@ -188,7 +188,7 @@
 ---
 
 **Demo video:**  
-- [Watch List Screen demo](https://chungmanpark12.github.io/classicq-media/listscreen.html)
+- [Watch List Screen demo](https://chungmanpark12.github.io/classicq-media/favouritescreen.html)
 
 ---
 

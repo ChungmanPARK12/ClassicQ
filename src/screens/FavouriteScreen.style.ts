@@ -40,11 +40,11 @@ const styles = StyleSheet.create({
   iconOverlay: {
     position: 'absolute',
     top: '50%',
-    left: '50%',
+    left: '47%',
     transform: [{ translateX: -9 }, { translateY: -9 }],
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 12,
-    padding: 4,
+    padding: 2,
   },
 
   textBox: { flex: 1, justifyContent: 'center' },
