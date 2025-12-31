@@ -95,11 +95,29 @@ When validation passes, the console logs confirm:
 
 Track IDs are generated from normalized metadata, with automatic collision handling to ensure stability during development.
 
----
-
 - Detailed debugging notes and iteration history are documented in `CHANGELOG.md`.
 
-## Expo Workflow & Environment (or Tech Stack)
+## Expo Workflow & Environment
+
+### Expo Go
+**Expo Go** is used to preview and test the UI/UX directly on a real mobile device.
+
+### npx expo
+`npx expo` runs the Expo CLI without a global installation.  
+It is used to start the development server, manage the Metro bundler, and generate the **QR code** for Expo Go.
+
+### Environment Versions
+The project was developed and tested with the following environment:
+
+- **Node.js**: v20.x
+- **Expo CLI**: via `npx expo`
+- **React Native**: 0.79.2 (Expo-managed)
+- **Expo SDK**: SDK 53
+- **Tested on**:
+  - iOS (Expo Go)
+  - Android *(not tested yet)*
+
+Exact SDK and dependency versions are defined in `package.json` and `app.json`.
 
 ## Next Steps (Portfolio v2)
 
