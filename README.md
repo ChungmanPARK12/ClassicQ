@@ -28,6 +28,29 @@ An overview of the application flow from launch to the main service screens:
 
 ## Installation
 
+- **IDE**  
+  Use any preferred editor. **Visual Studio** Code is recommended for JavaScript/TypeScript development.  
+  https://code.visualstudio.com/
+
+- **Node.js**  
+  Required for React Native and Expo development tools.  
+  https://nodejs.org
+
+- **Clone the Repository**:
+   ```bash
+   git clone https://github.com/ChungmanPARK12/ClassicQ.git
+   cd classicQ
+   ```
+
+- **Install Dependencies**:
+   ```bash
+   npm install
+   ```
+   or
+   ```bash
+   yarn install
+   ```
+
 ## Getting Started
 
 ## Debugging
