@@ -121,4 +121,11 @@ Exact SDK and dependency versions are defined in `package.json` and `app.json`.
 
 ## Next Steps (Portfolio v2)
 
+- Update the **Expo Go** app on test devices before starting Portfolio v2 development
+- Test the app on an **Android** physical device
+- Unify **per-track image loading** in the Favourite screen with the **ListScreen** placeholder strategy.
+- Improve **track reordering** in the Favourite screen by preventing **unnecessary image reloads** during drag.
+
 ## License
+
+This project is licensed under the MIT License.
