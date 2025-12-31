@@ -139,9 +139,14 @@
 **Demo highlights (shown in the video):**
 - **Per-item image loading handling**, showing a placeholder until the track image is fully loaded.
 - **Play/pause overlay behavior**, displayed only after the track image is ready.
-- **Playback-driven visuals**, with a blinking indicator applied to the title and composer.
+- **Playback-driven visuals**, with a blinking indicator applied to the title.
 - **Automatic track progression**, advancing to the next item after a 3-second interval.
 - **Favourite toggle interaction**, allowing tracks to be **added to or removed** from favourites via the heart icon.
+
+---
+
+**Demo video:**  
+- [Watch List Screen demo](https://chungmanpark12.github.io/classicq-media/listscreen.html)
 
 ---
 
