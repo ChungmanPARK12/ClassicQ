@@ -9,18 +9,16 @@ A self-initiated **React Native** mobile app project, developed with full owners
 This project showcases how I design and structure the core navigation
 and startup experience of a mobile app.
 
-- Clean and predictable navigation structure.
-- Controlled loading and splash screen behavior.
-- A calm, distraction-free UX inspired by classical music listening.
-- A solid UI and navigation foundation for a music-focused mobile app.
+- Clean and predictable navigation structure
+- Clear separation between app initialization and navigation flow
+- A solid UI and navigation foundation for a music-focused mobile app
 
 ## Features
 
-- **Controlled splash screen** with explicit app initialization handling.
-- **Track list and playback flow** designed for predictable state transitions.
-- **Random playback logic** across the full music library.
-- **Favorites screen** for persisting user-selected tracks.
-- A **clean and consistent navigation structure** across all screens.
+- **Controlled splash screen** with explicit app initialization logic
+- **Track list and playback flow** with predictable playback state transitions
+- **Random playback logic** across the full music library
+- **Favorites screen** for saving and managing user-selected tracks
 
 ## Full App Flow
 
