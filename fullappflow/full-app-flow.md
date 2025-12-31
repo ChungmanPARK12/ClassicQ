@@ -79,7 +79,7 @@
   />
 </p>
 
-- Displays the random music playback screen, showing the currently selected track and playback state
+- Displays the random music playback screen, showing the **pre-selected** track from `HomeScreen` and playback state
 
 ---
 
@@ -97,7 +97,7 @@
 - **Random track selection**, applied before navigation
 - **Playback-driven visuals**, with a blinking indicator applied to the title and composer, and vinyl record rotation.
 - **Volume-based interaction**, affecting blinking speed
-- **Control button interaction**, allowing users to move to the next track in the list
+- **Control button interaction**, enabling previous and next track navigation
 
 ---
 
@@ -137,7 +137,7 @@
 **Source:** `src/screens/ListScreen.tsx`
 
 **Demo highlights (shown in the video):**
-- **Per-item image loading handling**, showing a placeholder until the track image is fully loaded
+- **Per-track image loading handling**, showing a placeholder until the track image is fully loaded
 - **Play/pause overlay behavior**, displayed only after the track image is ready
 - **Playback-driven visuals**, with a blinking indicator applied to the title
 - **Automatic track progression**, advancing to the next item after a 3-second interval
@@ -181,7 +181,7 @@
 **Source:** `src/screens/FavouriteScreen.tsx`
 
 **Demo highlights (shown in the video):**
-- **Per-item image loading handling**, showing a loading indicator until the track image is fully loaded
+- **Per-track image loading handling**, showing a loading indicator until the track image is fully loaded
 - **Drag-and-drop list reordering**, long-press the **reorder icon** to reorder items
 - **Remove favourites instantly**, tap the **heart button** to remove an item
 
