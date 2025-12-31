@@ -53,6 +53,26 @@ An overview of the application flow from launch to the main service screens:
 
 ## Getting Started
 
+This project uses the Expo workflow.  
+Once dependencies are installed, you can start the development server and run the app on a mobile device.
+
+### Start the Development Server
+```bash
+npx expo start 
+```
+If the app does not open with the default Expo start command, using `--tunnel` can improve connectivity in some network environments.
+
+### Run the App
+Use **Expo Go** on your Android or iOS device to run the app.
+
+Scan the **QR code** shown in the terminal, and Expo Go will automatically open and load the project.
+
+### Troubleshooting
+If the Expo server does not start, try cleaning the cache:
+```bash
+npx expo start -c
+```
+
 ## Debugging
 - Key real issues you faced
 - What you learned / limitations
