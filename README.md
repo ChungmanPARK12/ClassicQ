@@ -74,8 +74,30 @@ npx expo start -c
 ```
 
 ## Debugging
-- Key real issues you faced
-- What you learned / limitations
+
+### Track Data Validation
+
+**Source:**  
+- `src/utils/debugTracks.ts`  
+- `src/data/tracks.ts`  
+- `src/data/trackId.ts`
+
+To prevent silent data issues during development, a lightweight track validation utility runs in **__DEV__** mode.
+
+It checks for:
+- Missing required fields (`id`, `title`, `composer`)
+- Duplicate track IDs
+- Deterministic ID generation (`id === trackIdOf(title, composer)`)
+
+When validation passes, the console logs confirm:
+- **ListScreen**: initial track list is valid (`TRACKS OK`)
+- **FavouriteScreen**: favourites list remains valid after updates (`TRACKS OK`)
+
+Track IDs are generated from normalized metadata, with automatic collision handling to ensure stability during development.
+
+---
+
+- Detailed debugging notes and iteration history are documented in `CHANGELOG.md`.
 
 ## Expo Workflow & Environment (or Tech Stack)
 
