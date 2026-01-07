@@ -117,8 +117,8 @@ The project was developed and tested with the following environment:
 
 - **Node.js**: v20.x
 - **Expo CLI**: via `npx expo`
-- **React Native**: 0.79.x (Expo-managed)
-- **Expo SDK**: SDK 53
+- **React Native**: 0.81.x (Expo-managed)
+- **Expo SDK**: SDK 54
 - **Tested on**:
   - iOS (Expo Go)
   - Android *(not tested yet)*
