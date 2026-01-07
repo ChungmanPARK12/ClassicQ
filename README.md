@@ -61,8 +61,9 @@ Once dependencies are installed, you can start the development server and run th
 npx expo start --tunnel
 ```
 **Recommendation:**  
-Using `--tunnel` connects through Expo’s servers and avoids local IP configuration issues.  
-Running `npx expo start` without `--tunnel` requires additional IP setup but provides faster startup times.
+
+- Using `--tunnel` connects through Expo’s servers and avoids local IP configuration issues.  
+- Running `npx expo start` without `--tunnel` requires additional IP setup but provides faster startup times.
 
 ### Run the App
 Use **Expo Go** on your Android or iOS device to run the app.
