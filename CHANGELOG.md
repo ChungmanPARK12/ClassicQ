@@ -368,6 +368,13 @@ All notable changes to this project will be documented in this file.
 # App.tsx
 - Added preloading method, `HomeScreen` now renders immediately without intermediate loading states. 
 
+### 2026 changelog
+
+## [2026-01-08]
+- Upgraded Expo SDK from 53 to 54
+- Aligned React Native and related dependencies
+- Fixed compatibility issues after the SDK upgrade
+
 
 
 
