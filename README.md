@@ -79,7 +79,7 @@ If the app does not open on a physical device due to network of IP configuration
 ```bash
 npx expo start -tunnel 
 ```
-asd
+
 
 ## Debugging
 
