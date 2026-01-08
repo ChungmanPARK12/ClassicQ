@@ -70,14 +70,15 @@ Use **Expo Go** on your Android or iOS device to run the app.
 
 Scan the **QR code** shown in the terminal, and Expo Go will automatically open and load the project.
 
-### Troubleshooting
-
-If the app behaves unexpectedly or changes are not reflected, try clearing the cache:
-
+### Start the Development Server
 ```bash
-npx expo start -c
+npx expo start 
 ```
-Then restart the app using `npx expo start --tunnel`
+
+If the app does not open on a physical device due to network of IP configuration issues, use:
+```bash
+npx expo start -tunnel 
+```
 
 ## Debugging
 
