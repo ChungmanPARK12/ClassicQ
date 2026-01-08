@@ -58,27 +58,27 @@ Once dependencies are installed, you can start the development server and run th
 
 ### Start the Development Server
 ```bash
-npx expo start --tunnel
+npx expo start 
 ```
-**Recommendation:**  
 
-- Using `--tunnel` connects through Expo’s servers and avoids local IP configuration issues.  
-- Running `npx expo start` without `--tunnel` requires additional IP setup but provides faster startup times.
+**Note(WSL):** If the app does not open on a physical device due to network of IP configuration issues, use:
+```bash
+npx expo start -tunnel 
+```
 
 ### Run the App
 Use **Expo Go** on your Android or iOS device to run the app.
 
 Scan the **QR code** shown in the terminal, and Expo Go will automatically open and load the project.
 
-### Start the Development Server
-```bash
-npx expo start 
-```
+### Troubleshooting
 
-If the app does not open on a physical device due to network of IP configuration issues, use:
+If the app behaves unexpectedly or changes are not reflected, try clearing the cache:
+
 ```bash
-npx expo start -tunnel 
+npx expo start -c
 ```
+Then restart the app using `npx expo start --tunnel`
 
 ## Debugging
 
