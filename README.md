@@ -80,7 +80,6 @@ If the app does not open on a physical device due to network of IP configuration
 npx expo start -tunnel 
 ```
 
-
 ## Debugging
 
 ### Track Data Validation
