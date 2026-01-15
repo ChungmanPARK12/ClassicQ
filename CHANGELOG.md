@@ -383,6 +383,11 @@ All notable changes to this project will be documented in this file.
 - Updated image loading state to use `Track.id` instead of list index.
 - Prevented image reload indicators from appearing after reordering.
 
+### Favourite Screen UX improvement
+
+- Added subtle haptic vibration when starting drag-and-drop reordering like a real-world app.
+
+
 
 
 
