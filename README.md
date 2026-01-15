@@ -122,16 +122,17 @@ The project was developed and tested with the following environment:
 - **Expo SDK**: SDK 54
 - **Tested on**:
   - iOS (Expo Go)
-  - Android *(not tested yet)*
+  - Android (Expo Go)
 
 Exact SDK and dependency versions are defined in `package.json` and `app.json`.
 
 ## Next Steps (Portfolio v2)
 
-- Update the **Expo Go** app on test devices before starting Portfolio v2 development
-- Test the app on an **Android** physical device
-- Unify **per-track image loading** in the Favourite screen with the **ListScreen** placeholder strategy.
-- Improve **track reordering** in the Favourite screen by preventing **unnecessary image reloads** during drag.
+- Update the **Expo Go** app on test devices before starting Portfolio v2 development **(Clear)**
+- Test the app on an **Android** physical device **(Tested – minor Android styling adjustment required)**
+- Unify **per-track image loading** in the Favourite screen with the **ListScreen** placeholder strategy **(Clear)**
+- Improve **track reordering** in the Favourite screen by preventing **unnecessary image reloads** during drag **(Clear)**
+- Add subtle **haptic feedback** when starting drag-and-drop reordering **(Clear)**
 
 ## License
 
