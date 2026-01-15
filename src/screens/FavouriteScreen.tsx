@@ -24,6 +24,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useFavourite } from '../screens/context/FavouriteContext';
 import { debugValidateTracks } from '../utils/debugTracks';
 import { Track } from '../navigation/types';
+import * as Haptics from 'expo-haptics';
 
 export default function FavouriteScreen() {
   const { favourites, removeFromFavourites, reorderFavourites } = useFavourite();
@@ -111,13 +112,13 @@ export default function FavouriteScreen() {
     const bgStyle = isActive
       ? styles.itemActive
       : index % 2 === 1
-      ? styles.itemDark
-      : styles.itemLight;
+        ? styles.itemDark
+        : styles.itemLight;
 
-    // ✅ Stable key for this track
+    // Stable key for this track
     const itemKey = item.id;
 
-    // ✅ Loading state is now tied to item.id, not index
+    // Loading state is now tied to item.id, not index
     const isLoading = loadingMap[itemKey];
     const isLoaded = loadedMap[itemKey];
 
@@ -137,7 +138,7 @@ export default function FavouriteScreen() {
               source={item.image}
               style={styles.trackImage}
               onLoadStart={() => {
-                // ✅ If already loaded once, don't show spinner again on reorder re-renders
+                // If already loaded once, don't show spinner again on reorder re-renders
                 if (isLoaded) return;
                 setLoadingMap(prev => ({ ...prev, [itemKey]: true }));
               }}
@@ -175,7 +176,10 @@ export default function FavouriteScreen() {
 
             {/* Drag handle */}
             <TouchableOpacity
-              onLongPress={drag}
+              onLongPress={() => {
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                drag();
+              }}
               disabled={isActive}
               style={styles.dragHandle}
               accessibilityLabel="Reorder item"
@@ -188,7 +192,7 @@ export default function FavouriteScreen() {
     );
   };
 
-  // ✅ Keep playback to same track after reorder (by id)
+  // Keep playback to same track after reorder (by id)
   const onDragEnd = ({ data }: { data: Track[] }) => {
     const prevPlayingId =
       playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].id : null;
