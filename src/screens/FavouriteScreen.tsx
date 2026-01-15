@@ -30,10 +30,13 @@ export default function FavouriteScreen() {
 
   // Debug output all the list in Favourite
   useEffect(() => {
-  debugValidateTracks(favourites, Math.min(10, favourites.length));
-}, [favourites]);
+    debugValidateTracks(favourites, Math.min(10, favourites.length));
+  }, [favourites]);
 
-  const [loadingMap, setLoadingMap] = useState<{ [index: number]: boolean }>({});
+  // ✅ Use id-based maps to keep image loading state stable across reorders
+  const [loadingMap, setLoadingMap] = useState<Record<string, boolean>>({});
+  const [loadedMap, setLoadedMap] = useState<Record<string, boolean>>({});
+
   const [playingIndex, setPlayingIndex] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
 
@@ -100,9 +103,10 @@ export default function FavouriteScreen() {
 
   const renderItem = ({ item, drag, isActive, getIndex }: RenderItemParams<Track>) => {
     const index = getIndex?.() ?? 0;
+
     const isPlaying = index === playingIndex && !isPaused;
     const TextComponent = isPlaying ? Animated.Text : Text;
-  
+
     // Change background color when dragging, otherwise alternate by row.
     const bgStyle = isActive
       ? styles.itemActive
@@ -110,7 +114,12 @@ export default function FavouriteScreen() {
       ? styles.itemDark
       : styles.itemLight;
 
-    const isLoading = loadingMap[index];
+    // ✅ Stable key for this track
+    const itemKey = item.id;
+
+    // ✅ Loading state is now tied to item.id, not index
+    const isLoading = loadingMap[itemKey];
+    const isLoaded = loadedMap[itemKey];
 
     return (
       <TouchableOpacity
@@ -120,13 +129,24 @@ export default function FavouriteScreen() {
       >
         <View style={[styles.item, bgStyle]}>
           <View style={styles.imageBox}>
-            {isLoading && <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />}
+            {isLoading && (
+              <ActivityIndicator size="small" color="#fff" style={styles.imageLoader} />
+            )}
+
             <Image
               source={item.image}
               style={styles.trackImage}
-              onLoadStart={() => setLoadingMap(prev => ({ ...prev, [index]: true }))}
-              onLoadEnd={() => setLoadingMap(prev => ({ ...prev, [index]: false }))}
+              onLoadStart={() => {
+                // ✅ If already loaded once, don't show spinner again on reorder re-renders
+                if (isLoaded) return;
+                setLoadingMap(prev => ({ ...prev, [itemKey]: true }));
+              }}
+              onLoadEnd={() => {
+                setLoadingMap(prev => ({ ...prev, [itemKey]: false }));
+                setLoadedMap(prev => ({ ...prev, [itemKey]: true }));
+              }}
             />
+
             <View style={styles.iconOverlay}>
               <Ionicons
                 name={index === playingIndex ? (isPaused ? 'play' : 'pause') : 'play'}
@@ -143,7 +163,7 @@ export default function FavouriteScreen() {
             <Text style={styles.trackComposer}>{item.composer}</Text>
           </View>
 
-           {/* Click heart icon to remove the item */}
+          {/* Click heart icon to remove the item */}
           <View style={styles.actionsBox}>
             <TouchableOpacity
               onPress={() => removeFromFavourites(item)}
@@ -168,15 +188,15 @@ export default function FavouriteScreen() {
     );
   };
 
-  // Keep playback to same track after reorder (by title)
+  // ✅ Keep playback to same track after reorder (by id)
   const onDragEnd = ({ data }: { data: Track[] }) => {
-    const prevPlayingTitle =
-      playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].title : null;
+    const prevPlayingId =
+      playingIndex !== null && favourites[playingIndex] ? favourites[playingIndex].id : null;
 
     reorderFavourites(data);
 
-    if (prevPlayingTitle) {
-      const newIndex = data.findIndex(t => t.title === prevPlayingTitle);
+    if (prevPlayingId) {
+      const newIndex = data.findIndex(t => t.id === prevPlayingId);
       setPlayingIndex(newIndex >= 0 ? newIndex : null);
     }
   };
@@ -187,7 +207,8 @@ export default function FavouriteScreen() {
         <View style={styles.container}>
           <DraggableFlatList
             data={favourites}
-            keyExtractor={(item, index) => `${item.title}-${index}`}
+            // ✅ Use stable id (no index) so rows don't remount on reorder
+            keyExtractor={(item) => item.id}
             renderItem={renderItem}
             onDragEnd={onDragEnd}
             ListEmptyComponent={<Text style={styles.empty}>No favourites yet.</Text>}
@@ -197,5 +218,3 @@ export default function FavouriteScreen() {
     </GestureHandlerRootView>
   );
 }
-
-

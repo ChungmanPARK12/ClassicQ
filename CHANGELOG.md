@@ -375,6 +375,14 @@ All notable changes to this project will be documented in this file.
 - Aligned React Native and related dependencies
 - Fixed compatibility issues after the SDK upgrade
 
+## [2026-01-15]
+
+### Unnecessary image reloading issue(Favourite Screen)
+
+- Replaced index-based keys with stable `Track.id` keys.
+- Updated image loading state to use `Track.id` instead of list index.
+- Prevented image reload indicators from appearing after reordering.
+
 
 
 
