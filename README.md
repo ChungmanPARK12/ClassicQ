@@ -12,4 +12,4 @@ React Native · TypeScript · Expo · UI/UX-driven projects
 - Favorites & playlist system
 
 ## Portfolio
- - **[View Full Portfolio → PORTFOLIO.md](./PORTFOLIO.md)**
+ - **[View Full Portfolio](portfolio/PORTFOLIO.md)**
