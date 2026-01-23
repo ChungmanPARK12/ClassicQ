@@ -127,7 +127,7 @@ The project was developed and tested with the following environment:
 
 Exact SDK and dependency versions are defined in `package.json` and `app.json`.
 
-## Next Steps (Portfolio v2)
+## Next Steps (Preparing for Portfolio v2)
 
 - Update the **Expo Go** app on test devices before starting Portfolio v2 development **(Clear)**
 - Test the app on an **Android** physical device **(Tested – minor Android styling adjustment required)**
