@@ -60,11 +60,11 @@ export default function HomeScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleOpenList}>
-          <Text style={styles.buttonText}>        Music List        </Text>
+          <Text style={styles.buttonText}>100 Music List</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} onPress={handleOpenFavourite}>
-          <Text style={styles.buttonText}>         Favourite         </Text>
+          <Text style={styles.buttonText}>Favourite List</Text>
         </TouchableOpacity>
       </View>
     </ImageBackground>
