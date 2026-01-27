@@ -387,6 +387,18 @@ All notable changes to this project will be documented in this file.
 
 - Added subtle haptic vibration when starting drag-and-drop reordering like a real-world app.
 
+## [2026-01-26] – [2026-01-27]
+
+### Platform-specific layout tuning (Android)
+- Fixed alignment issues for the HomeScreen title and button texts on Android.
+- Standardized and centered header titles across all screens.
+
+### Font rendering issue on SplashScreen & HomeScreen (Android)
+- Confirmed `fontFamily: 'Lora_700Bold'` renders correctly on iOS.
+- Identified that Android still falls back to the system font despite custom font configuration.
+
+
+
 
 
 

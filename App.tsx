@@ -1,6 +1,6 @@
 // App.tsx
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
+import { Text, StyleSheet, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { useFonts, Lora_700Bold } from '@expo-google-fonts/lora';
 import { Asset } from 'expo-asset';
@@ -8,6 +8,9 @@ import { Asset } from 'expo-asset';
 import AppNavigator from './src/navigation/AppNavigator';
 import { FavouriteProvider } from './src/screens/context/FavouriteContext';
 import 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+import { SplashT as T } from './src/ui/tokens/splashscreenToken';
 
 const MIN_SPLASH_MS = 2000;
 
@@ -36,7 +39,7 @@ export default function App() {
         await sleep(MIN_SPLASH_MS - elapsed);
       }
 
-      if (mounted) setIsAppReady(true);
+      if (mounted) setIsAppReady(true);        
     };
 
     if (fontsLoaded) {
@@ -50,10 +53,10 @@ export default function App() {
 
   if (!fontsLoaded || !isAppReady) {
     return (
-      <View style={styles.splashContainer}>
+      <SafeAreaView style={styles.splashContainer}>
         <StatusBar hidden />
         <Text style={styles.title}>🎼 ClassicQ</Text>
-      </View>
+      </SafeAreaView>
     );
   }
 
@@ -75,14 +78,10 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: 'Lora_700Bold',
-    fontSize: 36,
+    fontSize: T.titleFontSize,
     fontWeight: 'bold',
     color: '#1e1e1e',
-    marginBottom: 12,
+    marginBottom: T.titleMarginBottom,
   },
-  subtitle: {
-    fontSize: 14,
-    color: '#3a2a1f',
-    opacity: 0.7,
-  },
+
 });

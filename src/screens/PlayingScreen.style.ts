@@ -1,5 +1,5 @@
-// src/screens/PlayingScreen.style.ts
 import { StyleSheet, Dimensions } from 'react-native';
+import { PlayingT as T } from '../ui/tokens/playingscreenToken';
 
 const { width, height } = Dimensions.get('window');
 
@@ -14,9 +14,9 @@ const styles = StyleSheet.create({
 
   playerBox: {
     width: 350,
-    minHeight: 650,
-    paddingTop: 40,
-    paddingBottom: 60,
+    minHeight: T.playerBoxMinHeight,
+    paddingTop: T.playerBoxPaddingTop,
+    paddingBottom: T.playerBoxPaddingBottom,
     paddingHorizontal: 30,
     backgroundColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: 20,
@@ -24,31 +24,31 @@ const styles = StyleSheet.create({
     borderColor: 'rgba(255,255,255,0.2)',
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginTop: -60,
+    marginTop: T.playerBoxMarginTop,
   },
 
   infoBox: {
     width: '100%',
     backgroundColor: 'rgba(255, 255, 255, 0.04)',
     borderRadius: 16,
-    height: 450,
+    height: T.infoBoxHeight,
     paddingHorizontal: 24,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.2)',
     position: 'relative',
     overflow: 'hidden',
-    marginTop: -20,
+    marginTop: T.infoBoxMarginTop,
   },
 
   textArea: {
-    marginTop: 30,
+    marginTop: T.textAreaMarginTop,
     width: '100%',
     alignItems: 'center',
   },
 
   recordWrapper: {
     position: 'absolute',
-    bottom: 10,
+    bottom: T.recordBottom,
     left: 0,
     right: 0,
     alignSelf: 'center',
@@ -90,20 +90,18 @@ const styles = StyleSheet.create({
     textShadowRadius: 4,
   },
 
-  // Play, forward, backward button
   controlsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-evenly',
     alignItems: 'center',
-    width: '70%',
-    marginTop: -150,
+    width: T.controlsWidth as any, // Home에서 겪은 width 타입 이슈 회피 (원하면 as const로 고정)
+    marginTop: T.controlsMarginTop,
   },
 
   controlButton: {
     flex: 1,
     alignItems: 'center',
   },
-
 });
 
 export default styles;

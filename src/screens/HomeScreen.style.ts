@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { HomeT as T } from '../ui/tokens/homescreenTokens';
+import { HomeT as T } from '../ui/tokens/homescreenToken';
 
 const styles = StyleSheet.create({
   container: {
